@@ -206,12 +206,18 @@
       }
 
       /* ==========================================================================
-         🎯 МАГІЯ ДЛЯ МОБІЛЬНИХ ПРИСТРОЇВ (Екрани менше 768px)
+          🎯 МАГІЯ ДЛЯ МОБІЛЬНИХ ПРИСТРОЇВ (Екрани менше 768px)
          ========================================================================== */
       @media (max-width: 768px) {
         body {
           align-items: flex-start; /* Щоб довга сторінка нормально скролилася вниз */
           padding: 20px 15px;
+          /* Додаємо мобільний фон m.bg.png */
+          background-image: url('m.bg.png');
+          background-size: cover;
+          background-position: center top;
+          background-repeat: no-repeat;
+          background-attachment: fixed;
         }
 
         /* Змінюємо масштабну одиницю тексту для телефонів, щоб він був читабельним */
@@ -223,7 +229,7 @@
           gap: 25px; /* Відступи між блоками на мобілці */
         }
 
-        /* ❌ Ховаємо великий фон на телефонах, бо він там не потрібен */
+        /* ❌ Ховаємо великий десктопний фон на телефонах */
         .bg-image {
           display: none;
         }
@@ -278,7 +284,7 @@
           margin-bottom: 10px;
         }
 
-        /* ... вимикаємо обмеження скроллу всередині рамок ... */
+        /* Вимикаємо обмеження скроллу всередині рамок — тепер скролиться весь екран телефону */
         .scroll-content {
           overflow-y: visible;
           padding: 0;
@@ -295,7 +301,7 @@
           margin-bottom: 15px;
         }
 
-        /* Соцмережі */
+        /* Соцмережі: робимо іконки трохи більшими, щоб по них було зручно тапати */
         .social-grid {
           gap: 15px;
           justify-content: center;
@@ -324,7 +330,7 @@
 
       <div class="window-container center-pillar">
         <h2>ПРО АВТОРА</h2>
-        <img class="avatar" src="image_2c15f3.png" alt="Wineko" />
+        <img class="avatar" src="Lost_in_Time_Ketrin.jpg" alt="Wineko" />
         <h3>Біографія</h3>
         <div class="scroll-content">
           <p>
@@ -341,7 +347,7 @@
             Я принципово не використовую штучний інтелект для генерації ідей,
             сюжету чи лору книги. Уся творча частина, кожне слово, кожна деталь
             світу і душа цієї історії — це повністю моя ручна робота. Технології
-            я можу задіяти хіба що для того, аби виправити випадкові помилки в
+            I можу задіяти хіба що для того, аби виправити випадкові помилки в
             тексті, розставити розділові знаки.
           </p>
           <p>
@@ -391,7 +397,7 @@
         <div class="scroll-content social-grid">
           <a href="https://arkush.net/user/19778" target="_blank">
             <img
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABnRSTlMAAAAAAABupgeRAAAAU0lEQVR4AWPABMZGOpgIIoVTddXa/2gIKIhd9f////FpwFSNTwOmamI1QFTA/UesBmREgga4VXAGlTR8/54BRxB1yAwgop4GTDQ4NWBPSLgQmmoAUDw2ie7Y0G8AAAAASUVORK5CYII="
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAIAAACQkWg2AAAABnRSTlMAAAAAAABupgeRAAAAU0lEQVR4AWPABMZGOpgIIoVTddXa/2gIKIhd9f////FpwFSNTwOmamI1QFTA/UesBmREgga4VXAGlTR8/54BRxB1yAwgop4GTDQ4NWBPSLgQmmoAUDw2ie7Y0G8AAAAASUVORK5CYII="
             />
           </a>
 
@@ -421,13 +427,13 @@
             target="_blank"
           >
             <img
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAV1BMVEVHcEwHZv/O1v8HaP8Haf8IZ/8IaP8IZv8IZ/8IaP/r7/8IZ/8IZ/8AW/////+fsf8HZv////8AYP8AWf8AZP+Vqf/V3P8IZ/9wlP9jiv+tvP+Lpf82c/8XNRKaAAAAEHRSTlMAM/2GGN1h9exC+8LBwcGFy8UXywAAAPNJREFUKJFlk+kSgyAMhDnUQe2BQQtU3/85yxEi0P3l+E1gkyyMFXG5KmvVKjnrNSlNUlODhlE3GoebzVZ3sjMx+reDiYLwiXSgOrCHWJaPcIHafDLdB27L+sbSMfkk5rca6uiZejBLC1XoncxcSM7T7+kPZ7K78TIAmWnJHgTPyD7mbna9r4Sjh4phk7sxqVLEIeCxFiG1mISGLB67+xrmUqvQENRwMcWQ/D9WmNIKxwk4/01uvXMXGuJlelGFZR66iGahq8H99TtXKejjWy+4gLhtj0sG5CVgD74DlaNawjmYKNRxlAF2o03N4v0JOxLN6Dj8GhSiE70/PKAAAAABJRU5ErkJggg=="
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAV1BMVEVHcEwHZv/O1v8HaP8Haf8IZ/8IaP8IZv8IZ/8IaP/r7/8IZ/8IZ/8AW/////+fsf8HZv////8AYP8AWf8AZP+Vqf/V3P8IZ/9wlP9jiv+tvP+Lpf82c/8XNRKaAAAAEHRSTlMAM/2GGN1h9exC+8LBwcGFy8UXywAAAPNJREFUKJFlk+kSgyAMhDnUQe2BQQtU3/85yxEi0P3l+E1gkyyMFXG5KmvVKjnrNSlNUlODhlE3GoebzVZ3sjMx+reDiYLwiXSgOrCHWJaPcIHafDLdB27L+sbSMfkk5rca6uiZejBLC1XoncxcSM7T7+kPZ7K78TIAmWnJHgTPyD7mbna9r4Sjh4phk7sxqVLEIeCxFiG1mISGLB67+xrmUqvQENRwMcWQ/D9WmNIKxwk4/01uvXMXGuJlfGFZR66iGahq8H99TtXKejjWy+4gLhtj0sG5CVgD74DlaNawjmYKNRxlAF2o03N4v0JOxLN6Dj8GhSiE70/PKAAAAABJRU5ErkJggg=="
             />
           </a>
 
           <a href="https://drukarnia.com.ua/Wineko" target="_blank">
             <img
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACzklEQVR4Ac3WAUSjYRwG8FtNVSWLLTURd8VqlaqCgBAUyB3AnTsArWlKdU2qJJIWCBIOoELhglRRVSqVBNxxx53rJFBRuW3fc4+/vFrWum/3jh5++rR37//B+2578RyTTC56R37q/09++kBuslLMOGiEflKYoIlBvylATooaO82SQUigz9FKWGhQDU+8ACWTyiv6RjCjsrJSxFHgF7lJ5TUFzWxSV1eHk5MTwed4zsR7Umkzs0FNTQ2Oj49xF3mura01W8JPKu2Ef1FdXY3Dw0M8zNHRkbxmokC/6QLl5eU4ODjAI5HXKioqElMgIyMDCwsLeCpLS0twOBx6C1gsFqSmpsLj8eDy8hKxYhgGurq69BZwOp0YGhpCQUGBlLi6ulIDb29vcXZ2JoPvH8q8vDx9BZqamnBzc4OZmRnk5+fD6/VKiWAwiLGxMfksWFxcjCjV3Nysr0B3d7fafHp6GpmZmfD5fBgdHUVWVpasqaqqwunpqVrX09Ojr0AgEFAbr6ysID09HVarFSkpKWpNWloalpeX1bqJiQl9BcbHx9XGa2trciPu3w4eUCm1urqq1rG0vgIdHR1q4/Pzc9TX18v/c3JyMDU1heHhYWRnZ0vRUCgEMJ2dnfoKNDY24vr6WpXY2NhAQ0ODDA+Hw3LoBgYGYLfbMTk5KQeU79FWQDbe29vD/VxcXMgtuIvckr6+PuTm5spV5V9tBURra6sMjBEp4ff71eHUWsBms2F+fh5PZW5uTg6m7gKiqKgI6+vreCybm5soLi5O2LehKCkpwdbWFh5me3sbpaWlcX8de0y8UQbt7Oyo4bu7u3C73SaGi15SaaE/ZjYoKyvD/v4+SP0GMMGgt6RSSF8IZrhcLsFns36QiyLSS2FCghk0QkkUERt9olCCh8+Sg6LGRh/pKwUJmoToOw2SnWImiQqphdrIR+1x8pGX3tBL2fu55S9QftXBRmdb5wAAAABJRU5ErkJggg=="
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACzklEQVR4Ac3WAUSjYRwG8FtNVSWLLTURd8VqlaqCgBAUyB3AnTsArWlKdU2qJJIWCBIOoELhglRRVSqVBNxxx53rJFBRuW3fc4+/vFrWum/3jh5++rR37//B+2578RyTTC56R37q/09++kBuslLMOGiEflKYoIlBvylATooaO82SQUigz9FKWGhQDU+8ACWTyiv6RjCjsrJSxFHgF7lJ5TUFzWxSV1eHk5MTwed4zsR7Umkzs0FNTQ2Oj49xF3mura01W8JPKu2Ef1FdXY3Dw0M8zNHRkbxmokC/6QLl5eU4ODjAI5HXKioqElMgIyMDCwsLeCpLS0twOBx6C1gsFqSmpsLj8eDy8hKxYhgGurq69BZwOp0YGhpCQUGBlLi6ulIDb29vcXZ2JoPvH8q8vDx9BZqamnBzc4OZmRnk5+fD6/VKiWAwiLGxMfksWFxcjCjV3Nysr0B3d7fafHp6GpmZmfD5fBgdHUVWVpasqaqqwunpqVrX09Ojr0AgEFAbr6ysID09HVarFSkpKWpNWloalpeX1bqJiQl9BcbHx9XGa2传s3ofX4fD6/VKiWAwiLGxMfksWFxcjCjV3Nysr0B3d7fafHp6GpmZmfD5fBgdHUVWVpasqaqqwunpqVrX09Ojr0AgEFAbr6ysID09HVarFSkpKWpNWloalpeX1bqJiQl9BcbHx9XGa2/v6CwAAAD6SURBVEwNzW4LURSMFEPtxVWVLbbYRNwVq1WqCgBAUyB3AnTsArWlKdU2qJJIWCBIOoELhglRRVSqVBNxxx53rJFBRuW3fc4+/vFrWum/3jh5++rR37//B+2578RyTTC56R37q/09++kBuslLMOGiEflKYoIlBvylATooaO82SQUigz9FKWGhQDU+8ACWTyiv6RjCjsrJSxFHgF7lJ5TUFzWxSV1eHk5MTwed4zsR7Umkzs0FNTQ2Oj49xF3mura01W8JPKu2Ef1FdXY3Dw0M8zNHRkbxmokC/6QLl5eU4ODjAI5HXKioqElMgIyMDCwsLeCpLS0twOBx6C1gsFqSmpsLj8eDy8hKxYhgGurq69BZwOp0YGhpCQUGBlLi6ulIDb29vcXZ2JoPvH8q8vDx9BZqamnBzc4OZmRnk5+fD6/VKiWAwiLGxMfksWFxcjCjV3Nysr0B3d7fafHp6GpmZmfD5fBgdHUVWVpasqaqqwunpqVrX09Ojr0AgEFAbr6ysID09HVarFSkpKWpNWloalpeX1bqJiQl9BcbHx9XGa2Nf53S/QftXBRmdb5wAAAABJRU5ErkJggg=="
             />
           </a>
 
@@ -442,19 +448,18 @@
               src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAAAAABXZoBIAAAA/0lEQVR4AbXPIazCMACE4d+L2qoZFEGSIGcRc/gJJB5XMzGJmK9EN0HMi+qaibkKVF1txdQe4g0YzPK5yyWXHL9TaPNQ89LojH87N1rbJcXkMF4Fk31UMrf34hm14KUeoQxGArALHTMuQD2cAWQfJXOpgTbksGr9ng8qluShJTPhyCdx63POg7rEim95ZyR68I1ggQpnCEGwyPicw6hZtPEGmnhkycqOio1zm6XuFtyw5XDXfGvuau0dXHzJp8pfBPuhIXO9ZK5ILUCdSvLYMpc6ASBtl3EaC97I4KaFaOCaBE9Zn5jUsVqR2vcTJZO1DdbGoZryVp94Ka/mQfE7f2T3df0WBhLDAAAAAElFTkSuQmCC"
             />
           </a>
-
           <a
             href="https://www.instagram.com/lost_in_time_world/"
             target="_blank"
           >
             <img
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAABcVBMVEVHcEx3GPlwGPx1FvyDC/OWBumqA+K+AeDQANvVAs7rDa7jAtfoAMflAriKGP2ZCvunAvLEG/TgV9/oZt72G8nxB8nxALCKHPymGf7Pg/H86vf////zds79AcD9ALT3DZ30t+j63fP1st31quT8AKf8AJn98/jaO973Lr38AIvAAOz8Drn4V7370PHiGe34E6n7HZv9AHv5wOP1Wpr8D5H9AGz9GYX6q8r2YKL5dZP3tMT8D2/8KW31Y5f9AV/9Inn+G17+KFf3v879J0f+MUf5g2v3wbr9Nyz6RUP9Ml/9Qxr+SjX7zcr6Gkb8AEL+UQ/9Wiv98uT70rD8XQT8ZxD9ZCr40sP4Tn/9cAz+egj9ciX1km/1X1L9O0j4nD7+hAT9hRb8fh34unb9jQT3jZX73a78dwX+mwL6ymPzoZD8YSf9qAD+sQD7wBL8zEn5tV79jwb+uAD+vgH+wwD+LHP8owX+ygD6Olj7rQz+twf8UjMSMf5jAAAAe3RSTlMAW9L////////FW///2P///////////8b/////////xf///////////////////////////v/////////////////////////////////////////////////////////////////F////W////f//2f///9fY/9hbxcXA5ZvtAAACBUlEQVR4AUTPRaLkNhSF4f9IV3Kp/JjfCzMzM8xCG8lWMs9SsoIkTdNmZubiKtvqduMnZl0BkgCBEI+zhiBwD5f0ZA3wQj1Eu1YiMZQADyAA9SRXgpCEaGXcODFKoq/NEXRHXYmnshMak0xdGC/PiO1Mi1rTbA0LyM/BOOWyuISrHyLPTRoKZDaBndvoQrezQA/IWlBe6DXCsOdgong+bdCLyzW5F3VzpY7TckLH4ESRlvsbNlj2V4DNu3klk/Ed8HUvYlVKwa4NSmedWzNX1dbUcxlzsJMgxNppsywKv6l5M9YJZtizxOfObknxVOkVaAblle1BB0JNssXaJhA05tlKMOrcIXcMSOBc8IBvqzbQZC8SjIfMwxxz0iLnn0vQS+cx7ye0nPcPT7qPBmk2my7b4A0XlmiNzEMDQfD53vLF6sigLHLGMyzBCMzaawXf/HcAPqpmvqbDq5dGlQVjlexMYvqD0C3P+iVOccGBM0L1+d6uYобсkB/6suQ5wYEfQvX53q5irPNFzpNtvA3/cI0r7g4dgoKy/SCee+akH32ltf38muG0kzR+PUfPl+DHq1in3jnSp8ZtjAxgz+u7OUJfb51cmk0Tqf158QwgcQUmM5zy9+tqnr9+nCf+3seU4hFCKHsptStxoEQg4fPhp7dP1dB8u6+LFzjqOq6afof/IWH/38O40irXXZ1g2+q99K9TWBgAACS27uoe/IOhgAAAABJRU5ErkJggg=="
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAABcVBMVEVHcEx3GPlwGPx1FvyDC/OWBumqA+K+AeDQANvVAs7rDa7jAtfoAMflAriKGP2ZCvunAvLEG/TgV9/oZt72G8nxB8nxALCKHPymGf7Pg/H86vf////zds79AcD9ALT3DZ30t+j63fP1st31quT8AKf8AJn98/jaO973Lr38AIvAAOz8Drn4V7370PHiGe34E6n7HZv9AHv5wOP1Wpr8D5H9AGz9GYX6q8r2YKL5dZP3tMT8D2/8KW31Y5f9AV/9Inn+G17+KFf3v879J0f+MUf5g2v3wbr9Nyz6RUP9Ml/9Qxr+SjX7zcr6Gkb8AEL+UQ/9Wiv98uT70rD8XQT8ZxD9ZCr40sP4Tn/9cAz+egj9ciX1km/1X1L9O0j4nD7+hAT9hRb8fh34unb9jQT3jZX73a78dwX+mwL6ymPzoZD8YSf9qAD+sQD7wBL8zEn5tV79jwb+uAD+vgH+wwD+LHP8owX+ygD6Olj7rQz+twf8UjMSMf5jAAAAe3RSTlMAW9L////////FW///2P///////////8b/////////xf///////////////////////////v/////////////////////////////////////////////////////////////////F////W////f//2f///9fY/9hbxcXA5ZvtAAACBUlEQVR4AUTPRaLkNhSF4f9IV3Kp/JjfCzMzM8xCG8lWMs9SsoIkTdNmZuzuKtvqduMnZl0BkgCBEI+zhiBwD5f0ZA3wQj1Eu1ЯMsQADyAA9SRXgpCEaGXcODFKoq/NEXRHXYmnshMak0xdGC/PiO1Mi1rTbA0LyM/BOOWyuISrHyLPTRoKZDaBndvoQrezQA/IWlBe6DXCsOdgong+bdCLyzW5F3VzpY7TckLH4ESRlvsbNlj2V4DNu3klk/Ed8HUvYlVKwa4NSmedWzNX1dbUcxlzsJMgxNppsywKv6l5M9YJZtizxOfObknxVOkVaAblle1BB0JNssXaJhA05tlKMOrcIXcMSOBc8IBvqzbQZC8SjIfMwxxz0iLnn0vQS+cx7ye0nPcPT7qPBmk2my7b4A0XlmiNzEMDQfD53vLF6sigLHLGMyzBCMzaawXf/HcAPqpmvqbDq5dGlQVjlexMYvqD0C3P+iVOccGBM0L1+d6uYozzRc6TbvA3/cI0r7g4dgoKy/SCee+akH32ltf38muG0kzR+PUfPl+DHq1in3jnSp8ZtjAxgz+u7OUJfb51cmk0Tqf158QwgcQUmM5zy9+tqnr9+nCf+3seU4hFCKHsptStxoEQg4fPhp7dP1dB8u6+LFzjqOq6afof/IWH/38O40irXXZ1g2+q99K9TWBgAACS27uoe/IOhgAAAABJRU5ErkJggg=="
             />
           </a>
-
           <a href="https://www.threads.com/@lost_in_time_world" target="_blank">
             <img
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAAAAABXZoBIAAABH0lEQVR4AbWSIYyDQBBFH17hmuAdSdW50zhsPR5bh0FiUCjU+gSFF7jVaCQGt4oE9S9Hk7LctbJPzsts5s8swWsA8CR77Z188k8C17xtywTgj4Ri0c7WXThLLqNkm7Ko+1XuBsEhYZT95oGRUk9Co4EnhWZ/snB1EZB1fR0DvUqOzrtaiEdJWnOINXudgxLIZfOs0RpDlXty3AASgEo1eNMSOAdAWhljZIEjJ6EmgE47a7NXz7LRXGZZtUnWfxa3AJOLgZsGq9rPOW27jIBeOesSnKKkYDQW915ziFV8WoKBYJCkKYHhJC/бариb3APsGq9rPOW27jIBeOesSnKKkYDQW915ziFV8WoKBYJCkKYHhJC/bGgG3uskBnAt5t/hW3ekqjBqvPOjkokPuUa0225bl77GXKycCqGY9MCEv+Lo3pkz5AIH3aeEHHHmiORlPs9IAAAAASUVORK5CYII="
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAAAAABXZoBIAAAA/0lEQVR4AbWSIYyDQBBFH17hmuAdSdW50zhsPR5bh0FiUCjU+gSFF7jVaCQGt4oE9S9Hk7LctbJPzsts5s8swWsA8CR77Z188k8C17xtywTgj4Ri0c7WXThLLqNkm7Ko+1XuBsEhYZT95oGRUk9Co4EnhWZ/snB1EZB1fR0DvUqOzrtaiEdJWnOINXudgxLIZfOs0RpDlXty3AASgEo1eNMSOAdAWhljZIEjJ6EmgE47a7NXz7LRXGZZtUnWfxa3AJOLgZsGq9rPOW27jIBeOesSnKKkYDQW915ziFV8WoKBYJCkKYHhJC/бариГарантийныйСрокБылМеньше?  Нет, все на месте.
+            "
             />
           </a>
         </div>
