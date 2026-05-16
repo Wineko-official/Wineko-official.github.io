@@ -5,31 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wineko | Lost in Time</title>
     <style>
-      /* Стилі для іконки донату */
-      .donate-link {
-        display: flex;
-        justify-content: center; /* Центруємо іконку по горизонталі */
-        margin-top: 10px; /* Відступ зверху від текста */
-      }
-
-      .donate-img {
-        width: 100%; /* 📐 Розмір іконки  */
-        max-width: 1000px; /* Максимальний розмір в пікселях, щоб не розмивало */
-        height: auto;
-        display: block;
-        transition: transform 0.2s ease, filter 0.2s ease;
-        filter: drop-shadow(
-          0 0 4px rgba(255, 100, 0, 0.2)
-        ); /* Легке магічне свічення */
-      }
-
-      /* Ефект при наведенні курсору */
-      .donate-img:hover {
-        transform: scale(1.1); /* Трохи збільшується при наведенні */
-        filter: drop-shadow(
-          0 0 10px rgba(255, 150, 0, 0.6)
-        ); /* Світиться яскравіше */
-      }
       * {
         box-sizing: border-box;
         margin: 0;
@@ -54,10 +29,10 @@
         width: 100%;
         max-width: 2000px;
         display: block;
-        /* 🎯 Створюємо масштабну одиницю: 1% від ширини контейнера */
         --font-scale: 1vw;
       }
-      /* інтерфейсний арт на фоні */
+
+      /* Твій інтерфейсний арт на фоні */
       .bg-image {
         width: 100%;
         height: auto;
@@ -74,31 +49,24 @@
         color: #ccc;
       }
 
-      /* Стиль для великих головних заголовків (ПРО АВТОРА) */
       .window-container h2 {
         color: #fff;
-        font-size: calc(
-          var(--font-scale) * 1.25
-        ); /* 🎯 Адаптивний розмір головних заголовків */
+        font-size: calc(var(--font-scale) * 1.25);
         font-weight: normal;
         letter-spacing: 2px;
         margin-bottom: 10px;
         text-align: center;
       }
 
-      /* Стиль для підзаголовків */
       .window-container h3 {
         color: #fff;
-        font-size: calc(
-          var(--font-scale) * 1.05
-        ); /* 🎯 Адаптивний розмір підзаголовків */
+        font-size: calc(var(--font-scale) * 1.05);
         font-weight: normal;
         letter-spacing: 1px;
         margin-bottom: 8px;
         text-align: center;
       }
 
-      /* Зона прокрутки тексту всередині рамок */
       .scroll-content {
         width: 100%;
         flex: 1;
@@ -107,15 +75,12 @@
       }
 
       .scroll-content p {
-        font-size: calc(
-          var(--font-scale) * 0.75
-        ); /* 🎯 Адаптивний розмір звичайного тексту */
+        font-size: calc(var(--font-scale) * 0.75);
         line-height: 1.4;
         margin-bottom: 8px;
         text-align: justify;
       }
 
-      /* Тонкий повзунок для скроллу (однаковий для тексту і для соцмереж) */
       .scroll-content::-webkit-scrollbar {
         width: 3px;
       }
@@ -124,21 +89,35 @@
         border-radius: 2px;
       }
 
-      /* ==========================================================================
-            ПАНЕЛЬ КЕРУВАННЯ КООРДИНАТАМИ БЛОКІВ 👇
-            ========================================================================== */
-
-      /* 👑 1. ЦЕНТРАЛЬНИЙ СТОВПЧИК (ПРО АВТОРА + ФОТО + БІОГРАФІЯ) */
-      .center-pillar {
-        top: 22%; /* ⬆️ Вище / Нижче (весь центр рухається разом) */
-        left: 39.3%; /* ⬅️ Лівіше / Правіше */
-        width: 21.8%; /* 📐 Ширина центральної кам'яної рамки */
-        height: 67%; /* 📐 Висота центральної кам'яної рамки */
+      /* Стилі для іконки донату всередині блоку */
+      .donate-link {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .donate-img {
+        width: 100%;
+        max-width: 1000px;
+        height: auto;
+        display: block;
+        transition: transform 0.2s ease, filter 0.2s ease;
+        filter: drop-shadow(0 0 4px rgba(255, 100, 0, 0.2));
+      }
+      .donate-img:hover {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 10px rgba(255, 150, 0, 0.6));
       }
 
-      /* Квадратна аватарка */
+      /* КООРДИНАТИ ДЛЯ ДЕСКТОПУ (ПК) */
+      .center-pillar {
+        top: 22%;
+        left: 39.3%;
+        width: 21.8%;
+        height: 67%;
+      }
+
       .avatar {
-        width: 50%; /* 📐 Розмір фото відносно ширини рамки */
+        width: 50%;
         aspect-ratio: 1 / 1;
         object-fit: cover;
         border-radius: 6px;
@@ -147,51 +126,45 @@
         margin-bottom: 12px;
       }
 
-      /* 📰 2. ЛІВИЙ НИЖНІЙ БЛОК (ПОДІЇ ТА АНОНСИ) */
       .events-box {
-        top: 68.5%; /* ⬆️ Вище / Нижче */
-        left: 11.2%; /* ⬅️ Лівіше / Правіше */
-        width: 24%; /* 📐 Ширина рамки */
-        height: 21%; /* 📐 Висота рамки */
+        top: 68.5%;
+        left: 11.2%;
+        width: 24%;
+        height: 21%;
       }
 
-      /* 💎 3. СЕРЕДНІЙ НИЖНІЙ БЛОК (ПІДТРИМАТИ АВТОРА) */
       .support-box {
-        top: 60.5%; /* ⬆️ Вище / Нижче */
-        left: 65%; /* ⬅️ Лівіше / Правіше */
-        width: 12.8%; /* 📐 Ширина рамки */
-        height: 29%; /* 📐 Висота рамки */
+        top: 60.5%;
+        left: 65%;
+        width: 12.8%;
+        height: 29%;
       }
 
-      /* 🌐 4. ПРАВИЙ НИЖНІЙ БЛОК (СОЦІАЛЬНІ МЕРЕЖІ) */
       .social-box {
-        top: 60.5%; /* ⬆️ Вище / Нижче */
-        left: 80%; /* ⬅️ Лівіше / Правіше */
-        width: 12.8%; /* 📐 Ширина рамки */
-        height: 29%; /* 📐 Висота рамки */
+        top: 60.5%;
+        left: 80%;
+        width: 12.8%;
+        height: 29%;
       }
 
-      /* Розумна сітка іконок всередині соцмереж */
       .social-grid {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         align-content: flex-start;
-        gap: 10px; /* Відступ між іконками */
+        gap: 10px;
         padding: 5px;
       }
 
       .social-grid a {
-        width: 20%; /* 📐 Розмір іконок. */
+        width: 20%;
         max-width: 28px;
         aspect-ratio: 1 / 1;
         transition: transform 0.2s;
       }
-
       .social-grid a:hover {
         transform: scale(1.2);
       }
-
       .social-grid img {
         width: 100%;
         height: auto;
@@ -199,17 +172,15 @@
         filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
       }
 
-      /* ==========================================================================
-            НАВІГАЦІЙНЕ МЕНЮ ДЛЯ СТОРІНОК
-            ========================================================================== */
+      /* Навігація для ПК */
       .nav-menu {
         position: absolute;
         top: 33%;
-        left: 18.8%; /* ➡️  */
+        left: 18.8%;
         width: 15%;
         display: flex;
         flex-direction: column;
-        align-items: flex-end; /* 🎯 Вирівнює всі рядки строго по ПРАВОМУ краю */
+        align-items: flex-end;
         gap: 14px;
         z-index: 10;
       }
@@ -217,26 +188,126 @@
       .nav-menu a {
         color: #fff;
         text-decoration: none;
-        font-size: calc(
-          var(--font-scale) * 0.85
-        ); /* 🎯 Адаптивний розмір меню, тепер збільшується разом із сайтом */
+        font-size: calc(var(--font-scale) * 0.85);
         text-transform: uppercase;
         letter-spacing: 2px;
         font-family: "Georgia", serif;
         white-space: nowrap;
         text-align: right;
-        line-height: 1.4; /* Гарний відступ між рядками Книги / Проекти */
+        line-height: 1.4;
         transition: all 0.3s ease;
         text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
       }
-
-      /* Ефект підсвічування при наведенні курсору */
       .nav-menu a:hover {
         color: #00d2ff;
         text-shadow: 0 0 12px #00d2ff;
-        transform: translateX(
-          -5px
-        ); /* ⬅️ Зсув вліво (мінус 5px), щоб текст красиво відсторонявся від центру */
+        transform: translateX(-5px);
+      }
+
+      /* ==========================================================================
+         🎯 МАГІЯ ДЛЯ МОБІЛЬНИХ ПРИСТРОЇВ (Екрани менше 768px)
+         ========================================================================== */
+      @media (max-width: 768px) {
+        body {
+          align-items: flex-start; /* Щоб довга сторінка нормально скролилася вниз */
+          padding: 20px 15px;
+        }
+
+        /* Змінюємо масштабну одиницю тексту для телефонів, щоб він був читабельним */
+        .site-container {
+          --font-scale: 4.5vw;
+          height: auto;
+          display: flex;
+          flex-direction: column;
+          gap: 25px; /* Відступи між блоками на мобілці */
+        }
+
+        /* ❌ Ховаємо великий фон на телефонах, бо він там не потрібен */
+        .bg-image {
+          display: none;
+        }
+
+        /* Перетворюємо меню на зручні кнопко-посилання вгорі екрана */
+        .nav-menu {
+          position: static;
+          width: 100%;
+          align-items: center;
+          justify-content: center;
+          flex-direction: row;
+          flex-wrap: wrap;
+          gap: 15px;
+          margin-bottom: 10px;
+          border-bottom: 1px solid #222;
+          padding-bottom: 15px;
+        }
+        .nav-menu a {
+          font-size: 14px;
+          text-align: center;
+          white-space: normal;
+        }
+        .nav-menu a:hover {
+          transform: none;
+        }
+
+        /* Перетворюємо всі абсолютні вікна на звичайні гнучкі блоки */
+        .window-container {
+          position: static;
+          width: 100% !important; /* Займають всю ширину екрана смартфона */
+          height: auto !important; /* Розтягуються під об'єм тексту, нічого не затискається */
+          background: rgba(
+            15,
+            15,
+            15,
+            0.95
+          ); /* Робимо гарну темну підкладку під блоки */
+          border: 1px solid #222;
+          border-radius: 8px;
+          padding: 15px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Заголовки на мобілці */
+        .window-container h2 {
+          font-size: 18px;
+          margin-bottom: 15px;
+        }
+        .window-container h3 {
+          font-size: 16px;
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
+
+        /* Вимикаємо обмеження скроллу всередині рамок — тепер скролиться весь екран телефону */
+        .scroll-content {
+          overflow-y: visible;
+          padding: 0;
+        }
+        .scroll-content p {
+          font-size: 14px;
+          text-align: left; /* На телефонах зручніше читати ліве вирівнювання */
+          margin-bottom: 12px;
+        }
+
+        /* Аватарка автора на телефоні */
+        .avatar {
+          width: 120px;
+          margin-bottom: 15px;
+        }
+
+        /* Соцмережі: робимо іконки трохи більшими, щоб по них було зручно тапати */
+        .social-grid {
+          gap: 15px;
+          justify-content: center;
+        }
+        .social-grid a {
+          width: 35px;
+          max-width: 35px;
+        }
+
+        /* Іконка донату на телефоні */
+        .donate-img {
+          max-width: 60px;
+        }
       }
     </style>
   </head>
@@ -247,14 +318,12 @@
       <nav class="nav-menu">
         <a href="index.html">Головна</a>
         <a href="lore.html">Світ та Лор</a>
-        <a href="books.html">Книги та <br>Проекти</a>
+        <a href="books.html">Книги та <br />Проєкти</a>
       </nav>
 
       <div class="window-container center-pillar">
         <h2>ПРО АВТОРА</h2>
-
         <img class="avatar" src="Lost_in_Time_Ketrin.jpg" alt="Wineko" />
-
         <h3>Біографія</h3>
         <div class="scroll-content">
           <p>
