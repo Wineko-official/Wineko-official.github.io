@@ -5,6 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wineko | Lost in Time</title>
     <style>
+      /* Стилі для іконки донату */
+      .donate-link {
+        display: flex;
+        justify-content: center; /* Центруємо іконку по горизонталі */
+        margin-top: 10px; /* Відступ зверху від тексту */
+      }
+
+      .donate-img {
+        width: 100%; /* 📐 Розмір іконки (міняй цей %, щоб зробити більшою або меншою) */
+        max-width: 100px; /* Максимальний розмір в пікселях, щоб не розмивало */
+        height: auto;
+        display: block;
+        transition: transform 0.2s ease, filter 0.2s ease;
+        filter: drop-shadow(
+          0 0 4px rgba(255, 100, 0, 0.2)
+        ); /* Легке магічне свічення */
+      }
+
+      /* Ефект при наведенні курсору */
+      .donate-img:hover {
+        transform: scale(1.1); /* Трохи збільшується при наведенні */
+        filter: drop-shadow(
+          0 0 10px rgba(255, 150, 0, 0.6)
+        ); /* Світиться яскравіше */
+      }
       * {
         box-sizing: border-box;
         margin: 0;
@@ -135,7 +160,7 @@
       /* 🌐 4. ПРАВИЙ НИЖНІЙ БЛОК (СОЦІАЛЬНІ МЕРЕЖІ) */
       .social-box {
         top: 60.5%; /* ⬆️ Вище / Нижче */
-        left: 80.4%; /* ⬅️ Лівіше / Правіше */
+        left: 80%; /* ⬅️ Лівіше / Правіше */
         width: 12.8%; /* 📐 Ширина рамки */
         height: 29%; /* 📐 Висота рамки */
       }
@@ -228,14 +253,14 @@
         <h3>Біографія</h3>
         <div class="scroll-content">
           <p>
-            Привіт! Мене звати Wineko, і я autor та творець фентезі-всесвіту
+            Привіт! Мене звати Wineko, і я автор та творець фентезі-всесвіту
             "Lost in Time".
           </p>
           <p>
             Я з тих людей, які обожнюють створювати власні світи з нуля. Землі
             Етернхольту, сюжетні повороти, характери героїв, магічні істоти на
-            кшталт Грибожаба чи похмурий Орден Темного Ока — усе це від початку
-            і до кінця вигадано виключно моєю головою та прописано моїми руками.
+            кшталт Грибожаба чи Орден Темного Ока — усе це від початку і до
+            кінця вигадано виключно моєю головою та прописано моїми руками.
           </p>
           <p>
             Я принципово не використовую штучний інтелект для генерації ідей,
@@ -274,8 +299,19 @@
         <div class="scroll-content">
           <p>
             Тут ви можете знайти інформацію про те, як допомогти розвитку
-            проекту "Lost in Time".
+            проєкту "Lost in Time".
           </p>
+          <a
+            href="TAG7c6UXuqzw5NnqQ39mcSoTYMjEe6os8J"
+            target="_blank"
+            class="donate-link"
+          >
+            <img
+              src="https://i.postimg.cc/rpdFMC1n/Gemini-Generated-Image-gs2dp3gs2dp3gs2d-removebg-preview-(2).png"
+              class="donate-img"
+              alt="Підтримати автора"
+            />
+          </a>
         </div>
       </div>
 
