@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wineko | Підтримати автора</title>
+    <title>Підтримка проєкту | Wineko</title>
     <style>
       * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
       }
+
       body {
         background-color: #000;
         color: #fff;
@@ -21,15 +22,25 @@
         padding: 10px;
         overflow-x: hidden;
       }
-      /* Контейнер під майбутній великий фон */
+
+      /* 🎯 Головний контейнер сайту */
       .site-container {
         position: relative;
         width: 100%;
         max-width: 2000px;
-        height: 100vh;
         display: block;
         --font-scale: 1vw;
       }
+
+      /* Твій інтерфейсний арт на фоні */
+      .bg-image {
+        width: 100%;
+        height: auto;
+        display: block;
+        pointer-events: none;
+      }
+
+      /* Базовий стиль для рамки */
       .window-container {
         position: absolute;
         display: flex;
@@ -37,62 +48,26 @@
         align-items: center;
         color: #ccc;
       }
+
+      /* Головний заголовок ПІДТРИМКА */
       .window-container h2 {
         color: #fff;
         font-size: calc(var(--font-scale) * 1.25);
         font-weight: normal;
         letter-spacing: 2px;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
         text-align: center;
       }
-      .window-container h3 {
-        color: #fff;
-        font-size: calc(var(--font-scale) * 1.05);
-        font-weight: normal;
-        letter-spacing: 1px;
-        margin-bottom: 8px;
-        text-align: center;
-      }
+
+      /* Зона прокрутки вмісту */
       .scroll-content {
         width: 100%;
         flex: 1;
         overflow-y: auto;
         padding: 2px 6px;
       }
-      .scroll-content p {
-        font-size: calc(var(--font-scale) * 0.75);
-        line-height: 1.4;
-        margin-bottom: 8px;
-        text-align: justify;
-      }
-      .scroll-content::-webkit-scrollbar {
-        width: 3px;
-      }
-      .scroll-content::-webkit-scrollbar-thumb {
-        background: #444;
-        border-radius: 2px;
-      }
 
-      /* Велика іконка кристалу/донату для центральної панелі */
-      .donate-large-link {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 15px;
-      }
-      .donate-large-img {
-        width: 35%;
-        max-width: 120px;
-        height: auto;
-        display: block;
-        transition: transform 0.2s ease, filter 0.2s ease;
-        filter: drop-shadow(0 0 8px rgba(255, 100, 0, 0.3));
-      }
-      .donate-large-link:hover .donate-large-img {
-        transform: scale(1.08);
-        filter: drop-shadow(0 0 15px rgba(255, 150, 0, 0.7));
-      }
-
-      /* Координати для ПК (ставимо в той самий центральний стовпчик) */
+      /* 🎯 Координати фонової рамки на ПК */
       .center-pillar {
         top: 22%;
         left: 39.3%;
@@ -100,7 +75,38 @@
         height: 67%;
       }
 
-      /* Меню ПК */
+      /* Стилі для списка донатів */
+      .donate-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .donate-item {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+        color: #fff;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid #333;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: calc(var(--font-scale) * 0.8);
+        transition: all 0.2s ease;
+        font-family: "Georgia", serif;
+      }
+
+      .donate-item:hover {
+        background: rgba(255, 100, 0, 0.1);
+        border-color: #ff6400;
+        text-shadow: 0 0 8px #ff6400;
+        transform: scale(1.02);
+      }
+
+      /* Навігаційне меню ПК */
       .nav-menu {
         position: absolute;
         top: 33%;
@@ -112,6 +118,7 @@
         gap: 14px;
         z-index: 10;
       }
+
       .nav-menu a {
         color: #fff;
         text-decoration: none;
@@ -125,18 +132,22 @@
         transition: all 0.3s ease;
         text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
       }
+
       .nav-menu a:hover {
         color: #00d2ff;
         text-shadow: 0 0 12px #00d2ff;
         transform: translateX(-5px);
       }
 
-      /* 📱 АДАПТИВ ДЛЯ ТЕЛЕФОНІВ */
+      /* ==========================================================================
+         📱 АДАПТИВ ДЛЯ ТЕЛЕФОНІВ (Екрани менше 768px)
+         ========================================================================== */
       @media (max-width: 768px) {
         body {
           align-items: flex-start;
           padding: 20px 15px;
         }
+
         .site-container {
           --font-scale: 4.5vw;
           height: auto;
@@ -144,7 +155,13 @@
           flex-direction: column;
           gap: 25px;
         }
-        /* Мобільне меню */
+
+        /* ❌ Ховаємо фон на телефонах */
+        .bg-image {
+          display: none;
+        }
+
+        /* Мобільне меню кнопками */
         .nav-menu {
           position: static;
           width: 100%;
@@ -157,15 +174,18 @@
           border-bottom: 1px solid #222;
           padding-bottom: 15px;
         }
+
         .nav-menu a {
           font-size: 14px;
           text-align: center;
           white-space: normal;
         }
+
         .nav-menu a:hover {
           transform: none;
         }
-        /* Блок стає мобільним вікном */
+
+        /* Перетворюємо рамку на зручний блок */
         .window-container {
           position: static;
           width: 100% !important;
@@ -176,63 +196,98 @@
           padding: 15px;
           box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
+
         .window-container h2 {
           font-size: 18px;
           margin-bottom: 15px;
         }
-        .window-container h3 {
-          font-size: 16px;
-          margin-bottom: 10px;
-        }
-        /* Іконка на мобілці */
-        .donate-large-img {
-          width: 80px;
-          margin-bottom: 10px;
-        }
+
         .scroll-content {
           overflow-y: visible;
           padding: 0;
         }
+
+        /* Окремий стиль для тексту опису на мобільці */
         .scroll-content p {
-          font-size: 14px;
-          text-align: left;
-          margin-bottom: 12px;
+          font-size: 14px !important;
+          text-align: center;
+        }
+
+        /* Збільшуємо кнопки донатів під пальці */
+        .donate-item {
+          font-size: 15px;
+          padding: 14px 10px;
+        }
+        
+        .donate-item:hover {
+          transform: none; /* Вимикаємо легкий ПК-скейл на мобільних тачах */
         }
       }
     </style>
   </head>
   <body>
     <div class="site-container">
+      <img src="bg.png" class="bg-image" alt="Eternhold Interface" />
+
       <nav class="nav-menu">
         <a href="index.html">Головна</a>
         <a href="lore.html">Світ та Лор</a>
-        <a href="books.html">Книги та <br /> Проєкти</a>
+        <a href="books.html">Книги та <br />Проєкти</a>
       </nav>
 
       <div class="window-container center-pillar">
         <h2>ПІДТРИМКА</h2>
-
-        <a href="#" target="_blank" class="donate-large-link">
-          <img
-            class="donate-large-img"
-            src="https://i.postimg.cc/6QByKGj8/Gemini-Generated-Image-gs2dp3gs2dp3gs2d-removebg-preview.png"
-            alt="Підтримати проєкт"
-          />
-        </a>
-
-        <h3>"Lost in Time"</h3>
         <div class="scroll-content">
           <p>
-            Створення всесвіту Етернхольт — це повністю незалежний проєкт, який розвивається завдяки вашій цікавості та підтримці. 
+            Ваша допомога дозволяє проєкту "Lost in Time" розвиватися швидше.
+            Виберіть зручний спосіб:
           </p>
-          <p>
-            Якщо вам подобається ця історія, подорожі Кетрін та лор світу, ви можете зробити свій внесок у розвиток проєкту. Усі зібрані кошти йдуть на покращення сайту, замовлення нових ілюстрацій та просування книги.
-          </p>
-          <p>
-            Дякую кожному, хто допомагає Етернхольту ставати більшим та яскравішим!
-          </p>
+
+          <div class="donate-list">
+            <a
+              href="https://send.monobank.ua/jar/szLpaLr6C"
+              target="_blank"
+              class="donate-item"
+              >Monobank Банка</a
+            >
+
+            <button
+              onclick="copyCryptoAddress(this)"
+              class="donate-item"
+              style="cursor: pointer"
+            >
+              Crypto (USDT TRC20)
+            </button>
+          </div>
         </div>
       </div>
     </div>
+
+    <script>
+      function copyCryptoAddress(buttonElement) {
+        const walletAddress = "TAG7c6UXuqzw5NnqQ39mcSoTYMjEe6os8J";
+
+        navigator.clipboard
+          .writeText(walletAddress)
+          .then(() => {
+            const originalText = buttonElement.innerText;
+
+            buttonElement.innerText = "📋 Скопійовано!";
+            buttonElement.style.borderColor = "#00d2ff";
+            buttonElement.style.textShadow = "0 0 8px #00d2ff";
+            buttonElement.style.color = "#00d2ff";
+
+            setTimeout(() => {
+              buttonElement.innerText = originalText;
+              buttonElement.style.borderColor = "#333";
+              buttonElement.style.textShadow = "none";
+              buttonElement.style.color = "#fff";
+            }, 2500);
+          })
+          .catch((err) => {
+            alert("Адреса гаманця: " + walletAddress);
+          });
+      }
+    </script>
   </body>
 </html>
