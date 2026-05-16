@@ -1,62 +1,355 @@
 <!DOCTYPE html>
 <html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wineko | Lost in Time</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: #000; color: #fff; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 10px; }
-        
-        /* Главный контейнер, который держит пропорции твоего интерфейса */
-        .interface-wrapper { position: relative; width: 100%; max-width: 1200px; height: auto; aspect-ratio: 1200 / 675; background: url('bg.png') no-repeat center; background-size: contain; border-radius: 12px; box-shadow: 0 15px 40px rgba(0,0,0,0.8); }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-        /* Сетка для соцсетей внутри твоей правой нижней рамки */
-        .social-overlay { position: absolute; right: 4.5%; bottom: 6%; width: 22%; height: 18%; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; padding: 5px; }
-        
-        .social-overlay a { display: inline-block; transition: transform 0.2s; width: 16%; max-width: 32px; }
-        .social-overlay a:hover { transform: scale(1.2); }
-        .social-overlay img { width: 100%; height: auto; display: block; filter: invert(1) drop-shadow(0 0 2px rgba(0,0,0,0.5)); }
+      body {
+        background-color: #000;
+        color: #fff;
+        font-family: "Georgia", serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 10px;
+        overflow-x: hidden;
+      }
+
+      /* Головний контейнер сайту (автоматично облягає твою фонову картинку) */
+      .site-container {
+        position: relative;
+        width: 100%;
+        max-width: 1200px;
+        display: block;
+      }
+
+      /* Твій інтерфейсний арт на фоні */
+      .bg-image {
+        width: 100%;
+        height: auto;
+        display: block;
+        pointer-events: none;
+      }
+
+      /* Базовий стиль для всіх блоків з текстом */
+      .window-container {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #ccc;
+      }
+
+      /* Стиль для великих головних заголовків (ПРО АВТОРА) */
+      .window-container h2 {
+        color: #fff;
+        font-size: calc(10px + 0.5vw);
+        font-weight: normal;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      /* Стиль для підзаголовків */
+      .window-container h3 {
+        color: #fff;
+        font-size: calc(9px + 0.4vw);
+        font-weight: normal;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+        text-align: center;
+      }
+
+      /* Зона прокрутки тексту всередині рамок */
+      .scroll-content {
+        width: 100%;
+        flex: 1;
+        overflow-y: auto;
+        padding: 2px 6px;
+      }
+
+      .scroll-content p {
+        font-size: calc(7px + 0.32vw);
+        line-height: 1.4;
+        margin-bottom: 8px;
+        text-align: justify;
+      }
+
+      /* Тонкий повзунок для скроллу (однаковий для тексту і для соцмереж) */
+      .scroll-content::-webkit-scrollbar {
+        width: 3px;
+      }
+      .scroll-content::-webkit-scrollbar-thumb {
+        background: #444;
+        border-radius: 2px;
+      }
+
+      /* ==========================================================================
+            ПАНЕЛЬ КЕРУВАННЯ КООРДИНАТАМИ БЛОКІВ 👇
+            Змінюй відсотки (%), щоб ідеально підігнати рамки під свій малюнок
+            ========================================================================== */
+
+      /* 👑 1. ЦЕНТРАЛЬНИЙ СТОВПЧИК (ПРО АВТОРА + ФОТО + БІОГРАФІЯ) */
+      .center-pillar {
+        top: 22%; /* ⬆️ Вище / Нижче (весь центр рухається разом) */
+        left: 39.3%; /* ⬅️ Лівіше / Правіше */
+        width: 21.8%; /* 📐 Ширина центральної кам'яної рамки */
+        height: 67%; /* 📐 Висота центральної кам'яної рамки */
+      }
+
+      /* Квадратна аватарка */
+      .avatar {
+        width: 50%; /* 📐 Розмір фото відносно ширини рамки */
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid #333;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
+        margin-bottom: 12px;
+      }
+
+      /* 📰 2. ЛІВИЙ НИЖНІЙ БЛОК (ПОДІЇ ТА АНОНСИ) */
+      .events-box {
+        top: 68.5%; /* ⬆️ Вище / Нижче */
+        left: 11.2%; /* ⬅️ Лівіше / Правіше */
+        width: 24%; /* 📐 Ширина рамки */
+        height: 21%; /* 📐 Висота рамки */
+      }
+
+      /* 💎 3. СЕРЕДНІЙ НИЖНІЙ БЛОК (ПІДТРИМАТИ АВТОРА) */
+      .support-box {
+        top: 60.5%; /* ⬆️ Вище / Нижче */
+        left: 65%; /* ⬅️ Лівіше / Правіше */
+        width: 12.8%; /* 📐 Ширина рамки */
+        height: 29%; /* 📐 Висота рамки */
+      }
+
+      /* 🌐 4. ПРАВИЙ НИЖНІЙ БЛОК (СОЦІАЛЬНІ МЕРЕЖІ) */
+      .social-box {
+        top: 60.5%; /* ⬆️ Вище / Нижче */
+        left: 80.4%; /* ⬅️ Лівіше / Правіше */
+        width: 12.8%; /* 📐 Ширина рамки */
+        height: 29%; /* 📐 Висота рамки */
+      }
+
+      /* Розумна сітка іконок всередині соцмереж */
+      .social-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: flex-start;
+        gap: 10px; /* Відступ між іконками */
+        padding: 5px;
+      }
+
+      .social-grid a {
+        width: 20%; /* 📐 Розмір іконок. Роби менше %, якщо хочеш вмістити більше в ряд */
+        max-width: 28px;
+        aspect-ratio: 1 / 1;
+        transition: transform 0.2s;
+      }
+
+      .social-grid a:hover {
+        transform: scale(1.2);
+      }
+
+      .social-grid img {
+        width: 100%;
+        height: auto;
+        display: block;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+      }
+
+      /* ==========================================================================
+            НАВІГАЦІЙНЕ МЕНЮ ДЛЯ СТОРІНОК
+            ========================================================================== */
+      .nav-menu {
+        position: absolute;
+        top: 33%;
+        left: 18.5%; /* Настрой этот процент, чтобы подогнать меню под правый край твоих неоновых линий */
+        width: 15%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end; /* 🎯 Выравнивает все строки строго по ПРАВОМУ краю */
+        gap: 14px;
+        z-index: 10;
+      }
+
+      .nav-menu a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 11px; /* 🎯 Зафиксировали в px, теперь он не будет хаотично раздуваться */
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-family: "Georgia", serif;
+        white-space: nowrap;
+        text-align: right;
+        line-height: 1.4; /* Добавил красивый отступ между строками Книги / Проекты */
+        transition: all 0.3s ease;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+      }
+
+      /* Ефект підсвічування при наведенні курсору */
+      .nav-menu a:hover {
+        color: #00d2ff;
+        text-shadow: 0 0 12px #00d2ff;
+        transform: translateX(
+          -5px
+        ); /* ⬅️ Сдвиг влево (минус 5px), чтобы текст красиво отстранялся от центра */
+      }
     </style>
+  </head>
+  <body>
+    <div class="site-container">
+      <img src="bg.png" class="bg-image" alt="Eternhold Interface" />
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Wineko",
-      "url": "https://wineko-official.github.io",
-      "jobTitle": "Author",
-      "sameAs": [
-        "https://arkush.net/user/19778",
-        "https://youtube.com/@lostintime_world?si=0A-HLSWFFWrlIBMF",
-        "https://www.tiktok.com/@lost_in_time_official?_r=1&_t=ZS-95mgs0Xcyue",
-        "https://t.me/lostintime_world",
-        "https://www.facebook.com/profile.php?id=61588789587592",
-        "https://drukarnia.com.ua/Wineko",
-        "https://ru.pinterest.com/lostintime_world/",
-        "https://x.com/Wineko_official",
-        "https://www.instagram.com/lost_in_time_world/",
-        "https://www.threads.com/@lost_in_time_world"
-      ]
-    }
-    </script>
-</head>
-<body>
+      <nav class="nav-menu">
+        <a href="index.html">Головна</a>
+        <a href="lore.html">Світ та Лор</a>
+        <a href="books.html"
+          >Книги та <br />
+          Проекти</a
+        >
+      </nav>
 
-<div class="interface-wrapper">
-    <div class="social-overlay">
-        <a href="https://arkush.net/user/19778" target="_blank" title="Arkush"><img src="https://cdn-icons-png.flaticon.com/512/3067/3067421.png"></a>
-        <a href="https://youtube.com/@lostintime_world?si=0A-HLSWFFWrlIBMF" target="_blank" title="YouTube"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
-        <a href="https://www.tiktok.com/@lost_in_time_official?_r=1&_t=ZS-95mgs0Xcyue" target="_blank" title="TikTok"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046124.png"></a>
-        <a href="https://t.me/lostintime_world" target="_blank" title="Telegram"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
-        <a href="https://www.facebook.com/profile.php?id=61588789587592" target="_blank" title="Facebook"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></a>
-        <a href="https://drukarnia.com.ua/Wineko" target="_blank" title="Друкарня"><img src="https://cdn-icons-png.flaticon.com/512/2541/2541995.png"></a>
-        <a href="https://ru.pinterest.com/lostintime_world/" target="_blank" title="Pinterest"><img src="https://cdn-icons-png.flaticon.com/512/145/145808.png"></a>
-        <a href="https://x.com/Wineko_official" target="_blank" title="X (Twitter)"><img src="https://cdn-icons-png.flaticon.com/512/5969/5969020.png"></a>
-        <a href="https://www.instagram.com/lost_in_time_world/" target="_blank" title="Instagram"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"></a>
-        <a href="https://www.threads.com/@lost_in_time_world" target="_blank" title="Threads"><img src="https://cdn-icons-png.flaticon.com/512/10097/10097740.png"></a>
+      <div class="window-container center-pillar">
+        <h2>ПРО АВТОРА</h2>
+
+        <img class="avatar" src="Lost_in_Time_Ketrin.jpg" alt="Wineko" />
+
+        <h3>Біографія</h3>
+        <div class="scroll-content">
+          <p>
+            Привіт! Мене звати Wineko, і я autor та творець фентезі-всесвіту
+            "Lost in Time".
+          </p>
+          <p>
+            Я з тих людей, які обожнюють створювати власні світи з нуля. Землі
+            Етернхольту, сюжетні повороти, характери героїв, магічні істоти на
+            кшталт Грибожаба чи похмурий Орден Темного Ока — усе це від початку
+            і до кінця вигадано виключно моєю головою та прописано моїми руками.
+          </p>
+          <p>
+            Я принципово не використовую штучний інтелект для генерації ідей,
+            сюжету чи лору книги. Уся творча частина, кожне слово, кожна деталь
+            світу і душа цієї історії — це повністю моя ручна робота. Технології
+            я можу задіяти хіба що для того, аби виправити випадкові помилки в
+            тексті, розставити розділові знаки.
+          </p>
+          <p>
+            Для мене дуже важливо, щоб герої книги не були картонними, тому я
+            намагаюся прописувати їх як справжніх людей — зі своїми характерами,
+            страхами, внутрішніми конфліктами та живими емоціями. Сподіваюся,
+            вам буде цікаво спостерігати за Кетрін, Рюносуке та іншими
+            персонажами.
+          </p>
+          <p>
+            Цей сайт — мій особистісний затишний куточок та архів, де я збираю
+            енциклопедію світу і ділюся всесвітом, який створюю щодня. Дякую, що
+            зазирнули в Етернхольт!
+          </p>
+        </div>
+      </div>
+
+      <div class="window-container events-box">
+        <h3>Події та анонси</h3>
+        <div class="scroll-content">
+          <p>
+            Незабаром тут з'являться свіжі новини про вихід нових розділів книги
+            та оновлення бестіарію світу Eternhold!
+          </p>
+        </div>
+      </div>
+
+      <div class="window-container support-box">
+        <h3>Підтримати автора</h3>
+        <div class="scroll-content">
+          <p>
+            Тут ви можете знайти інформацію про те, як допомогти розвитку
+            проекту "Lost in Time".
+          </p>
+        </div>
+      </div>
+
+      <div class="window-container social-box">
+        <h3>соціальні мережі</h3>
+        <div class="scroll-content social-grid">
+          <a href="https://arkush.net/user/19778" target="_blank">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABnRSTlMAAAAAAABupgeRAAAAU0lEQVR4AWPABMZGOpgIIoVTddXa/2gIKIhd9f////FpwFSNTwOmamI1QFTA/UesBmREgga4VXAGlTR8/54BRxB1yAwgop4GTDQ4NWBPSLgQmmoAUDw2ie7Y0G8AAAAASUVORK5CYII="
+            />
+          </a>
+
+          <a href="https://youtube.com/@lostintime_world" target="_blank">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABJklEQVR4Ae2WpVaFQRSFcaeS4QVwIjTiLbgk7D1w9xeg4FQcOu6acHeXtNnDmsFd7in/WetLI+f7dbYDAFEsAUvgoeAQ5k5iSQFpIH1kkMyQFXJMTsgpwTuc6jlHes2M3qNP71mge7g76DLNg8gygZ1QckGmuSdZJ7Azq8RDCSQTCJGgBCoFBWqVQLegQJcSmPnWIr9oICMXcIr4C4FJJbD9rUX+NtzX+CIQlfVbgS0lcP4jAVNt/UCA7acCZ0oAPxfQdXMLFNUBvpHflvgbAVM7h0B6zrfeD3kB+Ucg/xLKf4biPyLJX3GH9GFUogRSBQUSTSBZEwskQpFs1USyl6E0gRSRJtJPhsnci1B69oVQeqzXzOo9+kmj3juBeDw2BkSxBCyBO+9s03HRLVCoAAAAAElFTkSuQmCC"
+            />
+          </a>
+
+          <a
+            href="https://www.tiktok.com/@lost_in_time_official"
+            target="_blank"
+          >
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAw1BMVEUAAAAAAAAFT1IAQUNBub6u5eexxcpyQ0wIAABaxsv5////9/nGj5oyAAD////84eeEYmvm4uN4f4A5P0MAFBXx+vu019khAAD60tr37vDlmqpXAAsALzAKc3gpo6hjpqr/6O3idYqcbHTSrLP6iJ9rABOc5Ofi+vvJYnXLbn8/AAI9HyWWIDhRz9TH9PffY3oDAAC99vjhSGe7KEenACiF4+f/1961PVaB09bFkZswjJGwuLr//f7xqbYYHh/9tsTiL1Yh8R0/AAAAAXRSTlP+GuMHfQAAANJJREFUeAG90kUCg1AMBNDiPtTd3d2V+5+quMOS2b6vSXI5IjnZIElSyUgzLMcnoSBKspKMUPMpiEKxVE5EVKr5WgTLBkr1BtBsBbHd6fZKOvYHw1F9PAkgSU9njXlNx8Vyxa2XfmxvtoC0M1GH/d6P3QPU8fFkY/Ar7Q0ag3ONIOKQvOB60i0WqSnUG6FnI6rzMJbvkB76zo5+wk0JIf8EGq9ndzN7f9bRrlQBcTYTcT22iAh+X9Ib7/dPm8Q1u5Zvfpq7c4uIQ56otVrLjEYzJX+4mxcG80U+CwAAAABJRU5ErkJggg=="
+            />
+          </a>
+
+          <a href="https://t.me/lostintime_world" target="_blank">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAY1BMVEX////8/f+41Pd7sfFFmO0gius9le1zrfCuzvby9/2QvPMTh+srjewzkOwykOwMhuvV5frB2figxvW20vfq8v1np/A4kuzv9f3i7fxtqvDO4fmWwPRQne7L3/kAguqGt/Ld6/s4puGjAAAA/0lEQVR4AayRhQ5DMQhFeVKFls5d/v8rt9I1YRLfjcLBgT9oGKfZGOt8+EYRDaWcExmePnAhk1MX4ajZgpNW5qXKY0lT4lVnA1X7I3cNTdEkJYNY+25eiahn2S53u0p5L3DsiZn4cAQAgXQSOFFjxpx2AAGgmBp5FjhnqWd9beGOvRQKrOvjptaDCxcAOJHA8IJmbA2uMoVT0D4b5Ntlt8i0g+YQCD0wk0GDd7EHFmjF8H0V2kilO4oRBQZOndbefdgCatGqjIcBbtWkMzQFfT9qs3L59c4sDNVDlx8PxQmURlY/Ja55SusNU24Iz3f41P4041M2FvitEB4jPp0DAHyFFi4xND68AAAAAElFTkSuQmCC"
+            />
+          </a>
+
+          <a
+            href="https://www.facebook.com/profile.php?id=61588789587592"
+            target="_blank"
+          >
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAV1BMVEVHcEwHZv/O1v8HaP8Haf8IZ/8IaP8IZv8IZ/8IaP/r7/8IZ/8IZ/8AW/////+fsf8HZv////8AYP8AWf8AZP+Vqf/V3P8IZ/9wlP9jiv+tvP+Lpf82c/8XNRKaAAAAEHRSTlMAM/2GGN1h9exC+8LBwcGFy8UXywAAAPNJREFUKJFlk+kSgyAMhDnUQe2BQQtU3/85yxEi0P3l+E1gkyyMFXG5KmvVKjnrNSlNUlODhlE3GoebzVZ3sjMx+reDiYLwiXSgOrCHWJaPcIHafDLdB27L+sbSMfkk5rca6uiZejBLC1XoncxcSM7T7+kPZ7K78TIAmWnJHgTPyD7mbna9r4Sjh4phk7sxqVLEIeCxFiG1mISGLB67+xrmUqvQENRwMcWQ/D9WmNIKxwk4/01uvXMXGuJlfGFZR66iGahq8H99TtXKejjWy+4gLhtj0sG5CVgD74DlaNawjmYKNRxlAF2o03N4v0JOxLN6Dj8GhSiE70/PKAAAAABJRU5ErkJggg=="
+            />
+          </a>
+
+          <a href="https://drukarnia.com.ua/Wineko" target="_blank">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACzklEQVR4Ac3WAUSjYRwG8FtNVSWLLTURd8VqlaqCgBAUyB3AnTsArWlKdU2qJJIWCBIOoELhglRRVSqVBNxxx53rJFBRuW3fc4+/vFrWum/3jh5++rR37//B+2578RyTTC56R37q/09++kBuslLMOGiEflKYoIlBvylATooaO82SQUigz9FKWGhQDU+8ACWTyiv6RjCjsrJSxFHgF7lJ5TUFzWxSV1eHk5MTwed4zsR7Umkzs0FNTQ2Oj49xF3mura01W8JPKu2Ef1FdXY3Dw0M8zNHRkbxmokC/6QLl5eU4ODjAI5HXKioqElMgIyMDCwsLeCpLS0twOBx6C1gsFqSmpsLj8eDy8hKxYhgGurq69BZwOp0YGhpCQUGBlLi6ulIDb29vcXZ2JoPvH8q8vDx9BZqamnBzc4OZmRnk5+fD6/VKiWAwiLGxMfksWFxcjCjV3Nysr0B3d7fafHp6GpmZmfD5fBgdHUVWVpasqaqqwunpqVrX09Ojr0AgEFAbr6ysID09HVarFSkpKWpNWloalpeX1bqJiQl9BcbHx9XGa2trciPu3w4eUCm1urqq1rG0vgIdHR1q4/Pzc9TX18v/c3JyMDU1heHhYWRnZ0vRUCgEMJ2dnfoKNDY24vr6WpXY2NhAQ0ODDA+Hw3LoBgYGYLfbMTk5KQeU79FWQDbe29vD/VxcXMgtuIvckr6+PuTm5spV5V9tBURra6sMjBEp4ff71eHUWsBms2F+fh5PZW5uTg6m7gKiqKgI6+vreCybm5soLi5O2LehKCkpwdbWFh5me3sbpaWlcX8de0y8UQbt7Oyo4bu7u3C73SaGi15SaaE/ZjYoKyvD/v4+SP0GMMGgt6RSSF8IZrhcLsFns36QiyLSS2FCghk0QkkUERt9olCCh8+Sg6LGRh/pKwUJmoToOw2SnWImiQqphdrIR+1x8pGX3tBL2fu55S9QftXBRmdb5wAAAABJRU5ErkJggg=="
+            />
+          </a>
+
+          <a href="https://ru.pinterest.com/lostintime_world/" target="_blank">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAKlBMVEVHcEzmACPmACPmACPmACLmACPmACPmACPmACPmACPlACPmACPmACPmACNXoEKOAAAADXRSTlMAeg3EBduLpk9lJS7p902OrQAAALtJREFUKJG9UksWxCAIQ0XwU+9/3QHss1rH3bxhpYTEAAL8Ibw/AOhik4gOd8y1Ee6NhTZF+IYxEe+oaeZ+Ti9l1HuRPFESy3rDhZihmmJE4z5U7UHpHPp7l9QMUL0InSzdPKirMRc5k2RK16j2jJ9AFrCahtTQBFpKbGTIdrKuF0MMLRmFTOkxdM8VwUd1FZZWsHcI3lqndQidyvJkTvnaFqNKCfi8lgoHTJVLOi1bRoHh+E16wemD/TQ+ta8LyZ7XxUgAAAAASUVORK5CYII="
+            />
+          </a>
+
+          <a href="https://x.com/Wineko_official" target="_blank">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAAAAABXZoBIAAAA/0lEQVR4AbXPIazCMACE4d+L2qoZFEGSIGcRc/gJJB5XMzGJmK9EN0HMi+qaibkKVF1txdQe4g0YzPK5yyWXHL9TaPNQ89LojH87N1rbJcXkMF4Fk31UMrf34hm14KUeoQxGArALHTMuQD2cAWQfJXOpgTbksGr9ng8qluShJTPhyCdx63POg7rEim95ZyR68I1ggQpnCEGwyPicw6hZtPEGmnhkycqOio1zm6XuFtyw5XDXfGvuau0dXHzJp8pfBPuhIXO9ZK5ILUCdSvLYMpc6ASBtl3EaC97I4KaFaOCaBE9Zn5jUsVqR2vcTJZO1DdbGoZryVp94Ka/mQfE7f2T3df0WBhLDAAAAAElFTkSuQmCC"
+            />
+          </a>
+          <a
+            href="https://www.instagram.com/lost_in_time_world/"
+            target="_blank"
+          >
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAABcVBMVEVHcEx3GPlwGPx1FvyDC/OWBumqA+K+AeDQANvVAs7rDa7jAtfoAMflAriKGP2ZCvunAvLEG/TgV9/oZt72G8nxB8nxALCKHPymGf7Pg/H86vf////zds79AcD9ALT3DZ30t+j63fP1st31quT8AKf8AJn98/jaO973Lr38AIvAAOz8Drn4V7370PHiGe34E6n7HZv9AHv5wOP1Wpr8D5H9AGz9GYX6q8r2YKL5dZP3tMT8D2/8KW31Y5f9AV/9Inn+G17+KFf3v879J0f+MUf5g2v3wbr9Nyz6RUP9Ml/9Qxr+SjX7zcr6Gkb8AEL+UQ/9Wiv98uT70rD8XQT8ZxD9ZCr40sP4Tn/9cAz+egj9ciX1km/1X1L9O0j4nD7+hAT9hRb8fh34unb9jQT3jZX73a78dwX+mwL6ymPzoZD8YSf9qAD+sQD7wBL8zEn5tV79jwb+uAD+vgH+wwD+LHP8owX+ygD6Olj7rQz+twf8UjMSMf5jAAAAe3RSTlMAW9L////////FW///2P///////////8b/////////xf///////////////////////////v/////////////////////////////////////////////////////////////////F////W////f//2f///9fY/9hbxcXA5ZvtAAACBUlEQVR4AUTPRaLkNhSF4f9IV3Kp/JjfCzMzM8xCG8lWMs9SsoIkTdNmZubiKtvqduMnZl0BkgCBEI+zhiBwD5f0ZA3wQj1Eu1YiMZQADyAA9SRXgpCEaGXcODFKoq/NEXRHXYmnshMak0xdGC/PiO1Mi1rTbA0LyM/BOOWyuISrHyLPTRoKZDaBndvoQrezQA/IWlBe6DXCsOdgong+bdCLyzW5F3VzpY7TckLH4ESRlvsbNlj2V4DNu3klk/Ed8HUvYlVKwa4NSmedWzNX1dbUcxlzsJMgxNppsywKv6l5M9YJZtizxOfObknxVOkVaAblle1BB0JNssXaJhA05tlKMOrcIXcMSOBc8IBvqzbQZC8SjIfMwxxz0iLnn0vQS+cx7ye0nPcPT7qPBmk2my7b4A0XlmiNzEMDQfD53vLF6sigLHLGMyzBCMzaawXf/HcAPqpmvqbDq5dGlQVjlexMYvqD0C3P+iVOccGBM0L1+d6uYozzRc6TbvA3/cI0r7g4dgoKy/SCee+akH32ltf38muG0kzR+PUfPl+DHq1in3jnSp8ZtjAxgz+u7OUJfb51cmk0Tqf158QwgcQUmM5zy9+tqnr9+nCf+3seU4hFCKHsptStxoEQg4fPhp7dP1dB8u6+LFzjqOq6afof/IWH/38O40irXXZ1g2+q99K9TWBgAACS27uoe/IOhgAAAABJRU5ErkJggg=="
+            />
+          </a>
+          <a href="https://www.threads.com/@lost_in_time_world" target="_blank">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAAAAABXZoBIAAABH0lEQVR4AbWSIYyDQBBFH17hmuAdSdW50zhsPR5bh0FiUCjU+gSFF7jVaCQGt4oE9S9Hk7LctbJPzsts5s8swWsA8CR77Z188k8C17xtywTgj4Ri0c7WXThLLqNkm7Ko+1XuBsEhYZT95oGRUk9Co4EnhWZ/snB1EZB1fR0DvUqOzrtaiEdJWnOINXudgxLIZfOs0RpDlXty3AASgEo1eNMSOAdAWhljZIEjJ6EmgE47a7NXz7LRXGZZtUnWfxa3AJOLgZsGq9rPOW27jIBeOesSnKKkYDQW915ziFV8WoKBYJCkKYHhJC/bGgG3uskBnAt5t/hW3ekqjBqvPOjkokPuUa0225bl77GXKycCqGY9MCEv+Lo3pkz5AIH3aeEHHHmiORlPs9IAAAAASUVORK5CYII="
+            />
+          </a>
+        </div>
+      </div>
     </div>
-</div>
-
-</body>
+  </body>
 </html>
