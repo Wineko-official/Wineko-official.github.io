@@ -146,6 +146,11 @@
         body {
           align-items: flex-start;
           padding: 20px 15px;
+          background-image: url('m.bg.png');
+          background-size: cover;
+          background-position: center top;
+          background-repeat: no-repeat;
+          background-attachment: fixed;
         }
 
         .site-container {
@@ -279,9 +284,9 @@
 
             setTimeout(() => {
               buttonElement.innerText = originalText;
-              buttonElement.style.borderColor = "#333";
-              buttonElement.style.textShadow = "none";
-              buttonElement.style.color = "#fff";
+              buttonElement.style.borderColor = "";
+              buttonElement.style.textShadow = "";
+              buttonElement.style.color = "";
             }, 2500);
           })
           .catch((err) => {
