@@ -21,12 +21,12 @@
         padding: 10px;
         overflow-x: hidden;
       }
-      /* 🎯 Контейнер розгорнутий на 2000px під майбутній великий фон */
+      /* Контейнер під майбутній великий фон */
       .site-container {
         position: relative;
         width: 100%;
         max-width: 2000px;
-        height: 100vh; /* Задаємо висоту екрана, оскільки картинки-підкладки тимчасово немає */
+        height: 100vh;
         display: block;
         --font-scale: 1vw;
       }
@@ -73,7 +73,7 @@
         border-radius: 2px;
       }
 
-      /* 📐 Координати блоків на чорному екрані */
+      /* Координати блоків на ПК */
       .center-pillar {
         top: 22%;
         left: 39.3%;
@@ -87,7 +87,7 @@
         height: 21%;
       }
 
-      /* Меню */
+      /* Меню ПК */
       .nav-menu {
         position: absolute;
         top: 33%;
@@ -120,6 +120,70 @@
       .nav-menu a:hover {
         transform: translateX(-5px);
       }
+
+      /* 📱 АДАПТИВ ДЛЯ ТЕЛЕФОНІВ */
+      @media (max-width: 768px) {
+        body {
+          align-items: flex-start;
+          padding: 20px 15px;
+        }
+        .site-container {
+          --font-scale: 4.5vw;
+          height: auto;
+          display: flex;
+          flex-direction: column;
+          gap: 25px;
+        }
+        /* Меню перетворюється на плашки вгорі */
+        .nav-menu {
+          position: static;
+          width: 100%;
+          align-items: center;
+          justify-content: center;
+          flex-direction: row;
+          flex-wrap: wrap;
+          gap: 15px;
+          margin-bottom: 10px;
+          border-bottom: 1px solid #222;
+          padding-bottom: 15px;
+        }
+        .nav-menu a {
+          font-size: 14px;
+          text-align: center;
+          white-space: normal;
+        }
+        .nav-menu a:hover {
+          transform: none;
+        }
+        /* Вікна стають блоками один під одним */
+        .window-container {
+          position: static;
+          width: 100% !important;
+          height: auto !important;
+          background: rgba(15, 15, 15, 0.95);
+          border: 1px solid #222;
+          border-radius: 8px;
+          padding: 15px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+        .window-container h2 {
+          font-size: 18px;
+          margin-bottom: 15px;
+        }
+        .window-container h3 {
+          font-size: 16px;
+          margin-bottom: 10px;
+        }
+        .scroll-content {
+          overflow-y: visible;
+          padding: 0;
+        }
+        .scroll-content p {
+          font-size: 14px;
+          text-align: left;
+          margin-bottom: 12px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -127,10 +191,7 @@
       <nav class="nav-menu">
         <a href="index.html">Головна</a>
         <a href="lore.html" class="active">Світ та Лор</a>
-        <a href="books.html"
-          >Книги та <br />
-          Проєкти</a
-        >
+        <a href="books.html">Книги та <br /> Проєкти</a>
       </nav>
 
       <div class="window-container center-pillar">
