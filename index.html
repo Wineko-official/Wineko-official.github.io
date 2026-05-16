@@ -533,5 +533,147 @@
         </div>
       </div>
     </div>
+               <div class="audio-player">
+  <button id="musicBtn" onclick="toggleMusic()">🎵 Увімкнути радіо</button>
+  <span id="trackName">Радіо Етернхольт</span>
+</div>
+
+<style>
+  /* Стилізація під твій інтерфейс */
+  .audio-player {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(15, 15, 15, 0.9);
+    border: 1px solid #333;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-family: "Georgia", serif;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  }
+
+  .audio-player button {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #444;
+    color: #fff;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: "Georgia", serif;
+    transition: all 0.2s ease;
+  }
+
+  .audio-player button:hover {
+    border-color: #00d2ff;
+    text-shadow: 0 0 8px #00d2ff;
+    background: rgba(0, 210, 255, 0.05);
+  }
+
+  #trackName {
+    font-size: 12px;
+    color: #888;
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Мобільний адаптив */
+  @media (max-width: 768px) {
+    .audio-player {
+      bottom: auto;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 30px);
+      justify-content: space-between;
+      background: rgba(15, 15, 15, 0.95);
+    }
+  }
+</style>
+
+<script>
+  // Список твоїх треків з папки audio
+  const playlist = [
+    { name: "Iron age", url: "audio/Wi_range - Iron age - Wi-Range.mp3" },
+    { name: "Revenge", url: "audio/Wi_Range - Revenge - Wi-Range.mp3" },
+    { name: "Back to 80's", url: "audio/Wi_Range feat Denis-g - back to 80's - Wi-Range.mp3" },
+    { name: "Night Road", url: "audio/Wi_Range & DENIS-G - NIGHT ROAD (ORIGINAL MIX) - Wi-Range.mp3" },
+    { name: "Night City of Miami", url: "audio/Wi_Range & DENIS-G - Night City of Miami - Wi-Range.mp3" },
+    { name: "Night Ranger", url: "audio/Wi_Range - Night Ranger - Wi-Range.mp3" },
+    { name: "Miami beach", url: "audio/Wi_Range - Miami beach - Wi-Range.mp3" },
+    { name: "Future", url: "audio/Wi_Range - Future - Wi-Range.mp3" },
+    { name: "Skeleton Knight", url: "audio/Wi_Range - Skeleton Knight - Wi-Range.mp3" },
+    { name: "Intro", url: "audio/Wi_Range - Intro - Wi-Range.mp3" },
+    { name: "Lyric Story", url: "audio/Wi_Range - Lyric Story - Wi-Range.mp3" }
+  ];
+
+  const audio = new Audio();
+  let isPlaying = false;
+  let currentTrackIndex = -1;
+  let isFirstLaunch = true; // Прапорець для першого ввімкнення "радіо"
+
+  function playRandomTrack() {
+    let randomIndex;
+    do {
+      randomIndex = Math.floor(Math.random() * playlist.length);
+    } while (randomIndex === currentTrackIndex && playlist.length > 1);
+
+    currentTrackIndex = randomIndex;
+    const track = playlist[currentTrackIndex];
+    
+    audio.src = track.url;
+    document.getElementById("trackName").innerText = "📻 " + track.name;
+    
+    // Ефект радіо: якщо це самий перший запуск плеєра користувачем
+    if (isFirstLaunch) {
+      isFirstLaunch = false;
+      
+      // Чекаємо, поки завантажаться метадані файлу, щоб дізнатися його довжину
+      audio.addEventListener('loadedmetadata', function onMetadata() {
+        // Отримуємо випадкову секунду від 0 до 80% тривалості треку
+        const randomTime = Math.floor(Math.random() * (audio.duration * 0.8));
+        audio.currentTime = randomTime;
+        
+        audio.play().catch(err => console.log("Помилка відтворення:", err));
+        // Видаляємо слухач, щоб він не спрацьовував на наступних треках
+        audio.removeEventListener('loadedmetadata', onMetadata);
+      });
+    } else {
+      // Наступні треки після закінчення попереднього грають просто спочатку
+      audio.play().catch(err => console.log("Помилка відтворення:", err));
+    }
+  }
+
+  function toggleMusic() {
+    const btn = document.getElementById("musicBtn");
+    
+    if (!isPlaying) {
+      if (currentTrackIndex === -1) {
+        playRandomTrack();
+      } else {
+        audio.play().catch(err => console.log(err));
+      }
+      isPlaying = true;
+      btn.innerText = "⏸ Пауза";
+      btn.style.borderColor = "#ff6400";
+    } else {
+      audio.pause();
+      isPlaying = false;
+      btn.innerText = "📻 Увімкнути радіо";
+      btn.style.borderColor = "#444";
+    }
+  }
+
+  // Автоматичне перемикання радіо на іншу хвилю, коли трек закінчився
+  audio.addEventListener("ended", () => {
+    playRandomTrack();
+  });
+</script>
   </body>
 </html>
