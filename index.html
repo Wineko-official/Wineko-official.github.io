@@ -9,7 +9,7 @@
       .donate-link {
         display: flex;
         justify-content: center; /* Центруємо іконку по горизонталі */
-        margin-top: 10px; /* Відступ зверху від тексту */
+        margin-top: 10px; /* Відступ зверху від текста */
       }
 
       .donate-img {
@@ -48,14 +48,15 @@
         overflow-x: hidden;
       }
 
-      /* Головний контейнер сайту (автоматично облягає твою фонову картинку) */
+      /* Головний контейнер сайту */
       .site-container {
         position: relative;
         width: 100%;
         max-width: 1200px;
         display: block;
+        /* 🎯 Створюємо масштабну одиницю: 1% від ширини контейнера */
+        --font-scale: 1vw;
       }
-
       /* Твій інтерфейсний арт на фоні */
       .bg-image {
         width: 100%;
@@ -76,7 +77,9 @@
       /* Стиль для великих головних заголовків (ПРО АВТОРА) */
       .window-container h2 {
         color: #fff;
-        font-size: calc(10px + 0.5vw);
+        font-size: calc(
+          var(--font-scale) * 1.25
+        ); /* 🎯 Адаптивний розмір головних заголовків */
         font-weight: normal;
         letter-spacing: 2px;
         margin-bottom: 10px;
@@ -86,7 +89,9 @@
       /* Стиль для підзаголовків */
       .window-container h3 {
         color: #fff;
-        font-size: calc(9px + 0.4vw);
+        font-size: calc(
+          var(--font-scale) * 1.05
+        ); /* 🎯 Адаптивний розмір підзаголовків */
         font-weight: normal;
         letter-spacing: 1px;
         margin-bottom: 8px;
@@ -102,7 +107,9 @@
       }
 
       .scroll-content p {
-        font-size: calc(7px + 0.32vw);
+        font-size: calc(
+          var(--font-scale) * 0.75
+        ); /* 🎯 Адаптивний розмір звичайного тексту */
         line-height: 1.4;
         margin-bottom: 8px;
         text-align: justify;
@@ -199,11 +206,11 @@
       .nav-menu {
         position: absolute;
         top: 33%;
-        left: 18.5%; /* Настрой этот процент, чтобы подогнать меню под правый край твоих неоновых линий */
+        left: 18.8%; /* ➡️ Трохи зсунув убік, щоб текст гарно ліг на твої сині неонові лінії */
         width: 15%;
         display: flex;
         flex-direction: column;
-        align-items: flex-end; /* 🎯 Выравнивает все строки строго по ПРАВОМУ краю */
+        align-items: flex-end; /* 🎯 Вирівнює всі рядки строго по ПРАВОМУ краю */
         gap: 14px;
         z-index: 10;
       }
@@ -211,13 +218,15 @@
       .nav-menu a {
         color: #fff;
         text-decoration: none;
-        font-size: 11px; /* 🎯 Зафиксировали в px, теперь он не будет хаотично раздуваться */
+        font-size: calc(
+          var(--font-scale) * 0.85
+        ); /* 🎯 Адаптивний розмір меню, тепер збільшується разом із сайтом */
         text-transform: uppercase;
         letter-spacing: 2px;
         font-family: "Georgia", serif;
         white-space: nowrap;
         text-align: right;
-        line-height: 1.4; /* Добавил красивый отступ между строками Книги / Проекты */
+        line-height: 1.4; /* Гарний відступ між рядками Книги / Проекти */
         transition: all 0.3s ease;
         text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
       }
@@ -228,7 +237,7 @@
         text-shadow: 0 0 12px #00d2ff;
         transform: translateX(
           -5px
-        ); /* ⬅️ Сдвиг влево (минус 5px), чтобы текст красиво отстранялся от центра */
+        ); /* ⬅️ Зсув вліво (мінус 5px), щоб текст красиво відсторонявся від центру */
       }
     </style>
   </head>
@@ -239,10 +248,7 @@
       <nav class="nav-menu">
         <a href="index.html">Головна</a>
         <a href="lore.html">Світ та Лор</a>
-        <a href="books.html"
-          >Книги та <br />
-          Проекти</a
-        >
+        <a href="books.html">Книги та <br>Проекти</a>
       </nav>
 
       <div class="window-container center-pillar">
@@ -383,7 +389,6 @@
             <img
               src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAAAAABXZoBIAAABH0lEQVR4AbWSIYyDQBBFH17hmuAdSdW50zhsPR5bh0FiUCjU+gSFF7jVaCQGt4oE9S9Hk7LctbJPzsts5s8swWsA8CR77Z188k8C17xtywTgj4Ri0c7WXThLLqNkm7Ko+1XuBsEhYZT95oGRUk9Co4EnhWZ/snB1EZB1fR0DvUqOzrtaiEdJWnOINXudgxLIZfOs0RpDlXty3AASgEo1eNMSOAdAWhljZIEjJ6EmgE47a7NXz7LRXGZZtUnWfxa3AJOLgZsGq9rPOW27jIBeOesSnKKkYDQW915ziFV8WoKBYJCkKYHhJC/bGgG3uskBnAt5t/hW3ekqjBqvPOjkokPuUa0225bl77GXKycCqGY9MCEv+Lo3pkz5AIH3aeEHHHmiORlPs9IAAAAASUVORK5CYII="
             />
-          </a>
         </div>
       </div>
     </div>
