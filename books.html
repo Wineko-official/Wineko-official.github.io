@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wineko | Книги та Проєкти</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-color: #000;
+        color: #fff;
+        font-family: "Georgia", serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 10px;
+        overflow-x: hidden;
+      }
+      /* 🎯 Контейнер розгорнутий на 2000px під майбутній великий фон */
+      .site-container {
+        position: relative;
+        width: 100%;
+        max-width: 2000px;
+        height: 100vh; /* Задаємо висоту екрана */
+        display: block;
+        --font-scale: 1vw;
+      }
+      .window-container {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #ccc;
+      }
+      .window-container h2 {
+        color: #fff;
+        font-size: calc(var(--font-scale) * 1.25);
+        font-weight: normal;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      .window-container h3 {
+        color: #fff;
+        font-size: calc(var(--font-scale) * 1.05);
+        font-weight: normal;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+        text-align: center;
+      }
+      .scroll-content {
+        width: 100%;
+        flex: 1;
+        overflow-y: auto;
+        padding: 2px 6px;
+      }
+      .scroll-content p {
+        font-size: calc(var(--font-scale) * 0.75);
+        line-height: 1.4;
+        margin-bottom: 8px;
+        text-align: justify;
+      }
+      .scroll-content::-webkit-scrollbar {
+        width: 3px;
+      }
+      .scroll-content::-webkit-scrollbar-thumb {
+        background: #444;
+        border-radius: 2px;
+      }
+
+      /* 📐 Координати центрального стовпчика на чорному екрані */
+      .center-pillar {
+        top: 22%;
+        left: 39.3%;
+        width: 21.8%;
+        height: 67%;
+      }
+
+      /* Обкладинка книги */
+      .book-cover {
+        width: 55%;
+        aspect-ratio: 2 / 3;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid #444;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
+        margin-bottom: 12px;
+      }
+
+      /* Меню */
+      .nav-menu {
+        position: absolute;
+        top: 33%;
+        left: 18.8%;
+        width: 15%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 14px;
+        z-index: 10;
+      }
+      .nav-menu a {
+        color: #fff;
+        text-decoration: none;
+        font-size: calc(var(--font-scale) * 0.85);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-family: "Georgia", serif;
+        white-space: nowrap;
+        text-align: right;
+        line-height: 1.4;
+        transition: all 0.3s ease;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+      }
+      .nav-menu a:hover,
+      .nav-menu a.active {
+        color: #00d2ff;
+        text-shadow: 0 0 12px #00d2ff;
+      }
+      .nav-menu a:hover {
+        transform: translateX(-5px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="site-container">
+      <nav class="nav-menu">
+        <a href="index.html">Головна</a>
+        <a href="lore.html">Світ та Лор</a>
+        <a href="books.html" class="active"
+          >Книги та <br />
+          Проєкти</a
+        >
+      </nav>
+
+      <div class="window-container center-pillar">
+        <h2>ПРОЄКТИ</h2>
+
+        <img
+          class="book-cover"
+          src="Lost_in_Time_Ketrin.jpg"
+          alt="Lost in Time Обкладинка"
+        />
+
+        <h3>"Lost in Time"</h3>
+        <div class="scroll-content">
+          <p>
+            Головний літературний проєкт всесвіту Етернхольт. Це історія про
+            подорожі крізь час, втрачені епохи та складні долі персонажів, які
+            намагаються змінити приречений світ.
+          </p>
+          <p>
+            Ви можете читати нові розділи книги, стежити за розвитком сюжету та
+            занурюватися в історію Кетрін на офіційних літературних платформах.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
