@@ -700,13 +700,13 @@
   
   <div class="volume-container">
     <span>🔈</span>
-    <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.2" oninput="changeVolume(this.value)">
+    <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.3" oninput="changeVolume(this.value)">
     <span>🔊</span>
   </div>
 </div>
 
 <script>
-  // Названия остаются красивыми, а ссылки становятся неубиваемыми
+  // Твой правильный массив с короткими путями
   const playlist = [
     { name: "Wi-Range & DENIS-G - Night City of Miami", url: "audio/1.mp3" },
     { name: "Wi-Range & DENIS-G - Night Road", url: "audio/2.mp3" },
@@ -722,7 +722,7 @@
   ];
 
   const audio = new Audio();
-  audio.volume = 0.2; 
+  audio.volume = 0.3; // Сделал чуть громче, чтобы сразу было слышно
   
   let isPlaying = false;
   let currentTrackIndex = -1;
@@ -739,22 +739,19 @@
     
     document.getElementById("trackName").innerText = "📻 " + track.name;
     
-    if (isFirstLaunch) {
-      isFirstLaunch = false;
-      
-      const onMetadata = function() {
-        const randomTime = Math.floor(Math.random() * (audio.duration * 0.8));
-        audio.currentTime = randomTime;
-        audio.play().catch(err => console.log("Помилка відтворення:", err));
-        audio.removeEventListener('loadedmetadata', onMetadata);
-      };
-      
-      audio.addEventListener('loadedmetadata', onMetadata);
-      audio.src = track.url; 
-    } else {
-      audio.src = track.url;
-      audio.play().catch(err => console.log("Помилка відтворення:", err));
-    }
+    audio.src = track.url;
+    
+    // Прямой запуск без ожидания метаданных — браузер не заблокирует клик
+    audio.play()
+      .then(() => {
+        // Эффект радио (перемотка при первом старте) срабатывает только ПОСЛЕ успешного запуска
+        if (isFirstLaunch && audio.duration) {
+          isFirstLaunch = false;
+          const randomTime = Math.floor(Math.random() * (audio.duration * 0.6));
+          audio.currentTime = randomTime;
+        }
+      })
+      .catch(err => console.log("Блокировка воспроизведения браузером:", err));
   }
 
   function toggleMusic() {
