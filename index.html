@@ -706,19 +706,19 @@
 </div>
 
 <script>
-  // Полный список, скопированный точь-в-точь с твоего репозитория GitHub
+  // Названия остаются красивыми, а ссылки становятся неубиваемыми
   const playlist = [
-    { name: "Wi-Range & DENIS-G - Night City of Miami", file: "Wi-Range & DENIS-G - Night City of Miami - Wi-Range.mp3" },
-    { name: "Wi-Range & DENIS-G - Night Road", file: "Wi-Range & DENIS-G - NIGHT ROAD (ORIGINAL MIX) - Wi-Range.mp3" },
-    { name: "Wi-Range - Future", file: "Wi-Range - Future - Wi-Range.mp3" },
-    { name: "Wi-Range - Intro", file: "Wi-Range - Intro - Wi-Range.mp3" },
-    { name: "Wi-Range - Lyric Story", file: "Wi-Range - Lyric Story - Wi-Range.mp3" },
-    { name: "Wi-Range - Miami beach", file: "Wi-Range - Miami beach - Wi-Range.mp3" },
-    { name: "Wi-Range - Night Ranger", file: "Wi-Range - Night Ranger - Wi-Range.mp3" },
-    { name: "Wi-Range - Skeleton Knight", file: "Wi-Range - Skeleton Knight - Wi-Range.mp3" },
-    { name: "Wi-Range - Revenge", file: "Wi-Range - Revenge - Wi-Range.mp3" },
-    { name: "Wi-Range feat Denis-g - Back to 80's", file: "Wi-Range feat Denis-g - back to 80's - Wi-Range.mp3" },
-    { name: "Wi-Range - Iron age", file: "Wi_range - Iron age - Wi-Range.mp3" }
+    { name: "Wi-Range & DENIS-G - Night City of Miami", url: "audio/1.mp3" },
+    { name: "Wi-Range & DENIS-G - Night Road", url: "audio/2.mp3" },
+    { name: "Wi-Range - Future", url: "audio/3.mp3" },
+    { name: "Wi-Range - Intro", url: "audio/4.mp3" },
+    { name: "Wi-Range - Lyric Story", url: "audio/5.mp3" },
+    { name: "Wi-Range - Miami beach", url: "audio/6.mp3" },
+    { name: "Wi-Range - Night Ranger", url: "audio/7.mp3" },
+    { name: "Wi-Range - Skeleton Knight", url: "audio/8.mp3" },
+    { name: "Wi-Range - Revenge", url: "audio/9.mp3" },
+    { name: "Wi-Range feat Denis-g - Back to 80's", url: "audio/10.mp3" },
+    { name: "Wi-Range - Iron age", url: "audio/11.mp3" }
   ];
 
   const audio = new Audio();
@@ -739,9 +739,6 @@
     
     document.getElementById("trackName").innerText = "📻 " + track.name;
     
-    // Автоматически кодируем пробелы и спецсимволы, чтобы гитхаб их понял
-    const fullUrl = "audio/" + encodeURIComponent(track.file);
-
     if (isFirstLaunch) {
       isFirstLaunch = false;
       
@@ -753,9 +750,9 @@
       };
       
       audio.addEventListener('loadedmetadata', onMetadata);
-      audio.src = fullUrl; 
+      audio.src = track.url; 
     } else {
-      audio.src = fullUrl;
+      audio.src = track.url;
       audio.play().catch(err => console.log("Помилка відтворення:", err));
     }
   }
