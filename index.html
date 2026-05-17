@@ -695,91 +695,97 @@
            </a> </div>
       </div>
     </div> <div class="audio-player">
-      <button id="musicBtn" onclick="toggleMusic()">🎵 Увімкнути радіо</button>
-      <span id="trackName">Радіо Етернхольт</span>
+  <button id="musicBtn" onclick="toggleMusic()">🎵 Увімкнути радіо</button>
+  <span id="trackName">Радіо Етернхольт</span>
+  
+  <div class="volume-container">
+    <span>🔈</span>
+    <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.2" oninput="changeVolume(this.value)">
+    <span>🔊</span>
+  </div>
+</div>
+
+<script>
+  // Плейлист с безопасными путями (без пробелов, знаков & и кавычек)
+  const playlist = [
+    { name: "Wi-Range & DENIS-G - Night City of Miami", url: "audio/Wi-Range-and-DENIS-G-NightCityofMiami-Wi-Range.mp3" },
+    { name: "Wi-Range & DENIS-G - Night Road", url: "audio/Wi-Range-and-DENIS-G-NIGHTROAD(ORIGINALMIX)-Wi-Range.mp3" },
+    { name: "Wi-Range - Future", url: "audio/Wi-Range-Future-Wi-Range.mp3" },
+    { name: "Wi-Range - Intro", url: "audio/Wi-Range-Intro-Wi-Range.mp3" },
+    { name: "Wi-Range - Lyric Story", url: "audio/Wi-Range-LyricStory-Wi-Range.mp3" },
+    { name: "Wi-Range - Miami beach", url: "audio/Wi-Range-Miamibeach-Wi-Range.mp3" },
+    { name: "Wi-Range - Night Ranger", url: "audio/Wi-Range-NightRanger-Wi-Range.mp3" },
+    { name: "Wi-Range - Skeleton Knight", url: "audio/Wi-Range-SkeletonKnight-Wi-Range.mp3" },
+    { name: "Wi-Range - Revenge", url: "audio/Wi-Range-Revenge-Wi-Range.mp3" },
+    { name: "Wi-Range feat Denis-g - Back to 80's", url: "audio/Wi-RangefeatDenis-g-backto80s-Wi-Range.mp3" },
+    { name: "Wi-Range - Iron age", url: "audio/Wi-range-Ironage-Wi-Range.mp3" }
+  ];
+
+  const audio = new Audio();
+  audio.volume = 0.2; 
+  
+  let isPlaying = false;
+  let currentTrackIndex = -1;
+  let isFirstLaunch = true;
+
+  function playRandomTrack() {
+    let randomIndex;
+    do {
+      randomIndex = Math.floor(Math.random() * playlist.length);
+    } while (randomIndex === currentTrackIndex && playlist.length > 1);
+
+    currentTrackIndex = randomIndex;
+    const track = playlist[currentTrackIndex];
+    
+    document.getElementById("trackName").innerText = "📻 " + track.name;
+    
+    // Если это самый первый клик — вешаем слушатель И НАЗНАЧАЕМ src только после этого
+    if (isFirstLaunch) {
+      isFirstLaunch = false;
       
-      <div class="volume-container">
-        <span>🔈</span>
-        <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.2" oninput="changeVolume(this.value)">
-        <span>🔊</span>
-      </div>
-    </div>
-
-    <script>
-      // Плейліст з виправленими шляхами
-      const playlist = [
-        { name: "Wi-Range & DENIS-G - Night City of Miami", url: "audio/Wi-Range&DENIS-G-NightCityofMiami-Wi-Range.mp3" },
-        { name: "Wi-Range & DENIS-G - Night Road", url: "audio/Wi-Range&DENIS-G-NIGHTROAD(ORIGINALMIX)-Wi-Range.mp3" },
-        { name: "Wi-Range - Future", url: "audio/Wi-Range-Future-Wi-Range.mp3" },
-        { name: "Wi-Range - Intro", url: "audio/Wi-Range-Intro-Wi-Range.mp3" },
-        { name: "Wi-Range - Lyric Story", url: "audio/Wi-Range-LyricStory-Wi-Range.mp3" },
-        { name: "Wi-Range - Miami beach", url: "audio/Wi-Range-Miamibeach-Wi-Range.mp3" },
-        { name: "Wi-Range - Night Ranger", url: "audio/Wi-Range-NightRanger-Wi-Range.mp3" },
-        { name: "Wi-Range - Skeleton Knight", url: "audio/Wi-Range-SkeletonKnight-Wi-Range.mp3" },
-        { name: "Wi-Range - Revenge", url: "audio/Wi-Range-Revenge-Wi-Range.mp3" },
-        { name: "Wi-Range feat Denis-g - Back to 80's", url: "audio/Wi-RangefeatDenis-g-backto80's-Wi-Range.mp3" },
-        { name: "Wi-Range - Iron age", url: "audio/Wi-range-Ironage-Wi-Range.mp3" }
-      ];
-
-      const audio = new Audio();
-      audio.volume = 0.2; 
+      const onMetadata = function() {
+        const randomTime = Math.floor(Math.random() * (audio.duration * 0.8));
+        audio.currentTime = randomTime;
+        audio.play().catch(err => console.log("Помилка відтворення:", err));
+        audio.removeEventListener('loadedmetadata', onMetadata); // Удаляем, чтобы не срабатывало потом
+      };
       
-      let isPlaying = false;
-      let currentTrackIndex = -1;
-      let isFirstLaunch = true;
+      audio.addEventListener('loadedmetadata', onMetadata);
+      audio.src = track.url; // Строго после addEventListener
+    } else {
+      // Для всех последующих треков просто меняем src и сразу играем
+      audio.src = track.url;
+      audio.play().catch(err => console.log("Помилка відтворення:", err));
+    }
+  }
 
-      function playRandomTrack() {
-        let randomIndex;
-        do {
-          randomIndex = Math.floor(Math.random() * playlist.length);
-        } while (randomIndex === currentTrackIndex && playlist.length > 1);
-
-        currentTrackIndex = randomIndex;
-        const track = playlist[currentTrackIndex];
-        
-        audio.src = track.url;
-        document.getElementById("trackName").innerText = "📻 " + track.name;
-        
-        if (isFirstLaunch) {
-          isFirstLaunch = false;
-          audio.addEventListener('loadedmetadata', function onMetadata() {
-            const randomTime = Math.floor(Math.random() * (audio.duration * 0.8));
-            audio.currentTime = randomTime;
-            audio.play().catch(err => console.log("Помилка відтворення:", err));
-            audio.removeEventListener('loadedmetadata', onMetadata);
-          });
-        } else {
-          audio.play().catch(err => console.log("Помилка відтворення:", err));
-        }
-      }
-
-      function toggleMusic() {
-        const btn = document.getElementById("musicBtn");
-        
-        if (!isPlaying) {
-          if (currentTrackIndex === -1) {
-            playRandomTrack();
-          } else {
-            audio.play().catch(err => console.log(err));
-          }
-          isPlaying = true;
-          btn.innerText = "⏸ Пауза";
-          btn.style.borderColor = "#ff6400";
-        } else {
-          audio.pause();
-          isPlaying = false;
-          btn.innerText = "📻 Увімкнути радіо";
-          btn.style.borderColor = "#444";
-        }
-      }
-
-      function changeVolume(val) {
-        audio.volume = val;
-      }
-
-      audio.addEventListener("ended", () => {
+  function toggleMusic() {
+    const btn = document.getElementById("musicBtn");
+    
+    if (!isPlaying) {
+      if (currentTrackIndex === -1) {
         playRandomTrack();
-      });
-    </script>
+      } else {
+        audio.play().catch(err => console.log(err));
+      }
+      isPlaying = true;
+      btn.innerText = "⏸ Пауза";
+      btn.style.borderColor = "#ff6400";
+    } else {
+      audio.pause();
+      isPlaying = false;
+      btn.innerText = "📻 Увімкнути радіо";
+      btn.style.borderColor = "#444";
+    }
+  }
+
+  function changeVolume(val) {
+    audio.volume = val;
+  }
+
+  audio.addEventListener("ended", () => {
+    playRandomTrack();
+  });
+</script>
   </body>
 </html>
