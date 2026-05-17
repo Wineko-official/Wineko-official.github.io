@@ -1,475 +1,382 @@
 <!DOCTYPE html>
 <html lang="uk">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Eternhold | Світ та Лор</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Wineko | Світ та Лор</title>
     <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        background-color: #000;
-        color: #fff;
-        font-family: "Georgia", serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        padding: 10px;
-        overflow-x: hidden;
-      }
-      /* Контейнер під майбутній великий фон */
-      .site-container {
-        position: relative;
-        width: 100%;
-        max-width: 2000px;
-        height: 100vh;
-        display: block;
-        --font-scale: 1vw;
-      }
-      .window-container {
-        position: absolute;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        color: #ccc;
-      }
-      .window-container h2 {
-        color: #fff;
-        font-size: calc(var(--font-scale) * 1.25);
-        font-weight: normal;
-        letter-spacing: 2px;
-        margin-bottom: 10px;
-        text-align: center;
-      }
-      .window-container h3 {
-        color: #fff;
-        font-size: calc(var(--font-scale) * 1.05);
-        font-weight: normal;
-        letter-spacing: 1px;
-        margin-bottom: 8px;
-        text-align: center;
-      }
-      .scroll-content {
-        width: 100%;
-        flex: 1;
-        overflow-y: auto;
-        padding: 2px 6px;
-      }
-      .scroll-content p {
-        font-size: calc(var(--font-scale) * 0.75);
-        line-height: 1.4;
-        margin-bottom: 8px;
-        text-align: justify;
-      }
-      .scroll-content::-webkit-scrollbar {
-        width: 3px;
-      }
-      .scroll-content::-webkit-scrollbar-thumb {
-        background: #444;
-        border-radius: 2px;
-      }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-      /* Координати блоків на ПК */
-      .center-pillar {
-        top: 22%;
-        left: 39.3%;
-        width: 21.8%;
-        height: 67%;
-      }
-      .events-box {
-        top: 68.5%;
-        left: 11.2%;
-        width: 24%;
-        height: 21%;
-      }
-
-      /* Menu ПК */
-      .nav-menu {
-        position: absolute;
-        top: 33%;
-        left: 18.8%;
-        width: 15%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 14px;
-        z-index: 10;
-      }
-      .nav-menu a {
-        color: #fff;
-        text-decoration: none;
-        font-size: calc(var(--font-scale) * 0.85);
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-family: "Georgia", serif;
-        white-space: nowrap;
-        text-align: right;
-        line-height: 1.4;
-        transition: all 0.3s ease;
-        text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-      }
-      .nav-menu a:hover,
-      .nav-menu a.active {
-        color: #00d2ff;
-        text-shadow: 0 0 12px #00d2ff;
-      }
-      .nav-menu a:hover {
-        transform: translateX(-5px);
-      }
-
-      /* 📱 АДАПТИВ ДЛЯ ТЕЛЕФОНІВ */
-      @media (max-width: 768px) {
         body {
-          align-items: flex-start;
-          padding: 20px 15px;
-          background-image: url('m.bg.png');
-          background-size: cover;
-          background-position: center top;
-          background-repeat: no-repeat;
-          background-attachment: fixed;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Georgia', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+            overflow-x: hidden;
         }
+
         .site-container {
-          --font-scale: 4.5vw;
-          height: auto;
-          display: flex;
-          flex-direction: column;
-          gap: 25px;
+            position: relative;
+            width: 100%;
+            max-width: 2000px;
+            display: block;
+            --font-scale: 1vw;
         }
-        /* Меню перетворюється на плашки вгорі */
-        .nav-menu {
-          position: static;
-          width: 100%;
-          align-items: center;
-          justify-content: center;
-          flex-direction: row;
-          flex-wrap: wrap;
-          gap: 15px;
-          margin-bottom: 10px;
-          border-bottom: 1px solid #222;
-          padding-bottom: 15px;
+
+        .bg-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            pointer-events: none;
         }
-        .nav-menu a {
-          font-size: 14px;
-          text-align: center;
-          white-space: normal;
-        }
-        .nav-menu a:hover {
-          transform: none;
-        }
-        /* Вікна стають блоками один під одним */
+
         .window-container {
-          position: static;
-          width: 100% !important;
-          height: auto !important;
-          background: rgba(15, 15, 15, 0.95);
-          border: 1px solid #222;
-          border-radius: 8px;
-          padding: 15px;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #ccc;
         }
+
         .window-container h2 {
-          font-size: 18px;
-          margin-bottom: 15px;
+            color: #fff;
+            font-size: calc(var(--font-scale) * 1.25);
+            font-weight: normal;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-align: center;
         }
+
         .window-container h3 {
-          font-size: 16px;
-          margin-bottom: 10px;
+            color: #fff;
+            font-size: calc(var(--font-scale) * 1.05);
+            font-weight: normal;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            text-align: center;
         }
+
         .scroll-content {
-          overflow-y: visible;
-          padding: 0;
+            width: 100%;
+            flex: 1;
+            overflow-y: auto;
+            padding: 2px 6px;
         }
+
         .scroll-content p {
-          font-size: 14px;
-          text-align: left;
-          margin-bottom: 12px;
+            font-size: calc(var(--font-scale) * 0.75);
+            line-height: 1.4;
+            margin-bottom: 8px;
+            text-align: justify;
         }
-      }
-            /* Стилізація радіо-плеєра */
-      .audio-player {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        background: rgba(15, 15, 15, 0.9);
-        border: 1px solid #333;
-        padding: 8px 14px;
-        border-radius: 4px;
-        font-family: "Georgia", serif;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-      }
-      .audio-player button {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid #444;
-        color: #fff;
-        padding: 6px 12px;
-        cursor: pointer;
-        border-radius: 4px;
-        font-size: 13px;
-        font-family: "Georgia", serif;
-        transition: all 0.2s ease;
-      }
-      .audio-player button:hover {
-        border-color: #00d2ff;
-        text-shadow: 0 0 8px #00d2ff;
-        background: rgba(0, 210, 255, 0.05);
-      }
-      #trackName {
-        font-size: 12px;
-        color: #888;
-        max-width: 150px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .volume-container {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 11px;
-      }
-      #volumeSlider {
-        width: 70px;
-        accent-color: #00d2ff;
-        cursor: pointer;
-        background: #333;
-        height: 4px;
-        border-radius: 2px;
-      }
-      @media (max-width: 768px) {
+
+        .scroll-content::-webkit-scrollbar {
+            width: 3px;
+        }
+        .scroll-content::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 2px;
+        }
+
+        .center-pillar {
+            top: 22%;
+            left: 39.3%;
+            width: 21.8%;
+            height: 67%;
+        }
+
+        .events-box {
+            top: 68.5%;
+            left: 11.2%;
+            width: 24%;
+            height: 21%;
+        }
+
+        .nav-menu {
+            position: absolute;
+            top: 33%;
+            left: 18.8%;
+            width: 15%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 14px;
+            z-index: 10;
+        }
+
+        .nav-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: calc(var(--font-scale) * 0.85);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Georgia', serif;
+            white-space: nowrap;
+            text-align: right;
+            line-height: 1.4;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 8px rgba(255,255,255,0.3);
+        }
+
+        .nav-menu a:hover {
+            color: #00d2ff;
+            text-shadow: 0 0 12px #00d2ff;
+            transform: translateX(-5px);
+        }
+
         .audio-player {
-          bottom: auto;
-          top: 15px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: calc(100% - 30px);
-          justify-content: space-between;
-          background: rgba(15, 15, 15, 0.95);
-          flex-wrap: wrap;
-          gap: 10px;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(15,15,15,0.9);
+            border: 1px solid #333;
+            padding: 8px 14px;
+            border-radius: 4px;
+            font-family: 'Georgia', serif;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
         }
+
+        .audio-player button {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid #444;
+            color: #fff;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: 'Georgia', serif;
+            transition: all 0.2s ease;
+        }
+
+        .audio-player button:hover {
+            border-color: #00d2ff;
+            text-shadow: 0 0 8px #00d2ff;
+            background: rgba(0,210,255,0.05);
+        }
+
         #trackName {
-          max-width: 120px;
+            font-size: 12px;
+            color: #888;
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-      }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+        }
+
+        #volumeSlider {
+            width: 70px;
+            accent-color: #00d2ff;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                align-items: flex-start;
+                padding: 80px 15px 20px 15px;
+                background-image: url('m.bg.png');
+                background-size: cover;
+                background-position: center top;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+            }
+
+            .site-container {
+                --font-scale: 4.5vw;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            .bg-image {
+                display: none;
+            }
+
+            .nav-menu {
+                position: static;
+                width: 100%;
+                align-items: center;
+                justify-content: center;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 15px;
+                margin-bottom: 10px;
+                border-bottom: 1px solid #222;
+                padding-bottom: 15px;
+            }
+
+            .nav-menu a {
+                font-size: 14px;
+                text-align: center;
+                white-space: normal;
+            }
+
+            .nav-menu a:hover {
+                transform: none;
+            }
+
+            .window-container {
+                position: static;
+                width: 100% !important;
+                height: auto !important;
+                background: rgba(15,15,15,0.95);
+                border: 1px solid #222;
+                border-radius: 8px;
+                padding: 15px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            }
+
+            .window-container h2 {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+
+            .window-container h3 {
+                font-size: 16px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            .scroll-content {
+                overflow-y: visible;
+                padding: 0;
+            }
+
+            .scroll-content p {
+                font-size: 14px;
+                text-align: left;
+                margin-bottom: 12px;
+            }
+
+            .audio-player {
+                bottom: auto;
+                top: 15px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: calc(100% - 30px);
+                justify-content: space-between;
+                background: rgba(15,15,15,0.95);
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            #trackName {
+                max-width: 120px;
+            }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="site-container">
-      <nav class="nav-menu">
-        <a href="index.html">Головна</a>
-        <a href="lore.html" class="active">Світ та Лор</a>
-        <a href="books.html">Книги та <br /> Проєкти</a>
-      </nav>
+        <img src="bg.png" class="bg-image" alt="Eternhold Interface">
 
-      <div class="window-container center-pillar">
-        <h2>ЕНЦИКЛОПЕДІЯ</h2>
-        <div class="scroll-content">
-          <p>
-            <strong>Етернхольт (Eternhold)</strong> — це древній всесвіт, де час
-            тече за своїми містичними законами, а магія переплітається з долями
-            смертних та безсмертних істот.
-          </p>
-          <p>
-            Світ розділений на унікальні зони, кожна з яких приховує свої
-            таємниці, небезпеки та прадавні артефакти, що здатні змінювати хід
-            історії.
-          </p>
-          <p>
-            Тут ви знайдете детальний опис ключових локацій, магічних законів,
-            релігійних орденів та хронологію найважливіших подій, які сформували
-            цей всесвіт.
-          </p>
-        </div>
-      </div>
+        <nav class="nav-menu">
+            <a href="index.html">Головна</a>
+            <a href="lore.html">Світ та Лор</a>
+            <a href="books.html">Книги та <br>Проєкти</a>
+        </nav>
 
-      <div class="window-container events-box">
-        <h3>Бестіарій світу</h3>
-        <div class="scroll-content">
-          <p>
-            <strong>Грибожаб</strong> — унікальна магічна істота, що населяє
-            вологі низини Етернхольту. Має зріст близько одного метра.
-          </p>
-          <p>
-            Попри свій дещо химерний вигляд, Грибожаб не становить серйозної
-            небезпеки для мандрівників і часто стає героєм місцевих
-            гумористичних історій та байок.
-          </p>
+        <div class="window-container center-pillar">
+            <h2>ЕНЦИКЛОПЕДІЯ</h2>
+            <div class="scroll-content">
+                <p><strong>Етернхольт (Eternhold)</strong> — це древній всесвіт, де час тече за своїми містичними законами, а магія переплітається з долями смертних та безсмертних істот.</p>
+                <p>Світ розділений на унікальні зони, кожна з яких приховує свої таємниці, небезпеки та прадавні артефакти, що здатні змінювати хід історії.</p>
+                <p>Тут ви знайдете детальний опис ключових локацій, магічних законів, релігійних орденів та хронологію найважливіших подій, які сформували цей всесвіт.</p>
+            </div>
         </div>
-      </div>
+
+        <div class="window-container events-box">
+            <h3>Бестіарій світу</h3>
+            <div class="scroll-content">
+                <p><strong>Грибожаб</strong> — унікальна магічна істота, що населяє вологі низини Етернхольту. Має зріст близько одного метра.</p>
+                <p>Попри свій дещо химерний вигляд, Грибожаб не становить серйозної небезпеки для мандрівників і часто стає героєм місцевих гумористичних історій та байок.</p>
+            </div>
+        </div>
     </div>
-    <!-- АУДІОПЛЕЄР із відновленням стану між сторінками -->
-<div class="audio-player">
-  <button id="musicBtn" onclick="toggleMusic()">🎵 Увімкнути радіо</button>
-  <span id="trackName">📻 Радіо Етернхольт</span>
-  <div class="volume-container">
-    <span>🔈</span>
-    <input type="range" id="volumeSlider" min="0" max="100" value="30" oninput="changeVolume(this.value)">
-    <span>🔊</span>
-  </div>
-</div>
-<div id="youtubePlayer" style="display: none;"></div>
 
-<script>
-  const videoIDs = [
-    "3y_6zqa5jn8","moKNkLdjKws","T5GdIQHGhv0","K_pY6pdh_2M","fL1327aZdfc",
-    "vrZLMxPcHYM","d2FW1DcMdiw","liIizxQ6z4A","Ml9rMQdqDQU","FZCCWVIcFYo","_9vRwdG7IvU"
-  ];
-  const trackNames = [
-    "Wi-Range - Lyric Story",
-    "Wi-Range - Intro",
-    "Wi-Range - Skeleton Knight",
-    "Wi-Range - Future",
-    "Wi-Range - Miami beach",
-    "Wi-Range - Night Ranger",
-    "Wi-Range & DENIS-G - Night City of Miami",
-    "Wi-Range & DENIS-G - NIGHT ROAD (ORIGINAL MIX)",
-    "Wi_Range feat Denis-g - back to 80's",
-    "Wi_Range - Revenge",
-    "Wi_range - Iron age"
-  ];
+    <!-- АУДІОПЛЕЄР -->
+    <div class="audio-player">
+        <button id="musicBtn" onclick="toggleMusic()">🎵 Увімкнути радіо</button>
+        <span id="trackName">📻 Радіо Етернхольт</span>
+        <div class="volume-container">
+            <span>🔈</span>
+            <input type="range" id="volumeSlider" min="0" max="100" value="30" oninput="changeVolume(this.value)">
+            <span>🔊</span>
+        </div>
+    </div>
+    <div id="youtubePlayer" style="display: none;"></div>
 
-  let player;
-  let isPlaying = false;
-  let currentTrack = -1;
-  let currentTime = 0;
-  let isPlayerReady = false;
-  let pendingRestore = false;
+    <script>
+        const videoIDs = ["3y_6zqa5jn8","moKNkLdjKws","T5GdIQHGhv0","K_pY6pdh_2M","fL1327aZdfc","vrZLMxPcHYM","d2FW1DcMdiw","liIizxQ6z4A","Ml9rMQdqDQU","FZCCWVIcFYo","_9vRwdG7IvU"];
+        const trackNames = ["Wi-Range - Lyric Story","Wi-Range - Intro","Wi-Range - Skeleton Knight","Wi-Range - Future","Wi-Range - Miami beach","Wi-Range - Night Ranger","Wi-Range & DENIS-G - Night City of Miami","Wi-Range & DENIS-G - NIGHT ROAD (ORIGINAL MIX)","Wi_Range feat Denis-g - back to 80's","Wi_Range - Revenge","Wi_range - Iron age"];
 
-  function saveState() {
-    if (currentTrack !== -1 && isPlayerReady) {
-      localStorage.setItem('radio_track', currentTrack);
-      localStorage.setItem('radio_time', currentTime);
-      localStorage.setItem('radio_playing', isPlaying ? '1' : '0');
-    }
-  }
+        let player, isPlaying = false, currentTrack = -1, currentTime = 0, isPlayerReady = false, pendingRestore = false;
 
-  function restoreState() {
-    const savedTrack = localStorage.getItem('radio_track');
-    const savedTime = parseFloat(localStorage.getItem('radio_time'));
-    const savedPlaying = localStorage.getItem('radio_playing') === '1';
-    
-    if (savedTrack !== null && savedTrack >= 0 && isPlayerReady) {
-      currentTrack = parseInt(savedTrack);
-      currentTime = isNaN(savedTime) ? 0 : savedTime;
-      isPlaying = savedPlaying;
-      document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
-      
-      player.loadVideoById({ videoId: videoIDs[currentTrack], startSeconds: 0 });
-      
-      let interval = setInterval(() => {
-        const dur = player.getDuration();
-        if (dur && dur > 0 && currentTime < dur) {
-          clearInterval(interval);
-          player.seekTo(currentTime, true);
-          if (isPlaying) player.playVideo();
-          else player.pauseVideo();
+        function saveState() { if (currentTrack !== -1 && isPlayerReady) { localStorage.setItem('radio_track', currentTrack); localStorage.setItem('radio_time', currentTime); localStorage.setItem('radio_playing', isPlaying ? '1' : '0'); } }
+        function restoreState() {
+            const savedTrack = localStorage.getItem('radio_track'), savedTime = parseFloat(localStorage.getItem('radio_time')), savedPlaying = localStorage.getItem('radio_playing') === '1';
+            if (savedTrack !== null && savedTrack >= 0 && isPlayerReady) {
+                currentTrack = parseInt(savedTrack); currentTime = isNaN(savedTime) ? 0 : savedTime; isPlaying = savedPlaying;
+                document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
+                player.loadVideoById({ videoId: videoIDs[currentTrack], startSeconds: 0 });
+                let interval = setInterval(() => { const dur = player.getDuration(); if (dur && dur > 0 && currentTime < dur) { clearInterval(interval); player.seekTo(currentTime, true); if (isPlaying) player.playVideo(); else player.pauseVideo(); } }, 100);
+            } else if (savedTrack === null) currentTrack = -1;
         }
-      }, 100);
-    } else if (savedTrack === null) {
-      currentTrack = -1;
-    }
-  }
-
-  function onPlayerReady() {
-    isPlayerReady = true;
-    if (pendingRestore) {
-      restoreState();
-      pendingRestore = false;
-    }
-    setInterval(() => {
-      if (player && player.getCurrentTime && isPlayerReady && currentTrack !== -1) {
-        const t = player.getCurrentTime();
-        if (t && !isNaN(t)) {
-          currentTime = t;
-          saveState();
+        function onPlayerReady() {
+            isPlayerReady = true;
+            if (pendingRestore) { restoreState(); pendingRestore = false; }
+            setInterval(() => { if (player && player.getCurrentTime && isPlayerReady && currentTrack !== -1) { const t = player.getCurrentTime(); if (t && !isNaN(t)) { currentTime = t; saveState(); } } }, 2000);
         }
-      }
-    }, 2000);
-  }
-
-  function onPlayerStateChange(event) {
-    if (event.data === YT.PlayerState.PLAYING) {
-      isPlaying = true;
-      const btn = document.getElementById("musicBtn");
-      if (btn) btn.innerText = "⏸ Пауза";
-      if (btn) btn.style.borderColor = "#ff6400";
-      saveState();
-    } else if (event.data === YT.PlayerState.PAUSED) {
-      isPlaying = false;
-      const btn = document.getElementById("musicBtn");
-      if (btn) btn.innerText = "📻 Увімкнути радіо";
-      if (btn) btn.style.borderColor = "#444";
-      saveState();
-    } else if (event.data === YT.PlayerState.ENDED) {
-      if (currentTrack !== -1) {
-        let newTrack = currentTrack;
-        while (newTrack === currentTrack && videoIDs.length > 1) {
-          newTrack = Math.floor(Math.random() * videoIDs.length);
+        function onPlayerStateChange(event) {
+            const btn = document.getElementById("musicBtn");
+            if (event.data === YT.PlayerState.PLAYING) { isPlaying = true; if (btn) { btn.innerText = "⏸ Пауза"; btn.style.borderColor = "#ff6400"; } saveState(); }
+            else if (event.data === YT.PlayerState.PAUSED) { isPlaying = false; if (btn) { btn.innerText = "📻 Увімкнути радіо"; btn.style.borderColor = "#444"; } saveState(); }
+            else if (event.data === YT.PlayerState.ENDED && currentTrack !== -1) {
+                let newTrack = currentTrack; while (newTrack === currentTrack && videoIDs.length > 1) newTrack = Math.floor(Math.random() * videoIDs.length);
+                currentTrack = newTrack; currentTime = 0;
+                document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
+                player.loadVideoById({ videoId: videoIDs[currentTrack], startSeconds: 0 });
+                if (isPlaying) player.playVideo();
+                saveState();
+            }
         }
-        currentTrack = newTrack;
-        currentTime = 0;
-        document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
-        player.loadVideoById({ videoId: videoIDs[currentTrack], startSeconds: 0 });
-        if (isPlaying) player.playVideo();
-        saveState();
-      }
-    }
-  }
-
-  function toggleMusic() {
-    if (!player || !isPlayerReady) return;
-    if (!isPlaying) {
-      if (currentTrack === -1) {
-        currentTrack = Math.floor(Math.random() * videoIDs.length);
-        currentTime = 0;
-        document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
-        player.loadVideoById({ videoId: videoIDs[currentTrack], startSeconds: 0 });
-        let interval = setInterval(() => {
-          const dur = player.getDuration();
-          if (dur && dur > 0) {
-            clearInterval(interval);
-            const randomSeek = Math.random() * (dur * 0.7);
-            player.seekTo(randomSeek, true);
-            player.playVideo();
-          }
-        }, 100);
-        isPlaying = true;
-      } else {
-        player.playVideo();
-      }
-    } else {
-      player.pauseVideo();
-    }
-  }
-
-  function changeVolume(val) {
-    if (player && player.setVolume) player.setVolume(val);
-  }
-
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('youtubePlayer', {
-      height: '0', width: '0',
-      videoId: videoIDs[0],
-      playerVars: { autoplay: 0, controls: 0, disablekb: 1, modestbranding: 1 },
-      events: {
-        onReady: onPlayerReady,
-        onStateChange: onPlayerStateChange
-      }
-    });
-    pendingRestore = true;
-  }
-
-  const tag = document.createElement('script');
-  tag.src = 'https://www.youtube.com/iframe_api';
-  document.head.appendChild(tag);
-</script>
-  </body>
+        function toggleMusic() {
+            if (!player || !isPlayerReady) return;
+            if (!isPlaying) {
+                if (currentTrack === -1) {
+                    currentTrack = Math.floor(Math.random() * videoIDs.length); currentTime = 0;
+                    document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
+                    player.loadVideoById({ videoId: videoIDs[currentTrack], startSeconds: 0 });
+                    let interval = setInterval(() => { const dur = player.getDuration(); if (dur && dur > 0) { clearInterval(interval); player.seekTo(Math.random() * (dur * 0.7), true); player.playVideo(); } }, 100);
+                    isPlaying = true;
+                } else player.playVideo();
+            } else player.pauseVideo();
+        }
+        function changeVolume(val) { if (player && player.setVolume) player.setVolume(val); }
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtubePlayer', { height: '0', width: '0', videoId: videoIDs[0], playerVars: { autoplay: 0, controls: 0, disablekb: 1, modestbranding: 1 }, events: { onReady: onPlayerReady, onStateChange: onPlayerStateChange } });
+            pendingRestore = true;
+        }
+        const tag = document.createElement('script'); tag.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(tag);
+    </script>
+</body>
 </html>
