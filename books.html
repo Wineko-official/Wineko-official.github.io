@@ -362,7 +362,6 @@
 <div id="youtubePlayer" style="display: none;"></div>
 
 <script>
-  // ========== НАЛАШТУВАННЯ ==========
   const videoIDs = [
     "3y_6zqa5jn8","moKNkLdjKws","T5GdIQHGhv0","K_pY6pdh_2M","fL1327aZdfc",
     "vrZLMxPcHYM","d2FW1DcMdiw","liIizxQ6z4A","Ml9rMQdqDQU","FZCCWVIcFYo","_9vRwdG7IvU"
@@ -385,58 +384,52 @@
   let isPlaying = false;
   let currentTrack = -1;
   let currentTime = 0;
-  let restoreAfterReady = false;
+  let isPlayerReady = false;
+  let pendingRestore = false;
 
-  // Зберегти стан у localStorage
   function saveState() {
-    if (currentTrack !== -1) {
+    if (currentTrack !== -1 && isPlayerReady) {
       localStorage.setItem('radio_track', currentTrack);
       localStorage.setItem('radio_time', currentTime);
       localStorage.setItem('radio_playing', isPlaying ? '1' : '0');
     }
   }
 
-  // Відновити стан після завантаження плеєра
   function restoreState() {
     const savedTrack = localStorage.getItem('radio_track');
     const savedTime = parseFloat(localStorage.getItem('radio_time'));
     const savedPlaying = localStorage.getItem('radio_playing') === '1';
     
-    if (savedTrack !== null && savedTrack >= 0) {
+    if (savedTrack !== null && savedTrack >= 0 && isPlayerReady) {
       currentTrack = parseInt(savedTrack);
-      document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
-      isPlaying = savedPlaying;
       currentTime = isNaN(savedTime) ? 0 : savedTime;
+      isPlaying = savedPlaying;
+      document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
       
-      // Завантажити трек і перемотати
       player.loadVideoById({ videoId: videoIDs[currentTrack], startSeconds: 0 });
-      restoreAfterReady = true;
-    } else {
-      // Немає збереженого стану – буде перше вмикання через кнопку
-      currentTrack = -1;
-    }
-  }
-
-  function onPlayerReady() {
-    if (restoreAfterReady) {
-      // Чекаємо, поки відео завантажиться, потім перемотуємо
+      
       let interval = setInterval(() => {
         const dur = player.getDuration();
         if (dur && dur > 0 && currentTime < dur) {
           clearInterval(interval);
           player.seekTo(currentTime, true);
-          if (isPlaying) {
-            player.playVideo();
-          } else {
-            player.pauseVideo();
-          }
-          restoreAfterReady = false;
+          if (isPlaying) player.playVideo();
+          else player.pauseVideo();
         }
       }, 100);
+    } else if (savedTrack === null) {
+      currentTrack = -1;
     }
-    // Оновлюємо час кожні 2 секунди
+  }
+
+  function onPlayerReady() {
+    isPlayerReady = true;
+    if (pendingRestore) {
+      restoreState();
+      pendingRestore = false;
+    }
     setInterval(() => {
-      if (player && player.getCurrentTime) {
+      if (player && player.getCurrentTime && isPlayerReady && currentTrack !== -1) {
         const t = player.getCurrentTime();
         if (t && !isNaN(t)) {
           currentTime = t;
@@ -449,34 +442,36 @@
   function onPlayerStateChange(event) {
     if (event.data === YT.PlayerState.PLAYING) {
       isPlaying = true;
-      document.getElementById("musicBtn").innerText = "⏸ Пауза";
-      document.getElementById("musicBtn").style.borderColor = "#ff6400";
+      const btn = document.getElementById("musicBtn");
+      if (btn) btn.innerText = "⏸ Пауза";
+      if (btn) btn.style.borderColor = "#ff6400";
       saveState();
     } else if (event.data === YT.PlayerState.PAUSED) {
       isPlaying = false;
-      document.getElementById("musicBtn").innerText = "📻 Увімкнути радіо";
-      document.getElementById("musicBtn").style.borderColor = "#444";
+      const btn = document.getElementById("musicBtn");
+      if (btn) btn.innerText = "📻 Увімкнути радіо";
+      if (btn) btn.style.borderColor = "#444";
       saveState();
     } else if (event.data === YT.PlayerState.ENDED) {
-      // Трек закінчився – наступний випадковий з початку
-      let newTrack = currentTrack;
-      while (newTrack === currentTrack && videoIDs.length > 1) {
-        newTrack = Math.floor(Math.random() * videoIDs.length);
+      if (currentTrack !== -1) {
+        let newTrack = currentTrack;
+        while (newTrack === currentTrack && videoIDs.length > 1) {
+          newTrack = Math.floor(Math.random() * videoIDs.length);
+        }
+        currentTrack = newTrack;
+        currentTime = 0;
+        document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
+        player.loadVideoById({ videoId: videoIDs[currentTrack], startSeconds: 0 });
+        if (isPlaying) player.playVideo();
+        saveState();
       }
-      currentTrack = newTrack;
-      currentTime = 0;
-      document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
-      player.loadVideoById({ videoId: videoIDs[currentTrack], startSeconds: 0 });
-      if (isPlaying) player.playVideo();
-      saveState();
     }
   }
 
   function toggleMusic() {
-    if (!player) return;
+    if (!player || !isPlayerReady) return;
     if (!isPlaying) {
       if (currentTrack === -1) {
-        // Перший запуск – випадковий трек із випадкової позиції
         currentTrack = Math.floor(Math.random() * videoIDs.length);
         currentTime = 0;
         document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
@@ -500,7 +495,7 @@
   }
 
   function changeVolume(val) {
-    if (player) player.setVolume(val);
+    if (player && player.setVolume) player.setVolume(val);
   }
 
   function onYouTubeIframeAPIReady() {
@@ -513,7 +508,7 @@
         onStateChange: onPlayerStateChange
       }
     });
-    restoreState(); // спробуємо відновити стан після створення плеєра
+    pendingRestore = true;
   }
 
   const tag = document.createElement('script');
