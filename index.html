@@ -706,19 +706,19 @@
 </div>
 
 <script>
-  // Плейлист с безопасными путями (без пробелов, знаков & и кавычек)
+  // Полный список, скопированный точь-в-точь с твоего репозитория GitHub
   const playlist = [
-    { name: "Wi-Range & DENIS-G - Night City of Miami", url: "audio/Wi-Range-and-DENIS-G-NightCityofMiami-Wi-Range.mp3" },
-    { name: "Wi-Range & DENIS-G - Night Road", url: "audio/Wi-Range-and-DENIS-G-NIGHTROAD(ORIGINALMIX)-Wi-Range.mp3" },
-    { name: "Wi-Range - Future", url: "audio/Wi-Range-Future-Wi-Range.mp3" },
-    { name: "Wi-Range - Intro", url: "audio/Wi-Range-Intro-Wi-Range.mp3" },
-    { name: "Wi-Range - Lyric Story", url: "audio/Wi-Range-LyricStory-Wi-Range.mp3" },
-    { name: "Wi-Range - Miami beach", url: "audio/Wi-Range-Miamibeach-Wi-Range.mp3" },
-    { name: "Wi-Range - Night Ranger", url: "audio/Wi-Range-NightRanger-Wi-Range.mp3" },
-    { name: "Wi-Range - Skeleton Knight", url: "audio/Wi-Range-SkeletonKnight-Wi-Range.mp3" },
-    { name: "Wi-Range - Revenge", url: "audio/Wi-Range-Revenge-Wi-Range.mp3" },
-    { name: "Wi-Range feat Denis-g - Back to 80's", url: "audio/Wi-RangefeatDenis-g-backto80s-Wi-Range.mp3" },
-    { name: "Wi-Range - Iron age", url: "audio/Wi-range-Ironage-Wi-Range.mp3" }
+    { name: "Wi-Range & DENIS-G - Night City of Miami", file: "Wi-Range & DENIS-G - Night City of Miami - Wi-Range.mp3" },
+    { name: "Wi-Range & DENIS-G - Night Road", file: "Wi-Range & DENIS-G - NIGHT ROAD (ORIGINAL MIX) - Wi-Range.mp3" },
+    { name: "Wi-Range - Future", file: "Wi-Range - Future - Wi-Range.mp3" },
+    { name: "Wi-Range - Intro", file: "Wi-Range - Intro - Wi-Range.mp3" },
+    { name: "Wi-Range - Lyric Story", file: "Wi-Range - Lyric Story - Wi-Range.mp3" },
+    { name: "Wi-Range - Miami beach", file: "Wi-Range - Miami beach - Wi-Range.mp3" },
+    { name: "Wi-Range - Night Ranger", file: "Wi-Range - Night Ranger - Wi-Range.mp3" },
+    { name: "Wi-Range - Skeleton Knight", file: "Wi-Range - Skeleton Knight - Wi-Range.mp3" },
+    { name: "Wi-Range - Revenge", file: "Wi-Range - Revenge - Wi-Range.mp3" },
+    { name: "Wi-Range feat Denis-g - Back to 80's", file: "Wi-Range feat Denis-g - back to 80's - Wi-Range.mp3" },
+    { name: "Wi-Range - Iron age", file: "Wi_range - Iron age - Wi-Range.mp3" }
   ];
 
   const audio = new Audio();
@@ -739,7 +739,9 @@
     
     document.getElementById("trackName").innerText = "📻 " + track.name;
     
-    // Если это самый первый клик — вешаем слушатель И НАЗНАЧАЕМ src только после этого
+    // Автоматически кодируем пробелы и спецсимволы, чтобы гитхаб их понял
+    const fullUrl = "audio/" + encodeURIComponent(track.file);
+
     if (isFirstLaunch) {
       isFirstLaunch = false;
       
@@ -747,14 +749,13 @@
         const randomTime = Math.floor(Math.random() * (audio.duration * 0.8));
         audio.currentTime = randomTime;
         audio.play().catch(err => console.log("Помилка відтворення:", err));
-        audio.removeEventListener('loadedmetadata', onMetadata); // Удаляем, чтобы не срабатывало потом
+        audio.removeEventListener('loadedmetadata', onMetadata);
       };
       
       audio.addEventListener('loadedmetadata', onMetadata);
-      audio.src = track.url; // Строго после addEventListener
+      audio.src = fullUrl; 
     } else {
-      // Для всех последующих треков просто меняем src и сразу играем
-      audio.src = track.url;
+      audio.src = fullUrl;
       audio.play().catch(err => console.log("Помилка відтворення:", err));
     }
   }
