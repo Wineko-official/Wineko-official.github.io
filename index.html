@@ -706,23 +706,23 @@
 </div>
 
 <script>
-  // Твой правильный массив с короткими путями
+  // Строгие, неубиваемые пути от корня сайта
   const playlist = [
-    { name: "Wi-Range & DENIS-G - Night City of Miami", url: "audio/1.mp3" },
-    { name: "Wi-Range & DENIS-G - Night Road", url: "audio/2.mp3" },
-    { name: "Wi-Range - Future", url: "audio/3.mp3" },
-    { name: "Wi-Range - Intro", url: "audio/4.mp3" },
-    { name: "Wi-Range - Lyric Story", url: "audio/5.mp3" },
-    { name: "Wi-Range - Miami beach", url: "audio/6.mp3" },
-    { name: "Wi-Range - Night Ranger", url: "audio/7.mp3" },
-    { name: "Wi-Range - Skeleton Knight", url: "audio/8.mp3" },
-    { name: "Wi-Range - Revenge", url: "audio/9.mp3" },
-    { name: "Wi-Range feat Denis-g - Back to 80's", url: "audio/10.mp3" },
-    { name: "Wi-Range - Iron age", url: "audio/11.mp3" }
+    { name: "Wi-Range & DENIS-G - Night City of Miami", url: "/audio/1.mp3" },
+    { name: "Wi-Range & DENIS-G - Night Road", url: "/audio/2.mp3" },
+    { name: "Wi-Range - Future", url: "/audio/3.mp3" },
+    { name: "Wi-Range - Intro", url: "/audio/4.mp3" },
+    { name: "Wi-Range - Lyric Story", url: "/audio/5.mp3" },
+    { name: "Wi-Range - Miami beach", url: "/audio/6.mp3" },
+    { name: "Wi-Range - Night Ranger", url: "/audio/7.mp3" },
+    { name: "Wi-Range - Skeleton Knight", url: "/audio/8.mp3" },
+    { name: "Wi-Range - Revenge", url: "/audio/9.mp3" },
+    { name: "Wi-Range feat Denis-g - Back to 80's", url: "/audio/10.mp3" },
+    { name: "Wi-Range - Iron age", url: "/audio/11.mp3" }
   ];
 
   const audio = new Audio();
-  audio.volume = 0.3; // Сделал чуть громче, чтобы сразу было слышно
+  audio.volume = 0.3; 
   
   let isPlaying = false;
   let currentTrackIndex = -1;
@@ -741,17 +741,19 @@
     
     audio.src = track.url;
     
-    // Прямой запуск без ожидания метаданных — браузер не заблокирует клик
+    // Чистый запуск. Браузер видит клик и не блокирует.
     audio.play()
       .then(() => {
-        // Эффект радио (перемотка при первом старте) срабатывает только ПОСЛЕ успешного запуска
+        // Перематываем на случайное место ТОЛЬКО после того, как трек успешно заиграл
         if (isFirstLaunch && audio.duration) {
           isFirstLaunch = false;
-          const randomTime = Math.floor(Math.random() * (audio.duration * 0.6));
+          const randomTime = Math.floor(Math.random() * (audio.duration * 0.5));
           audio.currentTime = randomTime;
         }
       })
-      .catch(err => console.log("Блокировка воспроизведения браузером:", err));
+      .catch(err => {
+        console.error("Ошибка воспроизведения:", err);
+      });
   }
 
   function toggleMusic() {
@@ -761,7 +763,7 @@
       if (currentTrackIndex === -1) {
         playRandomTrack();
       } else {
-        audio.play().catch(err => console.log(err));
+        audio.play().catch(err => console.error(err));
       }
       isPlaying = true;
       btn.innerText = "⏸ Пауза";
