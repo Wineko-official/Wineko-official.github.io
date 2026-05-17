@@ -437,7 +437,7 @@
       </div>
     </div>
 
-    <!-- АУДІОПЛЕЄР З YOUTUBE (РАНДОМ + ВИПАДКОВА ПОЗИЦІЯ) -->
+<!-- АУДІОПЛЕЄР (пауза = пауза, продовження з того ж місця) -->
 <div class="audio-player">
   <button id="musicBtn" onclick="toggleMusic()">🎵 Увімкнути радіо</button>
   <span id="trackName">📻 Радіо Етернхольт</span>
@@ -447,47 +447,27 @@
     <span>🔊</span>
   </div>
 </div>
-
 <div id="youtubePlayer" style="display: none;"></div>
 
 <script>
-  // ТВОЇ ID ВІДЕО З YOUTUBE (11 треків)
   const videoIDs = [
-    "3y_6zqa5jn8",
-    "moKNkLdjKws",
-    "T5GdIQHGhv0",
-    "K_pY6pdh_2M",
-    "fL1327aZdfc",
-    "vrZLMxPcHYM",
-    "d2FW1DcMdiw",
-    "liIizxQ6z4A",
-    "Ml9rMQdqDQU",
-    "FZCCWVIcFYo",
-    "_9vRwdG7IvU"
+    "3y_6zqa5jn8","moKNkLdjKws","T5GdIQHGhv0","K_pY6pdh_2M","fL1327aZdfc",
+    "vrZLMxPcHYM","d2FW1DcMdiw","liIizxQ6z4A","Ml9rMQdqDQU","FZCCWVIcFYo","_9vRwdG7IvU"
   ];
-
-  // НАЗВИ ТРЕКІВ
   const trackNames = [
-    "Wi-Range & DENIS-G - Night City of Miami",
-    "Wi-Range & DENIS-G - Night Road",
-    "Wi-Range - Future",
-    "Wi-Range - Intro",
-    "Wi-Range - Lyric Story",
-    "Wi-Range - Miami beach",
-    "Wi-Range - Night Ranger",
-    "Wi-Range - Skeleton Knight",
-    "Wi-Range - Revenge",
-    "Wi-Range feat Denis-g - Back to 80's",
-    "Wi-Range - Iron age"
+    "Wi-Range & DENIS-G - Night City of Miami","Wi-Range & DENIS-G - Night Road",
+    "Wi-Range - Future","Wi-Range - Intro","Wi-Range - Lyric Story","Wi-Range - Miami beach",
+    "Wi-Range - Night Ranger","Wi-Range - Skeleton Knight","Wi-Range - Revenge",
+    "Wi-Range feat Denis-g - Back to 80's","Wi-Range - Iron age"
   ];
 
   let player;
   let isPlaying = false;
-  let currentTrackIndex = -1;
-  let isFirstPlay = true;      // чи перше вмикання після завантаження сторінки
+  let currentTrack = -1;      // індекс поточного треку (-1 = ще не вибрано)
+  let isFirstStart = true;    // чи це перше вмикання після завантаження сторінки
 
-  // Функція випадкового треку (відмінний від поточного, якщо є більше 1)
-  function getRandomTrackIndex(avoidIndex) {
+  // Вибір випадкового треку, відмінного від поточного
+  function getRandomTrack(avoidIndex) {
     if (videoIDs.length === 1) return 0;
     let newIndex;
     do {
@@ -496,103 +476,65 @@
     return newIndex;
   }
 
-  // Випадкове число від 0 до maxSeconds (не більше 70% тривалості)
-  function getRandomSeekTime(duration) {
-    if (!duration || duration <= 0) return 0;
-    const maxSeek = duration * 0.7;  // не далі ніж 70% треку
-    return Math.random() * maxSeek;
-  }
-
-  // Запустити новий випадковий трек (і перемотати)
-  function startRandomTrack() {
-    // Вибираємо випадковий індекс (якщо вже грає якийсь - уникаємо його)
-    const oldIndex = currentTrackIndex;
-    currentTrackIndex = getRandomTrackIndex(oldIndex);
+  // Запустити новий випадковий трек з випадкової позиції (тільки при першому вмиканні)
+  function startRandomRadio() {
+    const newTrack = getRandomTrack(currentTrack);
+    currentTrack = newTrack;
+    document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
     
-    const trackId = videoIDs[currentTrackIndex];
-    const trackName = trackNames[currentTrackIndex];
-    document.getElementById("trackName").innerText = "📻 " + trackName;
+    // Завантажуємо трек з 0 секунди
+    player.loadVideoById({ videoId: videoIDs[currentTrack], startSeconds: 0 });
     
-    // Завантажуємо відео, але не запускаємо автоматично (автоплей вимкнено)
-    player.loadVideoById({
-      videoId: trackId,
-      startSeconds: 0   // спочатку 0, потім перемотаємо після завантаження
-    });
-    
-    // Як тільки плеєр отримає тривалість - перемотаємо
-    const seekHandler = setInterval(() => {
+    // Чекаємо, поки YouTube отримає тривалість, потім перемотуємо на випадкову позицію
+    let interval = setInterval(() => {
       const duration = player.getDuration();
       if (duration && duration > 0) {
-        clearInterval(seekHandler);
-        const seekTo = getRandomSeekTime(duration);
-        player.seekTo(seekTo, true);
-        // Якщо музика має грати (isPlaying true) - запускаємо
-        if (isPlaying) {
-          player.playVideo();
-        }
+        clearInterval(interval);
+        const randomSeek = Math.random() * (duration * 0.7); // до 70% треку
+        player.seekTo(randomSeek, true);
+        if (isPlaying) player.playVideo();
       }
     }, 100);
   }
 
-  // Обробник завершення треку
+  // Запустити наступний випадковий трек (після закінчення попереднього) – з початку
+  function playNextRandomFromStart() {
+    const newTrack = getRandomTrack(currentTrack);
+    currentTrack = newTrack;
+    document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
+    player.loadVideoById({ videoId: videoIDs[currentTrack], startSeconds: 0 });
+    if (isPlaying) player.playVideo();
+  }
+
+  // Обробник стану плеєра
   function onPlayerStateChange(event) {
+    // Якщо трек закінчився – вмикаємо наступний випадковий з початку
     if (event.data === YT.PlayerState.ENDED) {
-      // Трек закінчився - вмикаємо новий випадковий
-      startRandomTrack();
-    }
-    
-    // Якщо відео тільки-но завантажилось (BUFFERING або PLAYING) і це перший запуск після старту сторінки - теж перемотуємо випадково
-    if (isFirstPlay && (event.data === YT.PlayerState.PLAYING || event.data === YT.PlayerState.BUFFERING)) {
-      isFirstPlay = false;
-      const duration = player.getDuration();
-      if (duration && duration > 0) {
-        const seekTo = getRandomSeekTime(duration);
-        player.seekTo(seekTo, true);
-      }
+      playNextRandomFromStart();
     }
   }
 
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('youtubePlayer', {
-      height: '0',
-      width: '0',
-      videoId: videoIDs[0], // тимчасово
-      playerVars: {
-        'autoplay': 0,
-        'controls': 0,
-        'disablekb': 1,
-        'modestbranding': 1
-      },
-      events: {
-        'onReady': onPlayerReady,
-        'onStateChange': onPlayerStateChange
-      }
-    });
-  }
-
-  function onPlayerReady(event) {
-    // При старті нічого не грає, чекаємо кнопки
-    console.log("Радіо готове");
-  }
-
+  // Головна кнопка: play / pause (без зміни треку)
   function toggleMusic() {
     const btn = document.getElementById("musicBtn");
     
     if (!isPlaying) {
-      // Якщо ще не вибрано жодного треку або це перше вмикання
-      if (currentTrackIndex === -1) {
+      // Якщо ще не грає – треба запустити
+      if (currentTrack === -1) {
+        // Перше вмикання після завантаження сторінки – нове радіо з рандомної позиції
         isPlaying = true;
         btn.innerText = "⏸ Пауза";
         btn.style.borderColor = "#ff6400";
-        startRandomTrack();  // випадковий трек + випадкова позиція
+        startRandomRadio();
       } else {
-        // Просто продовжуємо поточний трек
+        // Продовжити поточний трек з того ж місця
         player.playVideo();
         isPlaying = true;
         btn.innerText = "⏸ Пауза";
         btn.style.borderColor = "#ff6400";
       }
     } else {
+      // Поставити на паузу
       player.pauseVideo();
       isPlaying = false;
       btn.innerText = "📻 Увімкнути радіо";
@@ -601,16 +543,22 @@
   }
 
   function changeVolume(val) {
-    if (player && player.setVolume) {
-      player.setVolume(val);
-    }
+    if (player) player.setVolume(val);
   }
 
-  // Підключаємо YouTube API
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('youtubePlayer', {
+      height: '0', width: '0',
+      videoId: videoIDs[0],  // тимчасовий, одразу не грає
+      playerVars: { autoplay: 0, controls: 0, disablekb: 1, modestbranding: 1 },
+      events: { onStateChange: onPlayerStateChange }
+    });
+  }
+
+  // Підключення YouTube API
   const tag = document.createElement('script');
   tag.src = 'https://www.youtube.com/iframe_api';
-  const firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  document.head.appendChild(tag);
 </script>
   </body>
 </html>
