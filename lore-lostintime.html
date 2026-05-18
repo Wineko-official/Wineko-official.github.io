@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Wineko | Енциклопедія Lost in Time</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: #000; color: #fff; font-family: 'Georgia', serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 10px; overflow-x: hidden; }
+        .site-container { position: relative; width: 100%; max-width: 2000px; display: block; --font-scale: 1vw; }
+        .bg-image { width: 100%; height: auto; display: block; pointer-events: none; }
+        .encyclopedia-window {
+            position: absolute;
+            top: 22%;
+            left: 39.3%;
+            width: 21.8%;
+            height: 67%;
+            background: rgba(0,0,0,0.85);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-y: auto;
+            backdrop-filter: blur(2px);
+        }
+        .encyclopedia-window h2 { color: #fff; font-size: calc(var(--font-scale) * 1.3); text-align: center; margin-bottom: 20px; letter-spacing: 2px; }
+        .encyclopedia-window h3 { color: #00d2ff; font-size: calc(var(--font-scale) * 1.05); margin-top: 20px; margin-bottom: 8px; border-left: 3px solid #00d2ff; padding-left: 10px; }
+        .encyclopedia-window p { font-size: calc(var(--font-scale) * 0.75); line-height: 1.5; margin-bottom: 12px; text-align: justify; }
+        .bestiary-item { margin-bottom: 20px; border-bottom: 1px solid #444; padding-bottom: 12px; }
+        .bestiary-item h4 { color: #ffaa44; font-size: calc(var(--font-scale) * 0.85); margin-bottom: 5px; }
+        .nav-menu { position: absolute; top: 33%; left: 18.8%; width: 15%; display: flex; flex-direction: column; align-items: flex-end; gap: 14px; z-index: 10; }
+        .nav-menu a { color: #fff; text-decoration: none; font-size: calc(var(--font-scale) * 0.85); text-transform: uppercase; letter-spacing: 2px; font-family: 'Georgia', serif; white-space: nowrap; text-align: right; transition: all 0.3s ease; }
+        .nav-menu a:hover { color: #00d2ff; transform: translateX(-5px); }
+        .back-link { display: inline-block; margin-top: 25px; padding: 8px 16px; background: rgba(255,255,255,0.05); border: 1px solid #888; color: #ccc; text-decoration: none; border-radius: 4px; font-size: calc(var(--font-scale) * 0.8); transition: all 0.2s ease; }
+        .back-link:hover { border-color: #00d2ff; color: #00d2ff; }
+        @media (max-width: 768px) {
+            body { align-items: flex-start; padding: 80px 15px 20px 15px; background-image: url('m.bg.png'); background-size: cover; background-attachment: fixed; }
+            .site-container { --font-scale: 4.5vw; height: auto; display: flex; flex-direction: column; gap: 25px; }
+            .bg-image { display: none; }
+            .nav-menu { position: static; width: 100%; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 10px; border-bottom: 1px solid #222; padding-bottom: 15px; }
+            .nav-menu a { font-size: 14px; white-space: normal; text-align: center; }
+            .encyclopedia-window { position: static; width: 100%; height: auto; margin-top: 20px; }
+            .encyclopedia-window p { font-size: 14px; }
+            .bestiary-item h4 { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-container">
+        <img src="bg.png" class="bg-image" alt="Eternhold Interface">
+        <nav class="nav-menu">
+            <a href="index.html">Головна</a>
+            <a href="lore.html">Світ та Лор</a>
+            <a href="books.html">Книги та <br>Проєкти</a>
+        </nav>
+
+        <div class="encyclopedia-window">
+            <h2>📖 Енциклопедія "Lost in Time"</h2>
+            <h3>Етернхольт (Eternhold)</h3>
+            <p>Древній всесвіт, де час тече за своїми містичними законами, а магія переплітається з долями смертних та безсмертних істот. Світ розділений на унікальні зони, кожна з яких приховує свої таємниці, небезпеки та прадавні артефакти, що здатні змінювати хід історії.</p>
+
+            <h3>🏰 Локації</h3>
+            <p><strong>Туманні низини</strong> — болотиста місцевість, де мешкають Грибожаби та інші дивовижні істоти. Вважається небезпечною через магічні аномалії.</p>
+            <p><strong>Чорний ліс</strong> — територія, де час спотворюється. Кажуть, що там можна зустріти примар минулого.</p>
+            <p><strong>Цитадель Ордену Темного Ока</strong> — фортеця таємничого ордену, який вивчає древню магію та артефакти.</p>
+
+            <h3>🐉 Бестіарій</h3>
+            <div class="bestiary-item">
+                <h4>🍄 Грибожаб</h4>
+                <p>Унікальна магічна істота, що населяє вологі низини Етернхольту. Має зріст близько одного метра. Попри химерний вигляд, не становить серйозної небезпеки для мандрівників і часто стає героєм місцевих гумористичних історій та байок.</p>
+            </div>
+            <div class="bestiary-item">
+                <h4>🐺 Тіньовий вовк</h4>
+                <p>Нічний хижак, здатний ставати невидимим у темряві. Зграї тіньових вовків нападають на самотніх мандрівників. Їхній виття віщує небезпеку.</p>
+            </div>
+            <div class="bestiary-item">
+                <h4>👁️ Спостерігач із безодні</h4>
+                <p>Давня істота, що складається з безлічі очей. Мешкає в глибоких печерах і може паралізувати жертву поглядом. Зустрічається вкрай рідко.</p>
+            </div>
+
+            <h3>⚔️ Магічні ордени</h3>
+            <p><strong>Орден Темного Ока</strong> — закрита організація, що займається збором і вивченням артефактів. Їхні цілі не завжди зрозумілі, але вони відіграють важливу роль у долях світу.</p>
+            <p><strong>Вартові часу</strong> — містичний орден, який стежить за тим, щоб часові аномалії не знищили реальність. Про них ходять легенди, але ніхто не знає їхнього справжнього місцезнаходження.</p>
+
+            <a href="lore.html" class="back-link">← Повернутися до світів</a>
+        </div>
+    </div>
+    <!-- За бажанням, сюди можна додати аудіоплеєр (скопіюй з lore.html) -->
+</body>
+</html>
