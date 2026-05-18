@@ -313,70 +313,152 @@
         </div>
     </div>
 
-    <!-- АУДІОПЛЕЄР -->
-    <div class="audio-player">
-        <button id="musicBtn" onclick="toggleMusic()">🎵 Увімкнути радіо</button>
-        <span id="trackName">📻 Радіо Етернхольт</span>
-        <div class="volume-container">
-            <span>🔈</span>
-            <input type="range" id="volumeSlider" min="0" max="100" value="30" oninput="changeVolume(this.value)">
-            <span>🔊</span>
-        </div>
+   <!-- АУДІОПЛЕЄР – НІКОЛИ НЕ ГРАЄ АВТОМАТИЧНО -->
+<div class="audio-player">
+    <button id="musicBtn" onclick="toggleMusic()">🎵 Увімкнути радіо</button>
+    <span id="trackName">📻 Радіо Етернхольт</span>
+    <div class="volume-container">
+        <span>🔈</span>
+        <input type="range" id="volumeSlider" min="0" max="100" value="30" oninput="changeVolume(this.value)">
+        <span>🔊</span>
     </div>
-    <div id="youtubePlayer" style="display: none;"></div>
+</div>
+<div id="youtubePlayer" style="display: none;"></div>
 
-    <script>
-        const videoIDs = ["3y_6zqa5jn8","moKNkLdjKws","T5GdIQHGhv0","K_pY6pdh_2M","fL1327aZdfc","vrZLMxPcHYM","d2FW1DcMdiw","liIizxQ6z4A","Ml9rMQdqDQU","FZCCWVIcFYo","_9vRwdG7IvU"];
-        const trackNames = ["Wi-Range - Lyric Story","Wi-Range - Intro","Wi-Range - Skeleton Knight","Wi-Range - Future","Wi-Range - Miami beach","Wi-Range - Night Ranger","Wi-Range & DENIS-G - Night City of Miami","Wi-Range & DENIS-G - NIGHT ROAD (ORIGINAL MIX)","Wi_Range feat Denis-g - back to 80's","Wi_Range - Revenge","Wi_range - Iron age"];
+<script>
+    const videoIDs = ["3y_6zqa5jn8","moKNkLdjKws","T5GdIQHGhv0","K_pY6pdh_2M","fL1327aZdfc","vrZLMxPcHYM","d2FW1DcMdiw","liIizxQ6z4A","Ml9rMQdqDQU","FZCCWVIcFYo","_9vRwdG7IvU","ezYuc1jnP9I"];
+    const trackNames = ["Wi-Range - Lyric Story","Wi-Range - Intro","Wi-Range - Skeleton Knight","Wi-Range - Future","Wi-Range - Miami beach","Wi-Range - Night Ranger","Wi-Range & DENIS-G - Night City of Miami","Wi-Range & DENIS-G - NIGHT ROAD (ORIGINAL MIX)","Wi_Range feat Denis-g - back to 80's","Wi_Range - Revenge","Wi_range - Iron age","Wi-Range - Lost In Time"];
 
-        let player, isPlaying = false, currentTrack = -1, currentTime = 0, isPlayerReady = false, pendingRestore = false;
+    let player = null;
+    let isPlaying = false;
+    let currentTrack = -1;
+    let currentTime = 0;
+    let isPlayerReady = false;
 
-        function saveState() { if (currentTrack !== -1 && isPlayerReady) { localStorage.setItem('radio_track', currentTrack); localStorage.setItem('radio_time', currentTime); localStorage.setItem('radio_playing', isPlaying ? '1' : '0'); } }
-        function restoreState() {
-            const savedTrack = localStorage.getItem('radio_track'), savedTime = parseFloat(localStorage.getItem('radio_time')), savedPlaying = localStorage.getItem('radio_playing') === '1';
-            if (savedTrack !== null && savedTrack >= 0 && isPlayerReady) {
-                currentTrack = parseInt(savedTrack); currentTime = isNaN(savedTime) ? 0 : savedTime; isPlaying = savedPlaying;
-                document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
-                player.loadVideoById({ videoId: videoIDs[currentTrack], startSeconds: 0 });
-                let interval = setInterval(() => { const dur = player.getDuration(); if (dur && dur > 0 && currentTime < dur) { clearInterval(interval); player.seekTo(currentTime, true); if (isPlaying) player.playVideo(); else player.pauseVideo(); } }, 100);
-            } else if (savedTrack === null) currentTrack = -1;
+    // Функції збереження/відновлення стану (тільки трек і позиція, БЕЗ автоплею)
+    function saveState() {
+        if (currentTrack !== -1 && isPlayerReady) {
+            localStorage.setItem('radio_track', currentTrack);
+            localStorage.setItem('radio_time', currentTime);
+            // Не зберігаємо стан isPlaying, щоб не грало автоматично
         }
-        function onPlayerReady() {
-            isPlayerReady = true;
-            if (pendingRestore) { restoreState(); pendingRestore = false; }
-            setInterval(() => { if (player && player.getCurrentTime && isPlayerReady && currentTrack !== -1) { const t = player.getCurrentTime(); if (t && !isNaN(t)) { currentTime = t; saveState(); } } }, 2000);
+    }
+
+    function loadSavedState() {
+        const savedTrack = localStorage.getItem('radio_track');
+        const savedTime = parseFloat(localStorage.getItem('radio_time'));
+        if (savedTrack !== null && savedTrack >= 0 && isPlayerReady) {
+            currentTrack = parseInt(savedTrack);
+            currentTime = isNaN(savedTime) ? 0 : savedTime;
+            // НЕ відновлюємо isPlaying — залишаємо false
+            isPlaying = false;
+            document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
+            // Завантажуємо трек на 0 секунді, потім перемотуємо
+            player.loadVideoById({ videoId: videoIDs[currentTrack], startSeconds: 0 });
+            let interval = setInterval(() => {
+                const dur = player.getDuration();
+                if (dur && dur > 0 && currentTime < dur) {
+                    clearInterval(interval);
+                    player.seekTo(currentTime, true);
+                    // Не запускаємо відтворення, тільки встановлюємо позицію
+                    player.pauseVideo();
+                }
+            }, 100);
+        } else {
+            currentTrack = -1;
         }
-        function onPlayerStateChange(event) {
-            const btn = document.getElementById("musicBtn");
-            if (event.data === YT.PlayerState.PLAYING) { isPlaying = true; if (btn) { btn.innerText = "⏸ Пауза"; btn.style.borderColor = "#ff6400"; } saveState(); }
-            else if (event.data === YT.PlayerState.PAUSED) { isPlaying = false; if (btn) { btn.innerText = "📻 Увімкнути радіо"; btn.style.borderColor = "#444"; } saveState(); }
-            else if (event.data === YT.PlayerState.ENDED && currentTrack !== -1) {
-                let newTrack = currentTrack; while (newTrack === currentTrack && videoIDs.length > 1) newTrack = Math.floor(Math.random() * videoIDs.length);
-                currentTrack = newTrack; currentTime = 0;
-                document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
-                player.loadVideoById({ videoId: videoIDs[currentTrack], startSeconds: 0 });
-                if (isPlaying) player.playVideo();
-                saveState();
+    }
+
+    function onPlayerReady() {
+        isPlayerReady = true;
+        loadSavedState(); // Завантажуємо збережений стан, але не граємо
+        // Оновлюємо час кожні 2 секунди
+        setInterval(() => {
+            if (player && player.getCurrentTime && isPlayerReady && currentTrack !== -1) {
+                const t = player.getCurrentTime();
+                if (t && !isNaN(t)) {
+                    currentTime = t;
+                    saveState();
+                }
             }
+        }, 2000);
+    }
+
+    function onPlayerStateChange(event) {
+        const btn = document.getElementById("musicBtn");
+        if (event.data === YT.PlayerState.PLAYING) {
+            isPlaying = true;
+            if (btn) { btn.innerText = "⏸ Пауза"; btn.style.borderColor = "#ff6400"; }
+            saveState();
+        } else if (event.data === YT.PlayerState.PAUSED) {
+            isPlaying = false;
+            if (btn) { btn.innerText = "🎵 Увімкнути радіо"; btn.style.borderColor = "#444"; }
+            saveState();
+        } else if (event.data === YT.PlayerState.ENDED && currentTrack !== -1) {
+            // Трек закінчився – наступний випадковий з початку
+            let newTrack = currentTrack;
+            while (newTrack === currentTrack && videoIDs.length > 1) {
+                newTrack = Math.floor(Math.random() * videoIDs.length);
+            }
+            currentTrack = newTrack;
+            currentTime = 0;
+            document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
+            player.loadVideoById({ videoId: videoIDs[currentTrack], startSeconds: 0 });
+            if (isPlaying) player.playVideo(); // якщо радіо грало, продовжуємо
+            saveState();
         }
-        function toggleMusic() {
-            if (!player || !isPlayerReady) return;
-            if (!isPlaying) {
-                if (currentTrack === -1) {
-                    currentTrack = Math.floor(Math.random() * videoIDs.length); currentTime = 0;
-                    document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
-                    player.loadVideoById({ videoId: videoIDs[currentTrack], startSeconds: 0 });
-                    let interval = setInterval(() => { const dur = player.getDuration(); if (dur && dur > 0) { clearInterval(interval); player.seekTo(Math.random() * (dur * 0.7), true); player.playVideo(); } }, 100);
-                    isPlaying = true;
-                } else player.playVideo();
-            } else player.pauseVideo();
+    }
+
+    function toggleMusic() {
+        if (!player || !isPlayerReady) {
+            console.warn("Player not ready");
+            return;
         }
-        function changeVolume(val) { if (player && player.setVolume) player.setVolume(val); }
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtubePlayer', { height: '0', width: '0', videoId: videoIDs[0], playerVars: { autoplay: 0, controls: 0, disablekb: 1, modestbranding: 1 }, events: { onReady: onPlayerReady, onStateChange: onPlayerStateChange } });
-            pendingRestore = true;
+        if (!isPlaying) {
+            if (currentTrack === -1) {
+                // Перший запуск – випадковий трек з випадкової позиції
+                currentTrack = Math.floor(Math.random() * videoIDs.length);
+                currentTime = 0;
+                document.getElementById("trackName").innerText = "📻 " + trackNames[currentTrack];
+                player.loadVideoById({ videoId: videoIDs[currentTrack], startSeconds: 0 });
+                let interval = setInterval(() => {
+                    const dur = player.getDuration();
+                    if (dur && dur > 0) {
+                        clearInterval(interval);
+                        const randomSeek = Math.random() * (dur * 0.7);
+                        player.seekTo(randomSeek, true);
+                        player.playVideo();
+                    }
+                }, 100);
+                isPlaying = true;
+            } else {
+                // Продовжити поточний трек
+                player.playVideo();
+            }
+        } else {
+            player.pauseVideo();
         }
-        const tag = document.createElement('script'); tag.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(tag);
-    </script>
+    }
+
+    function changeVolume(val) {
+        if (player && player.setVolume) player.setVolume(val);
+    }
+
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('youtubePlayer', {
+            height: '0', width: '0',
+            videoId: videoIDs[0],
+            playerVars: { autoplay: 0, controls: 0, disablekb: 1, modestbranding: 1 },
+            events: {
+                onReady: onPlayerReady,
+                onStateChange: onPlayerStateChange
+            }
+        });
+    }
+
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+</script>
 </body>
 </html>
