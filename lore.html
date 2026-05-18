@@ -5,12 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Wineko | Світ та Лор</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: #000; color: #fff; font-family: 'Georgia', serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 10px; overflow-x: hidden; }
-        .site-container { position: relative; width: 100%; max-width: 2000px; display: block; --font-scale: 1vw; }
-        .bg-image { width: 100%; height: auto; display: block; pointer-events: none; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        /* Стиль для вікон (як на головній) */
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Georgia', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+            overflow-x: hidden;
+        }
+
+        .site-container {
+            position: relative;
+            width: 100%;
+            max-width: 2000px;
+            display: block;
+            --font-scale: 1vw;
+        }
+
+        .bg-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            pointer-events: none;
+        }
+
         .window-container {
             position: absolute;
             display: flex;
@@ -18,6 +45,7 @@
             align-items: center;
             color: #ccc;
         }
+
         .window-container h2 {
             color: #fff;
             font-size: calc(var(--font-scale) * 1.25);
@@ -26,6 +54,7 @@
             margin-bottom: 10px;
             text-align: center;
         }
+
         .window-container h3 {
             color: #fff;
             font-size: calc(var(--font-scale) * 1.05);
@@ -34,18 +63,30 @@
             margin-bottom: 8px;
             text-align: center;
         }
+
         .scroll-content {
             width: 100%;
             flex: 1;
             overflow-y: auto;
             padding: 2px 6px;
         }
+
         .scroll-content p {
             font-size: calc(var(--font-scale) * 0.75);
             line-height: 1.4;
             margin-bottom: 8px;
             text-align: justify;
         }
+
+        .scroll-content::-webkit-scrollbar {
+            width: 3px;
+        }
+        .scroll-content::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 2px;
+        }
+
+        /* Кнопка енциклопедії */
         .encyclopedia-btn {
             display: inline-block;
             margin-top: 12px;
@@ -65,18 +106,18 @@
             transform: scale(1.02);
         }
 
-        /* Координати двох вікон праворуч (як на головній, але трохи вище) */
-        .world1-box {  /* Lost in Time */
-            top: 45%;
+        /* Ті самі координати, що й support-box та social-box на головній */
+        .world-left {
+            top: 60.5%;
             left: 65%;
             width: 12.8%;
             height: 29%;
         }
-        .world2-box {  /* Новий світ */
-            top: 77%;
-            left: 65%;
+        .world-right {
+            top: 60.5%;
+            left: 80%;
             width: 12.8%;
-            height: 18%;
+            height: 29%;
         }
 
         /* Навігація (без змін) */
@@ -91,6 +132,7 @@
             gap: 14px;
             z-index: 10;
         }
+
         .nav-menu a {
             color: #fff;
             text-decoration: none;
@@ -104,6 +146,7 @@
             transition: all 0.3s ease;
             text-shadow: 0 0 8px rgba(255,255,255,0.3);
         }
+
         .nav-menu a:hover {
             color: #00d2ff;
             text-shadow: 0 0 12px #00d2ff;
@@ -126,6 +169,7 @@
             font-family: 'Georgia', serif;
             box-shadow: 0 4px 15px rgba(0,0,0,0.6);
         }
+
         .audio-player button {
             background: rgba(255,255,255,0.03);
             border: 1px solid #444;
@@ -137,11 +181,13 @@
             font-family: 'Georgia', serif;
             transition: all 0.2s ease;
         }
+
         .audio-player button:hover {
             border-color: #00d2ff;
             text-shadow: 0 0 8px #00d2ff;
             background: rgba(0,210,255,0.05);
         }
+
         #trackName {
             font-size: 12px;
             color: #888;
@@ -150,19 +196,21 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
         .volume-container {
             display: flex;
             align-items: center;
             gap: 5px;
             font-size: 11px;
         }
+
         #volumeSlider {
             width: 70px;
             accent-color: #00d2ff;
             cursor: pointer;
         }
 
-        /* Мобільна версія */
+        /* Мобільна версія (як на головній) */
         @media (max-width: 768px) {
             body {
                 align-items: flex-start;
@@ -173,6 +221,7 @@
                 background-repeat: no-repeat;
                 background-attachment: fixed;
             }
+
             .site-container {
                 --font-scale: 4.5vw;
                 height: auto;
@@ -180,23 +229,30 @@
                 flex-direction: column;
                 gap: 25px;
             }
-            .bg-image { display: none; }
+
+            .bg-image {
+                display: none;
+            }
+
             .nav-menu {
                 position: static;
                 width: 100%;
+                align-items: center;
+                justify-content: center;
                 flex-direction: row;
                 flex-wrap: wrap;
-                justify-content: center;
                 gap: 15px;
                 margin-bottom: 10px;
                 border-bottom: 1px solid #222;
                 padding-bottom: 15px;
             }
+
             .nav-menu a {
                 font-size: 14px;
                 text-align: center;
                 white-space: normal;
             }
+
             .window-container {
                 position: static;
                 width: 100% !important;
@@ -208,9 +264,33 @@
                 box-shadow: 0 4px 15px rgba(0,0,0,0.5);
                 margin-bottom: 20px;
             }
-            .window-container h2 { font-size: 18px; }
-            .scroll-content p { font-size: 14px; }
-            .encyclopedia-btn { font-size: 12px; }
+
+            .window-container h2 {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+
+            .window-container h3 {
+                font-size: 16px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            .scroll-content {
+                overflow-y: visible;
+                padding: 0;
+            }
+
+            .scroll-content p {
+                font-size: 14px;
+                text-align: left;
+                margin-bottom: 12px;
+            }
+
+            .encyclopedia-btn {
+                font-size: 12px;
+            }
+
             .audio-player {
                 bottom: auto;
                 top: 15px;
@@ -218,10 +298,14 @@
                 transform: translateX(-50%);
                 width: calc(100% - 30px);
                 justify-content: space-between;
+                background: rgba(15,15,15,0.95);
                 flex-wrap: wrap;
                 gap: 10px;
             }
-            #trackName { max-width: 120px; }
+
+            #trackName {
+                max-width: 120px;
+            }
         }
     </style>
 </head>
@@ -235,19 +319,19 @@
             <a href="books.html">Книги та <br>Проєкти</a>
         </nav>
 
-        <!-- Перше вікно (праворуч, верхнє) – Lost in Time -->
-        <div class="window-container world1-box">
+        <!-- Ліве вікно (на місці support-box) – Lost in Time -->
+        <div class="window-container world-left">
             <h2>🌌 Lost in Time</h2>
             <div class="scroll-content">
                 <p><strong>Етернхольт (Eternhold)</strong> — древній всесвіт, де час тече за своїми містичними законами, а магія переплітається з долями смертних та безсмертних істот.</p>
-                <p>Світ розділений на унікальні зони, кожна з яких приховує таємниці, небезпеки та прадавні артефакти.</p>
+                <p>Світ розділений на унікальні зони, кожна з яких приховує таємниці, небезпеки та прадавні артефакти, що здатні змінювати хід історії.</p>
                 <p>У розділі енциклопедії ви знайдете детальний опис локацій, магічних законів, орденів та бестіарій.</p>
             </div>
             <a href="lore-lostintime.html" class="encyclopedia-btn">📖 Перейти до енциклопедії</a>
         </div>
 
-        <!-- Друге вікно (праворуч, нижнє) – Новий світ (заглушка) -->
-        <div class="window-container world2-box">
+        <!-- Праве вікно (на місці social-box) – Новий світ / анонси -->
+        <div class="window-container world-right">
             <h3>🔮 Новий світ</h3>
             <div class="scroll-content">
                 <p>Тут з’явиться енциклопедія другого всесвіту. Скоро...</p>
@@ -256,7 +340,7 @@
         </div>
     </div>
 
-    <!-- АУДІОПЛЕЄР (без автовідтворення) -->
+    <!-- АУДІОПЛЕЄР – НІКОЛИ НЕ ГРАЄ АВТОМАТИЧНО -->
     <div class="audio-player">
         <button id="musicBtn" onclick="toggleMusic()">🎵 Увімкнути радіо</button>
         <span id="trackName">📻 Радіо Етернхольт</span>
