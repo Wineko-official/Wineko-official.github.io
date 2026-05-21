@@ -162,11 +162,17 @@
             margin-bottom: 0.8rem;
             color: #c8aa7a;
         }
-        .lore-area p {
-            font-size: 0.85rem;
-            line-height: 1.4;
-            text-align: justify;
-        }
+       .lore-area p {
+    white-space: pre-wrap;    /* зберігає переноси рядків */
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+    .lore-area p strong {
+    color: #ffd8a0;           /* золотавий колір для заголовків */
+}
+.lore-area p em {
+    color: #c8aa7a;
+}
 
         /* Кнопка назад */
         .back-link {
