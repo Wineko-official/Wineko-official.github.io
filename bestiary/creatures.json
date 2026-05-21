@@ -1,1 +1,5 @@
-["tropikol"]
+[
+  { "slug": "tropikol", "name": "Тропіколь" },
+  { "slug": "Gromakhr", "name": "Громахр" },
+  { "slug": "Mutatont", "name": "Мутатонт" }
+]
