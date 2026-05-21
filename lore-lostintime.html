@@ -266,14 +266,14 @@
 </div>
 
 <script>
-    const BASE_PATH = 'bestiary/';
+        const BASE_PATH = 'bestiary/';
     const categories = {
         characters: { manifestUrl: BASE_PATH + 'characters.json', folder: 'characters' },
         creatures:  { manifestUrl: BASE_PATH + 'creatures.json',  folder: 'creatures' }
     };
 
     let currentCategory = 'characters';
-    let currentSlugs = [];
+    let currentItems = [];      // масив об'єктів {slug, name}
     let currentSelectedSlug = null;
 
     const pedestalImg = document.getElementById('pedestalImg');
@@ -323,24 +323,36 @@
         };
     }
 
-    function buildList(slugs, category) {
-        if (!slugs.length) {
+    // Побудова списку з группуванням за першою літерою УКРАЇНСЬКОГО імені
+    function buildList(items, category) {
+        if (!items.length) {
             entityListDiv.innerHTML = '<div class="list-group">Немає даних</div>';
             return;
         }
         const groups = {};
-        slugs.forEach(slug => {
-            let letter = slug.charAt(0).toUpperCase();
-            if (!/^[A-Z]$/.test(letter)) letter = '#';
+        items.forEach(item => {
+            const name = item.name;
+            const firstChar = name.charAt(0).toUpperCase();
+            // Підтримка українських літер (кирилиця)
+            let letter = firstChar;
             if (!groups[letter]) groups[letter] = [];
-            groups[letter].push(slug);
+            groups[letter].push({ slug: item.slug, name: name });
         });
-        const sortedLetters = Object.keys(groups).sort();
+        // Сортування літер: спочатку кирилиця в алфавітному порядку, потім латиниця
+        const sortedLetters = Object.keys(groups).sort((a, b) => {
+            const isCyrillicA = /^[А-ЯҐЄІЇ]/.test(a);
+            const isCyrillicB = /^[А-ЯҐЄІЇ]/.test(b);
+            if (isCyrillicA && !isCyrillicB) return -1;
+            if (!isCyrillicA && isCyrillicB) return 1;
+            return a.localeCompare(b, 'uk');
+        });
         let html = '';
         for (let letter of sortedLetters) {
             html += `<div class="list-group"><div class="list-letter">${letter}</div>`;
-            groups[letter].forEach(slug => {
-                html += `<div class="list-item" data-slug="${slug}">${slug}</div>`;
+            // Сортуємо імена всередині групи
+            groups[letter].sort((x, y) => x.name.localeCompare(y.name, 'uk'));
+            groups[letter].forEach(item => {
+                html += `<div class="list-item" data-slug="${item.slug}">${item.name}</div>`;
             });
             html += `</div>`;
         }
@@ -361,9 +373,9 @@
     async function loadCategory(category) {
         currentCategory = category;
         entityListDiv.innerHTML = '<div class="list-group">Завантаження...</div>';
-        const slugs = await fetchManifest(category);
-        currentSlugs = slugs;
-        if (slugs.length === 0) {
+        const items = await fetchManifest(category);
+        currentItems = items;
+        if (items.length === 0) {
             entityListDiv.innerHTML = '<div class="list-group">Немає сутностей</div>';
             pedestalImg.style.display = 'none';
             entityNameSpan.innerText = '-';
@@ -371,7 +383,7 @@
             entityDescP.innerText = 'Немає даних для цієї категорії.';
             return;
         }
-        buildList(slugs, category);
+        buildList(items, category);
     }
 
     function initTabs() {
