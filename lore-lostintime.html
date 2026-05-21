@@ -5,77 +5,422 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Wineko | Енциклопедія Lost in Time</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: #000; color: #fff; font-family: 'Georgia', serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 10px; overflow-x: hidden; }
-        .site-container { position: relative; width: 100%; max-width: 2000px; display: block; --font-scale: 1vw; }
-        .bg-image { width: 100%; height: auto; display: block; pointer-events: none; }
-        .encyclopedia-window {
-            position: absolute;
-            top: 22%;
-            left: 39.3%;
-            width: 21.8%;
-            height: 67%;
-            background: rgba(0,0,0,0.85);
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 20px;
-            overflow-y: auto;
-            backdrop-filter: blur(2px);
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-        .encyclopedia-window h2 { color: #fff; font-size: calc(var(--font-scale) * 1.3); text-align: center; margin-bottom: 20px; letter-spacing: 2px; }
-        .encyclopedia-window h3 { color: #00d2ff; font-size: calc(var(--font-scale) * 1.05); margin-top: 20px; margin-bottom: 8px; border-left: 3px solid #00d2ff; padding-left: 10px; }
-        .encyclopedia-window p { font-size: calc(var(--font-scale) * 0.75); line-height: 1.5; margin-bottom: 12px; text-align: justify; }
-        .bestiary-item { margin-bottom: 20px; border-bottom: 1px solid #444; padding-bottom: 12px; }
-        .bestiary-item h4 { color: #ffaa44; font-size: calc(var(--font-scale) * 0.85); margin-bottom: 5px; }
-        .nav-menu { position: absolute; top: 33%; left: 18.8%; width: 15%; display: flex; flex-direction: column; align-items: flex-end; gap: 14px; z-index: 10; }
-        .nav-menu a { color: #fff; text-decoration: none; font-size: calc(var(--font-scale) * 0.85); text-transform: uppercase; letter-spacing: 2px; font-family: 'Georgia', serif; white-space: nowrap; text-align: right; transition: all 0.3s ease; }
-        .nav-menu a:hover { color: #00d2ff; transform: translateX(-5px); }
-        .back-link { display: inline-block; margin-top: 25px; padding: 8px 16px; background: rgba(255,255,255,0.05); border: 1px solid #888; color: #ccc; text-decoration: none; border-radius: 4px; font-size: calc(var(--font-scale) * 0.8); transition: all 0.2s ease; }
-        .back-link:hover { border-color: #00d2ff; color: #00d2ff; }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Georgia', serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            /* Фонова картинка-інтерфейс */
+            background-image: url('bg_lore_lostintime.png');
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* Контейнер для абсолютного позиціонування елементів */
+        .interface {
+            position: relative;
+            width: 100%;
+            max-width: 2000px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        /* === ЗОНА П'ЄДЕСТАЛУ === */
+        .pedestal-area {
+            position: absolute;
+            top: 28%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 280px;
+            height: 280px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+        }
+        .pedestal-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px rgba(0,0,0,0.7));
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* === ПРАВА ПАНЕЛЬ МЕНЮ (СПИСОК) === */
+        .menu-area {
+            position: absolute;
+            top: 21%;
+            right: 14%;
+            width: 250px;
+            height: 380px;
+            background: rgba(0,0,0,0.6);
+            border-radius: 12px;
+            backdrop-filter: blur(4px);
+            border: 1px solid #5a4a3a;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        /* Вкладки */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            border-bottom: 1px solid #5a4a3a;
+            margin-bottom: 12px;
+        }
+        .tab-btn {
+            flex: 1;
+            background: rgba(30,20,15,0.8);
+            border: none;
+            padding: 8px 0;
+            color: #ccb;
+            font-family: 'Georgia', serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 6px 6px 0 0;
+        }
+        .tab-btn.active {
+            background: #4a3a2a;
+            color: #ffd8a0;
+            font-weight: bold;
+        }
+        /* Список із прокруткою */
+        .list-container {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        .list-group {
+            margin-bottom: 12px;
+        }
+        .list-letter {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #b89a7a;
+            border-bottom: 1px solid #5a4a3a;
+            margin-bottom: 5px;
+        }
+        .list-item {
+            padding: 4px 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.1s;
+            font-size: 0.85rem;
+        }
+        .list-item:hover {
+            background: #4a3a2a;
+            color: #fff;
+        }
+        .list-item.selected {
+            background: #6a4a2a;
+            color: #ffd;
+            font-weight: bold;
+        }
+
+        /* === НИЖНЯ ПАНЕЛЬ ОПИСУ === */
+        .lore-area {
+            position: absolute;
+            bottom: 12%;
+            left: 15%;
+            width: 40%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid #6a5a4a;
+            border-radius: 16px;
+            padding: 16px 20px;
+            color: #f0e6d0;
+            max-height: 30%;
+            overflow-y: auto;
+            pointer-events: auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+        }
+        .lore-area h2 {
+            font-size: 1.7rem;
+            margin-bottom: 0.2rem;
+            color: #ffd8a0;
+        }
+        .lore-area h3 {
+            font-size: 1rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #b89a7a;
+        }
+        .lore-area p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            text-align: justify;
+        }
+
+        /* Кнопка назад */
+        .back-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid #b89a7a;
+            color: #ffd8a0;
+            padding: 8px 16px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: 0.2s;
+            backdrop-filter: blur(4px);
+            z-index: 100;
+        }
+        .back-link:hover {
+            background: #4a3a2a;
+            border-color: #ffd8a0;
+        }
+
+        /* АДАПТИВ ДЛЯ МОБІЛЬНИХ */
         @media (max-width: 768px) {
-            body { align-items: flex-start; padding: 80px 15px 20px 15px; background-image: url('m.bg.png'); background-size: cover; background-attachment: fixed; }
-            .site-container { --font-scale: 4.5vw; height: auto; display: flex; flex-direction: column; gap: 25px; }
-            .bg-image { display: none; }
-            .nav-menu { position: static; width: 100%; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 10px; border-bottom: 1px solid #222; padding-bottom: 15px; }
-            .nav-menu a { font-size: 14px; white-space: normal; text-align: center; }
-            .encyclopedia-window { position: static; width: 100%; height: auto; margin-top: 20px; }
-            .encyclopedia-window p { font-size: 14px; }
-            .bestiary-item h4 { font-size: 16px; }
+            body {
+                background-size: cover;
+                background-attachment: scroll;
+            }
+            .pedestal-area {
+                top: 12%;
+                width: 180px;
+                height: 180px;
+            }
+            .menu-area {
+                position: static;
+                width: 90%;
+                margin: 20px auto 0;
+                height: 280px;
+            }
+            .lore-area {
+                position: static;
+                width: 90%;
+                margin: 20px auto;
+                max-height: none;
+            }
+            .back-link {
+                position: static;
+                display: inline-block;
+                margin: 20px auto;
+                text-align: center;
+                width: fit-content;
+            }
+            .interface {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding-bottom: 30px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="site-container">
-        <img src="bg.png" class="bg-image" alt="Eternhold Interface">
-        <nav class="nav-menu">
-            <a href="index.html">Головна</a>
-            <a href="lore.html">Світ та Лор</a>
-            <a href="books.html">Книги та <br>Проєкти</a>
-        </nav>
+<div class="interface">
+    <!-- П'єдестал для зображення -->
+    <div class="pedestal-area">
+        <img id="pedestalImg" class="pedestal-image" src="" alt="Entity" style="display: none;">
+    </div>
 
-        <div class="encyclopedia-window">
-            <h2>(тут ще нічого немає бот допомагає робити сайт і може вигадувати своє,я сам потім дороблю під своє а ти не нишпорь по комитах📖 Енциклопедія "Lost in Time"</h2>
-            <h3>Етернхольт (Eternhold)</h3>
-            <p>Древній всесвіт, де час тече за своїми містичними законами, а магія переплітається з долями смертних та безсмертних істот. Світ розділений на унікальні зони, кожна з яких приховує свої таємниці, небезпеки та прадавні артефакти, що здатні змінювати хід історії.</p>
-
-            <h3>🏰 Локації</h3>
-            <p><strong>Туманні низини</strong> — болотиста місцевість, де мешкають Грибожаби та інші дивовижні істоти. Вважається небезпечною через магічні аномалії.</p>
-            <p><strong>Чорний ліс</strong> — територія, де час спотворюється. Кажуть, що там можна зустріти примар минулого.</p>
-            <p><strong>Цитадель Ордену Темного Ока</strong> — фортеця таємничого ордену, який вивчає древню магію та артефакти.</p>
-
-            <h3>🐉 Бестіарій</h3>
-            <div class="bestiary-item">
-                <h4>🍄 Грибожаб</h4>
-                <p>Унікальна магічна істота, що населяє вологі низини Етернхольту. Має зріст близько одного метра. Попри химерний вигляд, не становить серйозної небезпеки для мандрівників і часто стає героєм місцевих гумористичних історій та байок.</p>
-            </div>
-
-            <h3>⚔️ Магічні ордени</h3>
-            <p><strong>Орден Темного Ока</strong> — закрита організація, що займається збором і вивченням артефактів. Їхні цілі не завжди зрозумілі, але вони відіграють важливу роль у долях світу.</p>
-            <p><strong>Вартові часу</strong> — містичний орден, який стежить за тим, щоб часові аномалії не знищили реальність. Про них ходять легенди, але ніхто не знає їхнього справжнього місцезнаходження.</p>
-
-            <a href="lore.html" class="back-link">← Повернутися до світів</a>
+    <!-- Права панель меню -->
+    <div class="menu-area">
+        <div class="tabs">
+            <button class="tab-btn" data-category="characters">Персонажі</button>
+            <button class="tab-btn" data-category="creatures">Істоти</button>
+        </div>
+        <div id="entityList" class="list-container">
+            <!-- Список буде заповнено динамічно -->
+            <div class="list-group">Завантаження...</div>
         </div>
     </div>
-    <!-- За бажанням, сюди можна додати аудіоплеєр (скопіюй з lore.html) -->
+
+    <!-- Нижня панель опису -->
+    <div class="lore-area" id="lorePanel">
+        <h2 id="entityName">-</h2>
+        <h3 id="entityTitle"></h3>
+        <p id="entityDesc">Оберіть персонажа чи істоту зі списку.</p>
+    </div>
+
+    <a href="lore.html" class="back-link">← Повернутися до світів</a>
+</div>
+
+<script>
+    // ---------- КОНФІГУРАЦІЯ ----------
+    const BASE_PATH = 'bestiary/';
+    // Список категорій та їхніх JSON-маніфестів
+    const categories = {
+        characters: {
+            manifestUrl: BASE_PATH + 'characters.json',
+            folder: 'characters'
+        },
+        creatures: {
+            manifestUrl: BASE_PATH + 'creatures.json',
+            folder: 'creatures'
+        }
+    };
+
+    let currentCategory = 'characters';
+    let currentData = [];        // масив слагів (наприклад ["Ketrin", "Arthas"])
+    let currentSelectedSlug = null;
+    let currentEntityData = null;
+
+    // DOM елементи
+    const pedestalImg = document.getElementById('pedestalImg');
+    const entityListDiv = document.getElementById('entityList');
+    const entityNameSpan = document.getElementById('entityName');
+    const entityTitleSpan = document.getElementById('entityTitle');
+    const entityDescP = document.getElementById('entityDesc');
+
+    // ---------- ДОПОМІЖНІ ФУНКЦІЇ ----------
+    // Завантажити масив слагів для категорії
+    async function fetchManifest(category) {
+        const url = categories[category].manifestUrl;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const slugs = await response.json();
+            return slugs; // очікуємо масив рядків, наприклад ["Ketrin", "Tropikol"]
+        } catch (err) {
+            console.error(`Помилка завантаження маніфесту ${category}:`, err);
+            return [];
+        }
+    }
+
+    // Завантажити JSON сутності за категорією та слагом
+    async function fetchEntityData(category, slug) {
+        const folder = categories[category].folder;
+        const url = `${BASE_PATH}${folder}/${slug}/data.json`;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            return data;
+        } catch (err) {
+            console.error(`Помилка завантаження даних для ${slug}:`, err);
+            return null;
+        }
+    }
+
+    // Показати сутність: зображення + опис
+    function displayEntity(category, slug, entityData) {
+        if (!entityData) return;
+        currentEntityData = entityData;
+        currentSelectedSlug = slug;
+        // Встановити текст
+        entityNameSpan.innerText = entityData.name || 'Без назви';
+        entityTitleSpan.innerText = entityData.title || '';
+        entityDescP.innerText = entityData.description || 'Опис відсутній.';
+
+        // Завантажити зображення
+        const imgPath = `${BASE_PATH}${categories[category].folder}/${slug}/image.png`;
+        pedestalImg.src = imgPath;
+        pedestalImg.style.display = 'block';
+        pedestalImg.onerror = () => {
+            pedestalImg.style.display = 'none';
+            console.warn(`Зображення не знайдено: ${imgPath}`);
+        };
+    }
+
+    // Побудувати алфавітний список з групуванням за першою літерою (A-Z)
+    function buildAlphabeticalList(slugs, category) {
+        if (!slugs.length) {
+            entityListDiv.innerHTML = '<div class="list-group">Немає даних</div>';
+            return;
+        }
+        // Отримуємо імена для сортування (потрібно завантажити хоча б назви? спростимо: сортуємо за слагами, але для групування беремо першу літеру слага)
+        // Для коректного відображення краще мати імена, але поки використаємо slug як тимчасову назву.
+        // Ми можемо окремо завантажити всі назви, але це забагато запитів. Краще в майбутньому маніфест містити об'єкти {slug, name}.
+        // Але зараз зробимо просто slug, а потім підвантажимо ім'я при кліку. Групувати будемо за першою літерою slug.
+        const groups = {};
+        slugs.forEach(slug => {
+            const letter = slug.charAt(0).toUpperCase();
+            if (!/^[A-Z]$/.test(letter)) return; // ігноруємо не латинські літери, можна додати кирилицю окремо
+            if (!groups[letter]) groups[letter] = [];
+            groups[letter].push(slug);
+        });
+        // Сортуємо літери
+        const sortedLetters = Object.keys(groups).sort();
+        let html = '';
+        for (let letter of sortedLetters) {
+            html += `<div class="list-group"><div class="list-letter">${letter}</div>`;
+            groups[letter].forEach(slug => {
+                html += `<div class="list-item" data-slug="${slug}">${slug}</div>`;
+            });
+            html += `</div>`;
+        }
+        entityListDiv.innerHTML = html;
+        // Додати обробники кліків
+        document.querySelectorAll('.list-item').forEach(item => {
+            item.addEventListener('click', async (e) => {
+                const slug = item.dataset.slug;
+                // Очистити клас selected у всіх
+                document.querySelectorAll('.list-item').forEach(el => el.classList.remove('selected'));
+                item.classList.add('selected');
+                const data = await fetchEntityData(category, slug);
+                if (data) {
+                    displayEntity(category, slug, data);
+                }
+            });
+        });
+        // Якщо є перший елемент, автоматично вибрати його
+        const firstItem = document.querySelector('.list-item');
+        if (firstItem) firstItem.click();
+    }
+
+    // Завантажити поточну категорію: отримати маніфест, побудувати список
+    async function loadCategory(category) {
+        currentCategory = category;
+        // Показати завантаження
+        entityListDiv.innerHTML = '<div class="list-group">Завантаження...</div>';
+        const slugs = await fetchManifest(category);
+        currentData = slugs;
+        if (slugs.length === 0) {
+            entityListDiv.innerHTML = '<div class="list-group">Немає сутностей</div>';
+            pedestalImg.style.display = 'none';
+            entityNameSpan.innerText = '-';
+            entityTitleSpan.innerText = '';
+            entityDescP.innerText = 'Немає даних для цієї категорії.';
+            return;
+        }
+        buildAlphabeticalList(slugs, category);
+    }
+
+    // Обробка вкладок
+    function initTabs() {
+        const btns = document.querySelectorAll('.tab-btn');
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                if (category === currentCategory) return;
+                btns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                loadCategory(category);
+            });
+        });
+        // Встановити активну за замовчуванням
+        document.querySelector('.tab-btn[data-category="characters"]').classList.add('active');
+    }
+
+    // Запуск
+    function init() {
+        initTabs();
+        loadCategory('characters');
+    }
+
+    init();
+</script>
 </body>
 </html>
