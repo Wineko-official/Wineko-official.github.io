@@ -24,6 +24,7 @@
             background-attachment: fixed;
         }
 
+        /* Контейнер для абсолютного позиціонування */
         .interface {
             position: relative;
             width: 100%;
@@ -32,14 +33,13 @@
             min-height: 100vh;
         }
 
-        /* ========== П'ЄДЕСТАЛ (ЦЕНТР, ВГОРІ) ========== */
+        /* ========== ПОСТАМЕНТ ДЛЯ ЗОБРАЖЕННЯ ========== */
         .pedestal-area {
             position: absolute;
-            top: 18%;          /* змісти трохи вище/нижче під фон */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 340px;
-            height: 340px;
+            left: 46.1%;
+            top: 4.0%;
+            width: 10.0%;
+            height: 28.4%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -47,82 +47,78 @@
             z-index: 5;
         }
         .pedestal-image {
-            max-width: 85%;
-            max-height: 85%;
+            max-width: 90%;
+            max-height: 90%;
             object-fit: contain;
-            filter: drop-shadow(0 0 20px rgba(0,0,0,0.8));
+            filter: drop-shadow(0 0 15px rgba(0,0,0,0.7));
             animation: float 3s ease-in-out infinite;
         }
         @keyframes float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
             100% { transform: translateY(0px); }
         }
 
-        /* ========== ПРАВА ПАНЕЛЬ (МЕНЮ) ========== */
+        /* ========== ПАНЕЛЬ ВИБОРУ (ПРАВА АРКА) ========== */
         .menu-area {
             position: absolute;
-            top: 25%;
-            right: 12%;
-            width: 260px;
-            height: 400px;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px);
-            border-radius: 16px;
+            left: 74.8%;
+            top: 33.9%;
+            width: 20.0%;
+            height: 11.0%;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(6px);
+            border-radius: 12px;
             border: 1px solid #7a5a4a;
-            padding: 12px;
+            padding: 8px;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            box-shadow: 0 0 25px rgba(0,0,0,0.6);
             z-index: 10;
         }
-
         .tabs {
             display: flex;
-            gap: 6px;
-            border-bottom: 1px solid #7a5a4a;
-            margin-bottom: 12px;
+            gap: 4px;
+            margin-bottom: 8px;
         }
         .tab-btn {
             flex: 1;
             background: rgba(30,20,15,0.8);
             border: none;
-            padding: 8px 0;
+            padding: 4px 0;
             color: #ddc;
             font-family: 'Georgia', serif;
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             cursor: pointer;
             transition: 0.2s;
-            border-radius: 8px 8px 0 0;
+            border-radius: 6px 6px 0 0;
         }
         .tab-btn.active {
             background: #4a3a2a;
             color: #ffd8a0;
             font-weight: bold;
         }
-
         .list-container {
             flex: 1;
             overflow-y: auto;
-            padding-right: 5px;
+            padding-right: 4px;
+            font-size: 0.7rem;
         }
         .list-group {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
         .list-letter {
-            font-size: 1.1rem;
+            font-size: 0.8rem;
             font-weight: bold;
             color: #c8aa7a;
             border-bottom: 1px solid #5a4a3a;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
         .list-item {
-            padding: 5px 10px;
+            padding: 2px 6px;
             cursor: pointer;
-            border-radius: 6px;
+            border-radius: 4px;
             transition: 0.1s;
-            font-size: 0.85rem;
         }
         .list-item:hover {
             background: #4a3a2a;
@@ -134,37 +130,36 @@
             font-weight: bold;
         }
 
-        /* ========== НИЖНЯ ПАНЕЛЬ ОПИСУ ========== */
+        /* ========== ТЕКСТОВА ПАНЕЛЬ (ОСНОВНИЙ БЛОК) ========== */
         .lore-area {
             position: absolute;
-            bottom: 8%;
-            left: 15%;
-            width: 42%;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(8px);
+            left: 29.0%;
+            top: 55.0%;
+            width: 41.5%;
+            height: 28.2%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
             border: 1px solid #6a5a4a;
-            border-radius: 20px;
-            padding: 18px 24px;
+            border-radius: 16px;
+            padding: 12px 20px;
             color: #f0e6d0;
-            max-height: 32%;
             overflow-y: auto;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.7);
             z-index: 10;
         }
         .lore-area h2 {
-            font-size: 1.9rem;
+            font-size: 1.6rem;
             margin-bottom: 0.2rem;
             color: #ffd8a0;
         }
         .lore-area h3 {
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-style: italic;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             color: #c8aa7a;
         }
         .lore-area p {
-            font-size: 0.95rem;
-            line-height: 1.45;
+            font-size: 0.85rem;
+            line-height: 1.4;
             text-align: justify;
         }
 
@@ -176,10 +171,10 @@
             background: rgba(0,0,0,0.6);
             border: 1px solid #b89a7a;
             color: #ffd8a0;
-            padding: 8px 18px;
+            padding: 6px 14px;
             border-radius: 30px;
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             transition: 0.2s;
             backdrop-filter: blur(4px);
             z-index: 100;
@@ -189,28 +184,31 @@
             border-color: #ffd8a0;
         }
 
-        /* ========== АДАПТАЦІЯ ДЛЯ МОБІЛЬНИХ ========== */
+        /* ========== МОБІЛЬНА ВЕРСІЯ ========== */
         @media (max-width: 768px) {
             body {
                 background-attachment: scroll;
+                background-size: cover;
             }
-            .pedestal-area {
-                position: static;
-                margin: 20px auto 0;
-                width: 240px;
-                height: 240px;
-                transform: none;
-            }
-            .menu-area {
-                position: static;
-                width: 90%;
-                margin: 20px auto;
-                height: 320px;
-            }
+            .pedestal-area,
+            .menu-area,
             .lore-area {
                 position: static;
                 width: 90%;
-                margin: 20px auto;
+                margin: 15px auto;
+                height: auto;
+                left: auto;
+                top: auto;
+            }
+            .pedestal-area {
+                width: 240px;
+                height: 240px;
+                margin-top: 30px;
+            }
+            .menu-area {
+                height: 280px;
+            }
+            .lore-area {
                 max-height: none;
             }
             .interface {
