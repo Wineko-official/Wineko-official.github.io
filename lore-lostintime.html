@@ -43,24 +43,26 @@
         }
 
         /* ========== ПОСТАМЕНТ ДЛЯ ЗОБРАЖЕННЯ ========== */
-        .pedestal-area {
-            position: absolute;
-            left: 46.1%;
-            top: 4%;
-            width: 10%;
-            height: 28%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            pointer-events: none;
-            z-index: 5;
-        }
-        .pedestal-image {
-            max-width: 95%;
-            max-height: 95%;
-            object-fit: contain;
-            filter: drop-shadow(0 0 15px rgba(0,0,0,0.7));
-        }
+     .pedestal-area {
+    position: absolute;
+    left: 46.1%;
+    top: 2%;          /* підняв трохи вище, щоб збільшити висоту */
+    width: 12%;       /* трохи ширше */
+    height: 32%;      /* вище, щоб вмістити більше зображення */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;  /* притискає до низу */
+    pointer-events: none;
+    z-index: 5;
+}
+
+.pedestal-image {
+    max-width: 95%;
+    max-height: 95%;
+    object-fit: contain;
+    object-position: bottom center;
+    filter: drop-shadow(0 0 15px rgba(0,0,0,0.7));
+}
 
         /* ========== ПАНЕЛЬ ВИБОРУ (ПРАВА АРКА) ========== */
         .menu-area {
