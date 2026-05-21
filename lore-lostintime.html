@@ -17,7 +17,6 @@
             font-family: 'Georgia', serif;
             min-height: 100vh;
             overflow-x: hidden;
-            /* Фонова картинка-інтерфейс */
             background-image: url('bg_lore_lostintime.png');
             background-size: cover;
             background-position: center top;
@@ -25,7 +24,6 @@
             background-attachment: fixed;
         }
 
-        /* Контейнер для абсолютного позиціонування елементів */
         .interface {
             position: relative;
             width: 100%;
@@ -34,54 +32,56 @@
             min-height: 100vh;
         }
 
-        /* === ЗОНА П'ЄДЕСТАЛУ === */
+        /* ========== П'ЄДЕСТАЛ (ЦЕНТР, ВГОРІ) ========== */
         .pedestal-area {
             position: absolute;
-            top: 28%;
+            top: 18%;          /* змісти трохи вище/нижче під фон */
             left: 50%;
             transform: translateX(-50%);
-            width: 280px;
-            height: 280px;
+            width: 340px;
+            height: 340px;
             display: flex;
             justify-content: center;
             align-items: center;
             pointer-events: none;
+            z-index: 5;
         }
         .pedestal-image {
-            max-width: 100%;
-            max-height: 100%;
+            max-width: 85%;
+            max-height: 85%;
             object-fit: contain;
-            filter: drop-shadow(0 0 15px rgba(0,0,0,0.7));
+            filter: drop-shadow(0 0 20px rgba(0,0,0,0.8));
             animation: float 3s ease-in-out infinite;
         }
         @keyframes float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-12px); }
+            50% { transform: translateY(-10px); }
             100% { transform: translateY(0px); }
         }
 
-        /* === ПРАВА ПАНЕЛЬ МЕНЮ (СПИСОК) === */
+        /* ========== ПРАВА ПАНЕЛЬ (МЕНЮ) ========== */
         .menu-area {
             position: absolute;
-            top: 21%;
-            right: 14%;
-            width: 250px;
-            height: 380px;
-            background: rgba(0,0,0,0.6);
-            border-radius: 12px;
-            backdrop-filter: blur(4px);
-            border: 1px solid #5a4a3a;
-            padding: 10px;
+            top: 25%;
+            right: 12%;
+            width: 260px;
+            height: 400px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 16px;
+            border: 1px solid #7a5a4a;
+            padding: 12px;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            box-shadow: 0 0 25px rgba(0,0,0,0.6);
+            z-index: 10;
         }
-        /* Вкладки */
+
         .tabs {
             display: flex;
-            gap: 4px;
-            border-bottom: 1px solid #5a4a3a;
+            gap: 6px;
+            border-bottom: 1px solid #7a5a4a;
             margin-bottom: 12px;
         }
         .tab-btn {
@@ -89,19 +89,19 @@
             background: rgba(30,20,15,0.8);
             border: none;
             padding: 8px 0;
-            color: #ccb;
+            color: #ddc;
             font-family: 'Georgia', serif;
             font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.2s;
-            border-radius: 6px 6px 0 0;
+            transition: 0.2s;
+            border-radius: 8px 8px 0 0;
         }
         .tab-btn.active {
             background: #4a3a2a;
             color: #ffd8a0;
             font-weight: bold;
         }
-        /* Список із прокруткою */
+
         .list-container {
             flex: 1;
             overflow-y: auto;
@@ -113,14 +113,14 @@
         .list-letter {
             font-size: 1.1rem;
             font-weight: bold;
-            color: #b89a7a;
+            color: #c8aa7a;
             border-bottom: 1px solid #5a4a3a;
             margin-bottom: 5px;
         }
         .list-item {
-            padding: 4px 8px;
+            padding: 5px 10px;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 6px;
             transition: 0.1s;
             font-size: 0.85rem;
         }
@@ -134,25 +134,25 @@
             font-weight: bold;
         }
 
-        /* === НИЖНЯ ПАНЕЛЬ ОПИСУ === */
+        /* ========== НИЖНЯ ПАНЕЛЬ ОПИСУ ========== */
         .lore-area {
             position: absolute;
-            bottom: 12%;
+            bottom: 8%;
             left: 15%;
-            width: 40%;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(5px);
+            width: 42%;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(8px);
             border: 1px solid #6a5a4a;
-            border-radius: 16px;
-            padding: 16px 20px;
+            border-radius: 20px;
+            padding: 18px 24px;
             color: #f0e6d0;
-            max-height: 30%;
+            max-height: 32%;
             overflow-y: auto;
-            pointer-events: auto;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.7);
+            z-index: 10;
         }
         .lore-area h2 {
-            font-size: 1.7rem;
+            font-size: 1.9rem;
             margin-bottom: 0.2rem;
             color: #ffd8a0;
         }
@@ -160,11 +160,11 @@
             font-size: 1rem;
             font-style: italic;
             margin-bottom: 1rem;
-            color: #b89a7a;
+            color: #c8aa7a;
         }
         .lore-area p {
-            font-size: 0.9rem;
-            line-height: 1.4;
+            font-size: 0.95rem;
+            line-height: 1.45;
             text-align: justify;
         }
 
@@ -176,7 +176,7 @@
             background: rgba(0,0,0,0.6);
             border: 1px solid #b89a7a;
             color: #ffd8a0;
-            padding: 8px 16px;
+            padding: 8px 18px;
             border-radius: 30px;
             text-decoration: none;
             font-size: 0.85rem;
@@ -189,22 +189,23 @@
             border-color: #ffd8a0;
         }
 
-        /* АДАПТИВ ДЛЯ МОБІЛЬНИХ */
+        /* ========== АДАПТАЦІЯ ДЛЯ МОБІЛЬНИХ ========== */
         @media (max-width: 768px) {
             body {
-                background-size: cover;
                 background-attachment: scroll;
             }
             .pedestal-area {
-                top: 12%;
-                width: 180px;
-                height: 180px;
+                position: static;
+                margin: 20px auto 0;
+                width: 240px;
+                height: 240px;
+                transform: none;
             }
             .menu-area {
                 position: static;
                 width: 90%;
-                margin: 20px auto 0;
-                height: 280px;
+                margin: 20px auto;
+                height: 320px;
             }
             .lore-area {
                 position: static;
@@ -212,42 +213,37 @@
                 margin: 20px auto;
                 max-height: none;
             }
-            .back-link {
-                position: static;
-                display: inline-block;
-                margin: 20px auto;
-                text-align: center;
-                width: fit-content;
-            }
             .interface {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 padding-bottom: 30px;
             }
+            .back-link {
+                position: static;
+                display: inline-block;
+                margin: 20px auto;
+                width: fit-content;
+            }
         }
     </style>
 </head>
 <body>
 <div class="interface">
-    <!-- П'єдестал для зображення -->
     <div class="pedestal-area">
         <img id="pedestalImg" class="pedestal-image" src="" alt="Entity" style="display: none;">
     </div>
 
-    <!-- Права панель меню -->
     <div class="menu-area">
         <div class="tabs">
             <button class="tab-btn" data-category="characters">Персонажі</button>
             <button class="tab-btn" data-category="creatures">Істоти</button>
         </div>
         <div id="entityList" class="list-container">
-            <!-- Список буде заповнено динамічно -->
             <div class="list-group">Завантаження...</div>
         </div>
     </div>
 
-    <!-- Нижня панель опису -->
     <div class="lore-area" id="lorePanel">
         <h2 id="entityName">-</h2>
         <h3 id="entityTitle"></h3>
@@ -258,73 +254,54 @@
 </div>
 
 <script>
-    // ---------- КОНФІГУРАЦІЯ ----------
     const BASE_PATH = 'bestiary/';
-    // Список категорій та їхніх JSON-маніфестів
     const categories = {
-        characters: {
-            manifestUrl: BASE_PATH + 'characters.json',
-            folder: 'characters'
-        },
-        creatures: {
-            manifestUrl: BASE_PATH + 'creatures.json',
-            folder: 'creatures'
-        }
+        characters: { manifestUrl: BASE_PATH + 'characters.json', folder: 'characters' },
+        creatures:  { manifestUrl: BASE_PATH + 'creatures.json',  folder: 'creatures' }
     };
 
     let currentCategory = 'characters';
-    let currentData = [];        // масив слагів (наприклад ["Ketrin", "Arthas"])
+    let currentSlugs = [];
     let currentSelectedSlug = null;
-    let currentEntityData = null;
 
-    // DOM елементи
     const pedestalImg = document.getElementById('pedestalImg');
     const entityListDiv = document.getElementById('entityList');
     const entityNameSpan = document.getElementById('entityName');
     const entityTitleSpan = document.getElementById('entityTitle');
     const entityDescP = document.getElementById('entityDesc');
 
-    // ---------- ДОПОМІЖНІ ФУНКЦІЇ ----------
-    // Завантажити масив слагів для категорії
     async function fetchManifest(category) {
         const url = categories[category].manifestUrl;
         try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const slugs = await response.json();
-            return slugs; // очікуємо масив рядків, наприклад ["Ketrin", "Tropikol"]
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return await res.json();
         } catch (err) {
-            console.error(`Помилка завантаження маніфесту ${category}:`, err);
+            console.error(`Помилка завантаження ${category}:`, err);
             return [];
         }
     }
 
-    // Завантажити JSON сутності за категорією та слагом
     async function fetchEntityData(category, slug) {
         const folder = categories[category].folder;
         const url = `${BASE_PATH}${folder}/${slug}/data.json`;
         try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const data = await response.json();
-            return data;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return await res.json();
         } catch (err) {
-            console.error(`Помилка завантаження даних для ${slug}:`, err);
+            console.error(`Помилка завантаження ${slug}:`, err);
             return null;
         }
     }
 
-    // Показати сутність: зображення + опис
-    function displayEntity(category, slug, entityData) {
-        if (!entityData) return;
-        currentEntityData = entityData;
+    function displayEntity(category, slug, data) {
+        if (!data) return;
         currentSelectedSlug = slug;
-        // Встановити текст
-        entityNameSpan.innerText = entityData.name || 'Без назви';
-        entityTitleSpan.innerText = entityData.title || '';
-        entityDescP.innerText = entityData.description || 'Опис відсутній.';
+        entityNameSpan.innerText = data.name || 'Без назви';
+        entityTitleSpan.innerText = data.title || '';
+        entityDescP.innerText = data.description || 'Опис відсутній.';
 
-        // Завантажити зображення
         const imgPath = `${BASE_PATH}${categories[category].folder}/${slug}/image.png`;
         pedestalImg.src = imgPath;
         pedestalImg.style.display = 'block';
@@ -334,24 +311,18 @@
         };
     }
 
-    // Побудувати алфавітний список з групуванням за першою літерою (A-Z)
-    function buildAlphabeticalList(slugs, category) {
+    function buildList(slugs, category) {
         if (!slugs.length) {
             entityListDiv.innerHTML = '<div class="list-group">Немає даних</div>';
             return;
         }
-        // Отримуємо імена для сортування (потрібно завантажити хоча б назви? спростимо: сортуємо за слагами, але для групування беремо першу літеру слага)
-        // Для коректного відображення краще мати імена, але поки використаємо slug як тимчасову назву.
-        // Ми можемо окремо завантажити всі назви, але це забагато запитів. Краще в майбутньому маніфест містити об'єкти {slug, name}.
-        // Але зараз зробимо просто slug, а потім підвантажимо ім'я при кліку. Групувати будемо за першою літерою slug.
         const groups = {};
         slugs.forEach(slug => {
-            const letter = slug.charAt(0).toUpperCase();
-            if (!/^[A-Z]$/.test(letter)) return; // ігноруємо не латинські літери, можна додати кирилицю окремо
+            let letter = slug.charAt(0).toUpperCase();
+            if (!/^[A-Z]$/.test(letter)) letter = '#';
             if (!groups[letter]) groups[letter] = [];
             groups[letter].push(slug);
         });
-        // Сортуємо літери
         const sortedLetters = Object.keys(groups).sort();
         let html = '';
         for (let letter of sortedLetters) {
@@ -362,31 +333,24 @@
             html += `</div>`;
         }
         entityListDiv.innerHTML = html;
-        // Додати обробники кліків
         document.querySelectorAll('.list-item').forEach(item => {
             item.addEventListener('click', async (e) => {
                 const slug = item.dataset.slug;
-                // Очистити клас selected у всіх
                 document.querySelectorAll('.list-item').forEach(el => el.classList.remove('selected'));
                 item.classList.add('selected');
                 const data = await fetchEntityData(category, slug);
-                if (data) {
-                    displayEntity(category, slug, data);
-                }
+                if (data) displayEntity(category, slug, data);
             });
         });
-        // Якщо є перший елемент, автоматично вибрати його
         const firstItem = document.querySelector('.list-item');
         if (firstItem) firstItem.click();
     }
 
-    // Завантажити поточну категорію: отримати маніфест, побудувати список
     async function loadCategory(category) {
         currentCategory = category;
-        // Показати завантаження
         entityListDiv.innerHTML = '<div class="list-group">Завантаження...</div>';
         const slugs = await fetchManifest(category);
-        currentData = slugs;
+        currentSlugs = slugs;
         if (slugs.length === 0) {
             entityListDiv.innerHTML = '<div class="list-group">Немає сутностей</div>';
             pedestalImg.style.display = 'none';
@@ -395,32 +359,25 @@
             entityDescP.innerText = 'Немає даних для цієї категорії.';
             return;
         }
-        buildAlphabeticalList(slugs, category);
+        buildList(slugs, category);
     }
 
-    // Обробка вкладок
     function initTabs() {
         const btns = document.querySelectorAll('.tab-btn');
         btns.forEach(btn => {
             btn.addEventListener('click', () => {
-                const category = btn.dataset.category;
-                if (category === currentCategory) return;
+                const cat = btn.dataset.category;
+                if (cat === currentCategory) return;
                 btns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                loadCategory(category);
+                loadCategory(cat);
             });
         });
-        // Встановити активну за замовчуванням
         document.querySelector('.tab-btn[data-category="characters"]').classList.add('active');
     }
 
-    // Запуск
-    function init() {
-        initTabs();
-        loadCategory('characters');
-    }
-
-    init();
+    initTabs();
+    loadCategory('characters');
 </script>
 </body>
 </html>
