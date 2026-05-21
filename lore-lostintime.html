@@ -45,9 +45,9 @@
         /* ========== ПОСТАМЕНТ ДЛЯ ЗОБРАЖЕННЯ ========== */
      .pedestal-area {
     position: absolute;
-    left: 46.1%;
-    top: 2%;          /* підняв трохи вище, щоб збільшити висоту */
-    width: 12%;       /* трохи ширше */
+    left: 41%;
+    top: -0.1%;          /* підняв трохи вище, щоб збільшити висоту */
+    width: 20%;       /* трохи ширше */
     height: 32%;      /* вище, щоб вмістити більше зображення */
     display: flex;
     justify-content: center;
@@ -189,40 +189,55 @@
             border-color: #ffd8a0;
         }
 
-        /* ========== МОБІЛЬНА ВЕРСІЯ ========== */
-        @media (max-width: 768px) {
-            .interface {
-                aspect-ratio: auto;
-                height: auto;
-                background-size: cover;
-                background-attachment: scroll;
-            }
-            .pedestal-area,
-            .menu-area,
-            .lore-area {
-                position: static;
-                width: 90%;
-                margin: 15px auto;
-                height: auto;
-            }
-            .pedestal-area {
-                width: 200px;
-                height: 200px;
-                margin-top: 30px;
-            }
-            .menu-area {
-                height: 280px;
-            }
-            .lore-area {
-                max-height: none;
-            }
-            .back-link {
-                position: static;
-                display: inline-block;
-                margin: 20px auto;
-                width: fit-content;
-            }
-        }
+    /* ========== МОБІЛЬНА ВЕРСІЯ ========== */
+@media (max-width: 768px) {
+    .interface {
+        aspect-ratio: auto;
+        height: auto;
+        background-size: cover;
+        background-attachment: scroll;
+    }
+    .pedestal-area,
+    .menu-area,
+    .lore-area {
+        position: static;
+        width: 90%;
+        margin: 15px auto;
+        height: auto;
+    }
+    .pedestal-area {
+        width: 260px;
+        height: 280px;
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        overflow: visible;
+    }
+    .pedestal-image {
+        width: auto;
+        height: auto;
+        max-width: 110%;
+        max-height: 110%;
+        object-fit: contain;
+        object-position: center bottom;
+        filter: drop-shadow(0 0 10px rgba(0,0,0,0.7));
+        /* Одночасно зсуваємо вниз (5%) і вліво (-10px). Для зсуву вправо зміни -10px на +10px */
+        transform: translateX(16px) translateY(5%);
+    }
+    .menu-area {
+        height: 280px;
+    }
+    .lore-area {
+        max-height: none;
+    }
+    .back-link {
+        position: static;
+        display: inline-block;
+        margin: 20px auto;
+        width: fit-content;
+    }
+}
     </style>
 </head>
 <body>
