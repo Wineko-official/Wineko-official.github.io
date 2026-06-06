@@ -3,10 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    
+    <!-- Базове SEO -->
     <title>Wineko | Енциклопедія світу Lost in Time – Лор, локації, бестіарій</title>
-<meta name="description" content="Енциклопедія світу Lost in Time: локації Етернхольт, бестіарій істот, магічні ордени, історія.">
-<meta name="keywords" content="Етернхольт, бестіарій, Грибожаб, Тропіколь, Орцинтавр, Мутатонт, Громахр, Орден Темного Ока">
-<link rel="canonical" href="https://wineko-official.github.io/lore.html">
+    <meta name="description" content="Енциклопедія світу Lost in Time: локації Етернхольт, бестіарій істот, магічні ордени, історія фентезі-всесвіту.">
+    <meta name="keywords" content="Етернхольт, бестіарій, Грибожаб, Тропіколь, Орцинтавр, Мутатонт, Громахр, Орден Темного Ока, Wineko, лор">
+    <link rel="canonical" href="https://wineko-official.github.io/lore.html">
+    <meta name="robots" content="index, follow">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Wineko Lost In Time.png">
+
+    <!-- Open Graph / Telegram / Discord / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wineko-official.github.io/lore.html">
+    <meta property="og:title" content="Wineko | Енциклопедія світу Lost in Time – Лор, локації, бестіарій">
+    <meta property="og:description" content="Енциклопедія світу Lost in Time: детальний опис локацій Етернхольту, магічних законів, орденів та унікального бестіарію.">
+    <meta property="og:image" content="https://wineko-official.github.io/Wineko%20Lost%20In%20Time.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Wineko | Енциклопедія світу Lost in Time – Лор, локації, бестіарій">
+    <meta name="twitter:description" content="Енциклопедія світу Lost in Time: детальний опис локацій Етернхольту, магічних законів, орденів та унікального бестіарію.">
+    <meta name="twitter:image" content="https://wineko-official.github.io/Wineko%20Lost%20In%20Time.png">
+
     <style>
         * {
             box-sizing: border-box;
@@ -58,13 +78,11 @@
             text-align: center;
         }
 
-        .window-container h3 {
-            color: #fff;
+        /* Стиль для підзаголовків або альтернативних блоків */
+        .window-container .sub-title {
             font-size: calc(var(--font-scale) * 1.05);
-            font-weight: normal;
             letter-spacing: 1px;
             margin-bottom: 8px;
-            text-align: center;
         }
 
         .scroll-content {
@@ -109,7 +127,7 @@
             transform: scale(1.02);
         }
 
-        /* Ті самі координати, що й support-box та social-box на головній */
+        /* Координати як у support-box та social-box на головній */
         .world-left {
             top: 60.5%;
             left: 65%;
@@ -123,7 +141,7 @@
             height: 29%;
         }
 
-        /* Навігація (без змін) */
+        /* Навігація */
         .nav-menu {
             position: absolute;
             top: 33%;
@@ -213,11 +231,11 @@
             cursor: pointer;
         }
 
-        /* Мобільна версія (як на головній) */
+        /* Мобільна версія */
         @media (max-width: 768px) {
             body {
                 align-items: flex-start;
-                padding: 80px 15px 20px 15px;
+                padding: 100px 15px 20px 15px; /* Збільшено для запобігання перекриттю плеєром */
                 background-image: url('m.bg.png');
                 background-size: cover;
                 background-position: center top;
@@ -273,7 +291,7 @@
                 margin-bottom: 15px;
             }
 
-            .window-container h3 {
+            .window-container .sub-title {
                 font-size: 16px;
                 margin-top: 10px;
                 margin-bottom: 10px;
@@ -323,7 +341,7 @@
             <a href="poems.html">Вірші та <br>Балади</a>
         </nav>
 
-        <!-- Ліве вікно (на місці support-box) – Lost in Time -->
+        <!-- Ліве вікно – Lost in Time -->
         <div class="window-container world-left">
             <h2>🌌 Lost in Time</h2>
             <div class="scroll-content">
@@ -334,9 +352,9 @@
             <a href="lore-lostintime.html" class="encyclopedia-btn">📖 Перейти до енциклопедії</a>
         </div>
 
-        <!-- Праве вікно (на місці social-box) – Новий світ / анонси -->
+        <!-- Праве вікно – Новий світ / анонси -->
         <div class="window-container world-right">
-            <h3>🔮 Новий світ</h3>
+            <h2 class="sub-title">🔮 Новий світ</h2>
             <div class="scroll-content">
                 <p>Тут з’явиться енциклопедія другого всесвіту. Скоро...</p>
                 <p>✨ Слідкуйте за анонсами ✨</p>
@@ -344,7 +362,7 @@
         </div>
     </div>
 
-    <!-- АУДІОПЛЕЄР – НІКОЛИ НЕ ГРАЄ АВТОМАТИЧНО -->
+    <!-- АУДІОПЛЕЄР -->
     <div class="audio-player">
         <button id="musicBtn" onclick="toggleMusic()">🎵 Увімкнути радіо</button>
         <span id="trackName">📻 Радіо Етернхольт</span>
